@@ -65,7 +65,7 @@ export function About() {
           </Reveal>
           <Reveal dir="left" delay={0.08}>
             <h2 className="mt-5 text-3xl font-black leading-[1.08] tracking-tight text-content sm:text-4xl lg:text-5xl">
-              I don't sell workouts.
+              Meet Coach Nati.
               <br />
               I engineer <span className="text-gradient-accent">transformations.</span>
             </h2>
@@ -113,7 +113,7 @@ export function About() {
 
       {/* Certifications */}
       <div className="container-shell mt-20">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {ACHIEVEMENTS.map((a, i) => (
             <Reveal key={a.title} dir="up" delay={i * 0.07}>
               <div className="group h-full rounded-2xl border border-border bg-surface-subtle/60 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/5 dark:bg-surface-subtle">

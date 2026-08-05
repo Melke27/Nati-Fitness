@@ -14,7 +14,7 @@ export function WhyChoose() {
           description="Every element of the system is designed for one thing: making sure you show up, stay consistent and see results you can measure."
         />
 
-        <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {WHY_CHOOSE.map((f) => (
             <StaggerItem key={f.title}>
               <div className="group relative h-full overflow-hidden rounded-2xl border border-border bg-surface-subtle/70 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-lift dark:bg-surface-subtle">

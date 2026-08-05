@@ -17,10 +17,10 @@ export const SITE = {
 }
 
 export const STATS = [
-  { value: 500, suffix: '+', label: 'Happy Clients' },
-  { value: 10, suffix: '+', label: 'Years Experience' },
+  { value: 500, suffix: '+', label: 'Clients' },
+  { value: 10, suffix: '+', label: 'Years Coaching' },
+  { value: 1000, suffix: '+', label: 'Workouts Created' },
   { value: 98, suffix: '%', label: 'Success Rate' },
-  { value: 24, suffix: 'K', label: 'Coaching Hours' },
 ]
 
 export const TRUST_LOGOS = ['Strength Lab', 'FitHive', 'CoreStudio', 'PulseGym', 'VitaLife', 'IronWorks', 'Nordic Fit', 'Zenith Health']
@@ -37,16 +37,12 @@ export const SERVICES = [
 ]
 
 export const WHY_CHOOSE = [
-  { icon: 'ClipboardList', title: 'Personal Workout Plan', desc: 'Every program is written for your body, your equipment and your schedule.' },
-  { icon: 'Salad', title: 'Nutrition Guidance', desc: 'Flexible macro-based nutrition with meals you actually enjoy.' },
-  { icon: 'TrendingUp', title: 'Weekly Progress', desc: 'Data-driven check-ins that keep you accountable and on trajectory.' },
-  { icon: 'MessageSquare', title: 'Daily Support', desc: 'Direct access to Coach Nati — every single day, no bots.' },
-  { icon: 'House', title: 'Home Workout', desc: 'Zero-equipment and dumbbell-only programs that still deliver.' },
-  { icon: 'Landmark', title: 'Gym Workout', desc: 'Advanced gym splits with periodization built for steady growth.' },
-  { icon: 'Video', title: 'Video Coaching', desc: 'Exercise tutorials and form reviews with personalized feedback.' },
-  { icon: 'Radio', title: 'Live Sessions', desc: 'Weekly live Q&A and group training sessions with the community.' },
-  { icon: 'Clock', title: '24/7 Support', desc: 'Message anytime. You always get a response within the hour.' },
+  { icon: 'ClipboardList', title: 'Personal Workout Plans', desc: 'Programs written for your body, your equipment and your schedule.' },
+  { icon: 'Salad', title: 'Nutrition Strategy', desc: 'Flexible macro-based nutrition built on foods you actually enjoy.' },
   { icon: 'ChartColumn', title: 'Progress Tracking', desc: 'Body metrics, measurements and photos tracked automatically.' },
+  { icon: 'MessageSquare', title: 'Weekly Check-ins', desc: 'Data-driven check-ins that keep you accountable and on trajectory.' },
+  { icon: 'Video', title: 'Exercise Guidance', desc: 'Video tutorials and form reviews with personalized feedback.' },
+  { icon: 'HeartPulse', title: 'Lifestyle Coaching', desc: 'Sleep, stress and habit systems that make your transformation permanent.' },
 ]
 
 export const PROGRAMS: Program[] = [
@@ -86,23 +82,6 @@ export const PROGRAMS: Program[] = [
     features: ['Personalized plan', 'Video tutorials', 'Nutrition coaching', 'Progress tracking'],
   },
   {
-    id: 'p_recomp',
-    slug: 'body-recomposition',
-    name: 'Body Recomposition',
-    tagline: 'Lose fat, build muscle — together',
-    description: 'The holy grail: simultaneous fat loss and muscle gain through precise periodization and nutritional cycling.',
-    duration: '12 weeks',
-    weeks: 12,
-    level: 'Intermediate',
-    goal: 'Body Recomposition',
-    price: 199,
-    plan: 'monthly',
-    icon: 'RefreshCcw',
-    color: '#22C55E',
-    benefits: ['Recomp your physique', 'Visible in 30 days', 'Tighter, stronger body'],
-    features: ['Personalized plan', 'Body fat tracking', 'Meal plan', 'Weekly check-ins'],
-  },
-  {
     id: 'p_strength',
     slug: 'strength-training',
     name: 'Strength Training',
@@ -118,6 +97,74 @@ export const PROGRAMS: Program[] = [
     color: '#F59E0B',
     benefits: ['Add 25kg+ to total', 'Perfect technique', 'Meet PR targets'],
     features: ['Strength plan', 'Form reviews', 'Accessory work', 'Progress tracking'],
+  },
+  {
+    id: 'p_fatburn',
+    slug: 'fat-burning',
+    name: 'Fat Burning',
+    tagline: 'Melt stubborn fat fast',
+    description: 'High-intensity conditioning and metabolic circuits that torch calories and keep your metabolism firing long after training.',
+    duration: '12 weeks',
+    weeks: 12,
+    level: 'Intermediate',
+    goal: 'Fat Burning',
+    price: 149,
+    plan: 'monthly',
+    icon: 'Flame',
+    color: '#F59E0B',
+    benefits: ['Drop body fat %', 'Boost metabolism', 'High-energy sessions'],
+    features: ['Fat loss plan', 'Nutrition guidance', 'Progress tracking'],
+  },
+  {
+    id: 'p_online',
+    slug: 'online-coaching',
+    name: 'Online Coaching',
+    tagline: 'Train anywhere, coach everywhere',
+    description: 'Full remote coaching with a personal app dashboard, video feedback, weekly check-ins and daily messaging support.',
+    duration: '12 weeks',
+    weeks: 12,
+    level: 'All levels',
+    goal: 'Overall Fitness',
+    price: 199,
+    plan: 'monthly',
+    icon: 'MonitorPlay',
+    color: '#22C55E',
+    benefits: ['Coach from anywhere', 'Daily support', 'Video form reviews'],
+    features: ['App dashboard', 'Daily messaging', 'Weekly check-ins'],
+  },
+  {
+    id: 'p_personal',
+    slug: 'personal-training',
+    name: 'Personal Training',
+    tagline: '1:1 sessions, in person',
+    description: 'Hands-on 1:1 in-person training with Coach Nati — every rep coached, every meal planned, every week accounted for.',
+    duration: 'Flexible',
+    weeks: 12,
+    level: 'All levels',
+    goal: 'Overall Fitness',
+    price: 299,
+    plan: 'monthly',
+    icon: 'Dumbbell',
+    color: '#7CFF4F',
+    benefits: ['1:1 in-person', 'Live form coaching', 'Full accountability'],
+    features: ['1:1 sessions', 'Meal planning', 'Weekly check-ins'],
+  },
+  {
+    id: 'p_recomp',
+    slug: 'body-recomposition',
+    name: 'Body Recomposition',
+    tagline: 'Lose fat, build muscle — together',
+    description: 'The holy grail: simultaneous fat loss and muscle gain through precise periodization and nutritional cycling.',
+    duration: '12 weeks',
+    weeks: 12,
+    level: 'Intermediate',
+    goal: 'Body Recomposition',
+    price: 199,
+    plan: 'monthly',
+    icon: 'RefreshCcw',
+    color: '#22C55E',
+    benefits: ['Recomp your physique', 'Visible in 30 days', 'Tighter, stronger body'],
+    features: ['Personalized plan', 'Body fat tracking', 'Meal plan', 'Weekly check-ins'],
   },
   {
     id: 'p_women',
@@ -500,12 +547,10 @@ export const FAQS: FAQItem[] = [
 ]
 
 export const PROCESS_STEPS = [
-  { title: 'Consultation', desc: 'A free 15-minute call to understand your goals, history and what is holding you back.' },
-  { title: 'Assessment', desc: 'Full body composition, measurements, movement screening and health review.' },
+  { title: 'Fitness Assessment', desc: 'Body composition, movement screening and a full health review to build your baseline.' },
   { title: 'Goal Planning', desc: 'We define your target weight, body composition and a realistic timeline.' },
-  { title: 'Workout Plan', desc: 'Your personalized training program, built around your equipment and schedule.' },
-  { title: 'Nutrition Plan', desc: 'Calories, macros and meals designed for your body and food preferences.' },
-  { title: 'Weekly Tracking', desc: 'Check-ins, measurements, progress photos and plan adjustments every week.' },
+  { title: 'Custom Program', desc: 'Your personalized training and nutrition plan, built around your equipment and schedule.' },
+  { title: 'Weekly Coaching', desc: 'Check-ins, measurements, progress photos and plan adjustments every single week.' },
   { title: 'Transformation', desc: 'Your new body, new habits and the confidence to keep it forever.' },
 ]
 
@@ -537,9 +582,8 @@ export const MEAL_IDEAS = [
 ]
 
 export const ACHIEVEMENTS = [
-  { icon: 'Dumbbell', title: 'Certified Strength Specialist', org: 'NSCA — Certified Strength & Conditioning' },
+  { icon: 'Dumbbell', title: 'Certified Trainer', org: 'NSCA — Certified Strength & Conditioning' },
   { icon: 'Apple', title: 'Nutrition Expert', org: 'Precision Nutrition L2' },
   { icon: 'HeartPulse', title: 'Transformation Coach', org: '1,000+ lives transformed since 2016' },
-  { icon: 'MonitorPlay', title: 'Online Coach', org: '500+ remote clients in 12 countries' },
-  { icon: 'Home', title: 'Lifestyle Mentor', org: 'Habit & behavior-change certified' },
+  { icon: 'MonitorPlay', title: 'Fitness Mentor', org: 'Habit & behavior-change certified' },
 ]

@@ -11,9 +11,10 @@ const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/#about', label: 'About' },
   { to: '/programs', label: 'Programs' },
+  { to: '/#services', label: 'Services' },
   { to: '/#transformations', label: 'Transformations' },
+  { to: '/#testimonials', label: 'Testimonials' },
   { to: '/#pricing', label: 'Pricing' },
-  { to: '/blog', label: 'Blog' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -126,7 +127,7 @@ export function Navbar() {
                 onClick={() => navigate('/#pricing')}
                 className="group"
               >
-                Book Now
+                Book Consultation
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </div>
@@ -215,7 +216,7 @@ function MobileMenu({ open, onClose, onHash }: { open: boolean; onClose: () => v
               className="mt-8 space-y-3 pb-10"
             >
               <Link to="/#pricing" onClick={onClose} className="flex items-center justify-center gap-2 rounded-full bg-cta-gradient py-4 text-base font-black text-primary">
-                Book a Free Consultation <ArrowRight className="h-4 w-4" />
+                Book Consultation <ArrowRight className="h-4 w-4" />
               </Link>
               <div className="flex gap-3">
                 {session ? (

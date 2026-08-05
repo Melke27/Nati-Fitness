@@ -8,7 +8,7 @@ export function Process() {
       <div className="container-shell">
         <SectionHeading
           eyebrow="Coaching process"
-          title={<>From consultation to <span className="text-gradient-accent">transformation</span> in 7 steps</>}
+          title={<>From assessment to <span className="text-gradient-accent">transformation</span> in 5 steps</>}
           description="A proven, structured journey. You always know exactly what's happening and what's next."
         />
 
@@ -30,7 +30,7 @@ export function Process() {
                       <div className="group relative rounded-2xl border border-border bg-surface-subtle/60 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lift dark:bg-surface-subtle">
                         <div className="flex items-center gap-3">
                           <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-lg font-black text-primary dark:text-accent">
-                            {i + 1}
+                            {String(i + 1).padStart(2, '0')}
                           </span>
                           <h3 className="text-lg font-black text-content">{step.title}</h3>
                         </div>

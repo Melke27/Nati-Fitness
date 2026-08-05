@@ -30,9 +30,9 @@ export function CTABand() {
             </motion.span>
 
             <h2 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Your transformation
+              Ready to
               <br />
-              starts <span className="text-gradient-accent">today.</span>
+              <span className="text-gradient-accent">transform?</span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg">
               Only 3 coaching spots open this month. Book your free consultation now — and walk away with a clear,
@@ -45,14 +45,14 @@ export function CTABand() {
                 className="group flex items-center gap-2 rounded-full bg-cta-gradient px-8 py-4 text-base font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-1"
               >
                 <CalendarClock className="h-5 w-5" />
-                Book Free Consultation
+                Start Your Journey
                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
-                to="/programs"
+                to="/contact"
                 className="rounded-full border border-white/25 px-8 py-4 text-base font-black text-white transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:text-accent"
               >
-                Browse Programs
+                Book Consultation
               </Link>
             </div>
 

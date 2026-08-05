@@ -8,21 +8,21 @@ import { Button } from '@/components/ui'
 
 const QUICK_LINKS = [
   { label: 'About Coach Nati', to: '/#about' },
+  { label: 'Services', to: '/#services' },
   { label: 'Programs', to: '/programs' },
   { label: 'Transformations', to: '/#transformations' },
+  { label: 'Testimonials', to: '/#testimonials' },
   { label: 'Pricing', to: '/#pricing' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'FAQ', to: '/#faq' },
   { label: 'Contact', to: '/contact' },
 ]
 
 const PROGRAM_LINKS = [
   'Weight Loss',
   'Muscle Gain',
-  'Body Recomposition',
   'Strength Training',
-  "Women's Fitness",
-  'Home Workout',
+  'Fat Burning',
+  'Online Coaching',
+  'Personal Training',
 ]
 
 export function Footer() {

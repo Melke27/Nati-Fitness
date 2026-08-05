@@ -17,8 +17,11 @@ const levelColor: Record<string, string> = {
 const PROGRAM_IMG: Record<string, string> = {
   'weight-loss': MEDIA.runWoman,
   'muscle-gain': MEDIA.barbell,
-  'body-recomposition': MEDIA.womanFit,
   'strength-training': MEDIA.deadlift,
+  'fat-burning': MEDIA.running,
+  'online-coaching': MEDIA.coachAlt,
+  'personal-training': MEDIA.trainer,
+  'body-recomposition': MEDIA.womanFit,
   'womens-fitness': MEDIA.womanFit2,
   'mens-fitness': MEDIA.trainer,
   'home-workout': MEDIA.home,

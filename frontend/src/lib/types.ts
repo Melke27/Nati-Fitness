@@ -16,9 +16,10 @@ export type FitnessGoal =
   | 'Muscle Gain'
   | 'Body Recomposition'
   | 'Strength Training'
+  | 'Fat Burning'
   | 'Overall Fitness'
 
-export type FitnessLevel = 'Beginner' | 'Intermediate' | 'Advanced'
+export type FitnessLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'All levels'
 
 export interface HealthProfile {
   age: number

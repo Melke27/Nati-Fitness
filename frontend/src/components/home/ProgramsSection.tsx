@@ -11,13 +11,17 @@ const levelColor: Record<string, string> = {
   Beginner: 'bg-success/10 text-success border-success/25',
   Intermediate: 'bg-warning/10 text-warning border-warning/25',
   Advanced: 'bg-error/10 text-error border-error/25',
+  'All levels': 'bg-accent/10 text-primary border-accent/30 dark:text-accent',
 }
 
 const PROGRAM_IMG: Record<string, string> = {
   'weight-loss': MEDIA.runWoman,
   'muscle-gain': MEDIA.barbell,
-  'body-recomposition': MEDIA.womanFit,
   'strength-training': MEDIA.deadlift,
+  'fat-burning': MEDIA.running,
+  'online-coaching': MEDIA.coachAlt,
+  'personal-training': MEDIA.trainer,
+  'body-recomposition': MEDIA.womanFit,
   'womens-fitness': MEDIA.womanFit2,
   'mens-fitness': MEDIA.trainer,
   'home-workout': MEDIA.home,
@@ -107,7 +111,7 @@ export function ProgramsSection({ limit }: { limit?: number }) {
             to="/programs"
             className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-4 text-sm font-black text-content transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent/10"
           >
-            Explore all 9 programs <ArrowRight className="h-4 w-4" />
+            Explore all 12 programs <ArrowRight className="h-4 w-4" />
           </Link>
         </Reveal>
       </div>

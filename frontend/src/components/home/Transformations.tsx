@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { MoveHorizontal, Quote, TrendingUp, Scale } from 'lucide-react'
+import { MoveHorizontal, Quote, TrendingUp, Scale, Dumbbell } from 'lucide-react'
 import { TESTIMONIALS } from '@/lib/constants'
 import { SectionHeading, Badge } from '@/components/ui'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion'
@@ -35,8 +35,8 @@ export function Transformations() {
         <div className="mt-16 grid gap-4 sm:grid-cols-3">
           {[
             { icon: Scale, label: 'Avg. weight lost', value: '12.4 kg' },
-            { icon: TrendingUp, label: 'Avg. muscle gained', value: '4.8 kg' },
-            { icon: MoveHorizontal, label: 'Avg. waist reduced', value: '9.2 cm' },
+            { icon: Dumbbell, label: 'Avg. muscle gained', value: '4.8 kg' },
+            { icon: TrendingUp, label: 'Avg. strength improved', value: '+45%' },
           ].map((s, i) => (
             <motion.div
               key={s.label}
