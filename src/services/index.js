@@ -1,0 +1,11 @@
+export { storageService } from './storageService';
+export { authService } from './authService';
+export { memberService } from './memberService';
+export { trainerService } from './trainerService';
+export { planService } from './planService';
+export { workoutService } from './workoutService';
+export { attendanceService } from './attendanceService';
+export { paymentService } from './paymentService';
+export { messageService } from './messageService';
+export { blogService } from './blogService';
+export { reportService } from './reportService';
