@@ -57,7 +57,7 @@ const NAV_GROUPS: { title: string; items: { to: string; label: string; icon: typ
     items: [
       { to: '/admin/ai', label: 'AI Assistant', icon: Sparkles },
       { to: '/admin/notifications', label: 'Notifications', icon: BellRing },
-      { to: '/admin/profile', label: 'Trainer Profile', icon: UserRound },
+      { to: '/admin/profile', label: 'Coach Profile', icon: UserRound },
       { to: '/admin/settings', label: 'Settings', icon: Settings },
     ],
   },
@@ -156,7 +156,7 @@ export default function AdminLayout() {
           {!collapsed && (
             <div className="min-w-0">
               <p className="truncate text-base font-black text-content">Coach<span className="text-accent-dark dark:text-accent">Nati</span></p>
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-content-faint">Trainer Studio</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-content-faint">Coach Studio</p>
             </div>
           )}
           <button onClick={() => setMobileOpen(false)} className="ml-auto grid h-9 w-9 place-items-center rounded-full border border-border text-content lg:hidden" aria-label="Close menu">
@@ -181,7 +181,7 @@ export default function AdminLayout() {
         )}
 
         {/* Nav */}
-        <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-2 [scrollbar-width:thin]" aria-label="Trainer navigation">
+        <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-2 [scrollbar-width:thin]" aria-label="Coach navigation">
           {NAV_GROUPS.map((group) => (
             <div key={group.title}>
               {!collapsed && <p className="mb-1 px-3 text-[10px] font-black uppercase tracking-[0.18em] text-content-faint">{group.title}</p>}
@@ -306,7 +306,7 @@ export default function AdminLayout() {
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 px-4 pt-5 text-xs font-bold text-content-faint sm:px-6">
-          <span>Trainer Studio</span>
+          <span>Coach Studio</span>
           <ChevronRight className="h-3 w-3" />
           <span className="text-accent-dark dark:text-accent">{currentItem?.label ?? 'Overview'}</span>
         </div>

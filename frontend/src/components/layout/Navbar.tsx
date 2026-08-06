@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, BadgeCheck, LayoutGrid, Sparkles, HeartPulse, Users } from 'lucide-react'
+import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, LayoutGrid, Sparkles, HeartPulse, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { getSession, useDB } from '@/lib/store'
+import { getSession } from '@/lib/store'
 import { Button } from '@/components/ui'
 
 /* ----------------------- Mega menu data ----------------------- */
@@ -15,7 +15,6 @@ const PROGRAMS_MENU = [
 
 const ABOUT_MENU = [
   { to: '/about', icon: Users, title: 'About Coach Nati', desc: 'Meet your head coach & transformation specialist.' },
-  { to: '/trainers', icon: BadgeCheck, title: 'Our Trainers', desc: 'A team of certified, passionate coaches.' },
   { to: '/contact', icon: Sparkles, title: 'Contact', desc: 'Book a free call and start your journey.' },
 ]
 
@@ -83,7 +82,6 @@ function MenuGroup({
 const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/programs', label: 'Programs' },
-  { to: '/trainers', label: 'Trainers' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -95,8 +93,6 @@ export function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const session = getSession()
-  const db = useDB()
-  const featured = db.partners.slice(0, 4)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -194,12 +190,12 @@ export function Navbar() {
         </div>
       </header>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} featured={featured} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </>
   )
 }
 
-function MobileMenu({ open, onClose, featured }: { open: boolean; onClose: () => void; featured: { id: string; slug: string; name: string; avatar: string }[] }) {
+function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const session = getSession()
 
   return (
@@ -232,21 +228,6 @@ function MobileMenu({ open, onClose, featured }: { open: boolean; onClose: () =>
                 </Link>
               </motion.div>
             ))}
-
-            {/* Featured trainers */}
-            {featured.length > 0 && (
-              <div className="mt-6">
-                <p className="mb-3 text-xs font-black uppercase tracking-widest text-content-muted">Trainers</p>
-                <div className="space-y-2">
-                  {featured.map((t) => (
-                    <Link key={t.id} to={`/trainers/${t.slug}`} onClick={onClose} className="flex items-center gap-3 rounded-xl p-2 hover:bg-surface-subtle">
-                      <img src={t.avatar} alt={t.name} className="h-10 w-10 rounded-full object-cover" />
-                      <span className="text-sm font-semibold text-white/90">{t.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
 
             <div className="mt-8 space-y-3 pb-10">
               <Link to="/register" onClick={onClose} className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white">

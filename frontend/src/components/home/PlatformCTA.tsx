@@ -22,7 +22,7 @@ export function PlatformCTA() {
               Ready to start your transformation?
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-content-muted">
-              Browse courses or connect with a verified trainer today.
+              Browse courses or start your transformation with Coach Nati today.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Button asChild variant="accent" size="lg" className="group">
@@ -33,7 +33,7 @@ export function PlatformCTA() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/contact">Become a Trainer</Link>
+                <Link to="/contact">Book Free Call</Link>
               </Button>
             </div>
           </div>

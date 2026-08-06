@@ -4,7 +4,6 @@ import { SITE } from '@/lib/constants'
 
 const COMPANY_LINKS = [
   { label: 'About', to: '/about' },
-  { label: 'Trainers', to: '/trainers' },
   { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ]
@@ -20,7 +19,6 @@ const SUPPORT_LINKS = [
   { label: 'FAQ', to: '/faq' },
   { label: 'Services', to: '/services' },
   { label: 'Transformations', to: '/transformations' },
-  { label: 'Become a Trainer', to: '/contact' },
 ]
 
 const SOCIALS = [
@@ -46,7 +44,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-content-muted">
-              {SITE.tagline} Discover trainers, programs, and courses.
+              {SITE.tagline} Discover programs, courses, and results.
             </p>
             <div className="flex gap-2">
               {SOCIALS.map((s) => (

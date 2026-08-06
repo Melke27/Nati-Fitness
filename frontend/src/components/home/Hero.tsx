@@ -6,13 +6,13 @@ import { Button } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
 
 const SLIDES = [
-  { word1: 'BUILD', word2: 'YOUR', word3: 'MUSCLE', image: MEDIA.hero, alt: 'Trainer building muscle' },
-  { word1: 'GROW', word2: 'YOUR', word3: 'POWER', image: MEDIA.gymDark, alt: 'Trainer lifting in a dark gym' },
-  { word1: 'FORGE', word2: 'YOUR', word3: 'POWER', image: MEDIA.barbell, alt: 'Trainer loading a barbell' },
+  { word1: 'BUILD', word2: 'YOUR', word3: 'MUSCLE', image: MEDIA.hero, alt: 'Coach Nati building muscle' },
+  { word1: 'GROW', word2: 'YOUR', word3: 'POWER', image: MEDIA.gymDark, alt: 'Coach Nati lifting in a dark gym' },
+  { word1: 'FORGE', word2: 'YOUR', word3: 'POWER', image: MEDIA.barbell, alt: 'Coach Nati loading a barbell' },
 ]
 
 const STATS = [
-  { value: '10+', label: 'Expert Trainers' },
+  { value: '10+', label: 'Years Experience' },
   { value: '500+', label: 'Active Members' },
   { value: '50+', label: 'Programs' },
 ]
@@ -85,7 +85,7 @@ export function Hero() {
                 </Link>
                 <Link to="/contact">
                   <Button variant="outline" size="xl" className="items-center gap-3 border-white/20 bg-white/5 px-10 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white">
-                    Become a Trainer
+                    Book Free Call
                     <ArrowUpRight className="h-6 w-6" />
                   </Button>
                 </Link>
@@ -108,7 +108,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT — trainer image */}
+          {/* RIGHT — coach image */}
           <div className="lg:col-span-5 lg:self-stretch">
             <div className="relative h-[420px] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0c10] shadow-[0_60px_120px_-40px_rgba(0,0,0,0.9)] sm:h-[520px] lg:h-full lg:min-h-[560px]">
               <AnimatePresence mode="wait">

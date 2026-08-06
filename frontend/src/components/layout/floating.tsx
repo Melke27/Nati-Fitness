@@ -53,7 +53,7 @@ export function StickyCTA() {
           <div className="container-shell flex items-center justify-between gap-4">
             <div className="hidden min-w-0 sm:block">
               <p className="truncate text-sm font-semibold text-content">Train with the best, anytime, anywhere</p>
-              <p className="text-caption text-content-muted">Browse programs, courses, and verified trainers.</p>
+              <p className="text-caption text-content-muted">Browse programs, courses, and personalized plans.</p>
             </div>
             <Link
               to="/courses"

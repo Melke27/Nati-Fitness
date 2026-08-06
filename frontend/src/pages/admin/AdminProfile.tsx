@@ -19,7 +19,7 @@ export default function AdminProfile() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <PageHeader title="Trainer Profile" sub="Your public coach identity" icon={<UserRound className="h-5 w-5" />} actions={<Button variant="accent" size="md" onClick={() => toast?.success('Profile saved')}><Check className="h-4 w-4" /> Save changes</Button>} />
+      <PageHeader title="Coach Profile" sub="Your public coach identity" icon={<UserRound className="h-5 w-5" />} actions={<Button variant="accent" size="md" onClick={() => toast?.success('Profile saved')}><Check className="h-4 w-4" /> Save changes</Button>} />
 
       {/* Hero */}
       <div className="relative overflow-hidden rounded-3xl bg-primary p-7 text-white">

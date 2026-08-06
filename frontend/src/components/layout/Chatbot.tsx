@@ -6,18 +6,18 @@ import { cn } from '@/lib/utils'
 
 type Msg = { role: 'user' | 'bot'; text: string; to?: string; cta?: string }
 
-const QUICK = ['Programs & pricing', 'Start my transformation', 'Trainer help', 'Payment options', 'Free trial']
+const QUICK = ['Programs & pricing', 'Start my transformation', 'Coach help', 'Payment options', 'Free trial']
 
 const GREETING: Msg = {
   role: 'bot',
-  text: "Hi, I'm Coach Nati's assistant! 👋 I can help with programs, pricing, trainers, payments, and starting your transformation.",
+  text: "Hi, I'm Coach Nati's assistant! 👋 I can help with programs, pricing, payments, and starting your transformation.",
 }
 
 function ruleReply(input: string): Msg {
   const q = input.toLowerCase()
 
   if (/(hi|hello|hey|help)\b/.test(q))
-    return { role: 'bot', text: 'Hey there! Ask me anything about our programs, plans, trainers, or how to get started. I\u2019m here to help.' }
+    return { role: 'bot', text: 'Hey there! Ask me anything about our programs, plans, or how to get started. I\u2019m here to help.' }
   if (/(free trial|trial|start|transformation|begin|signup|sign up|register)/.test(q))
     return {
       role: 'bot',
@@ -42,9 +42,9 @@ function ruleReply(input: string): Msg {
   if (/(trainer|coach|online|personal)/.test(q))
     return {
       role: 'bot',
-      text: 'Browse our team of certified coaches — or open any trainer page to hit \u201cStart Your Transformation\u201d and get a fully personalized training + nutrition plan.',
-      to: '/trainers',
-      cta: 'Meet Trainers',
+      text: 'Coach Nati personally designs every program — fully personalized training and nutrition, guided every step of the way. Start your transformation and get matched with Coach Nati today.',
+      to: '/onboarding',
+      cta: 'Start Transform',
     }
   if (/(course|lesson|learn|video)/.test(q))
     return {
@@ -69,7 +69,7 @@ function ruleReply(input: string): Msg {
     }
   return {
     role: 'bot',
-    text: 'I\u2019d love to help! Try asking about programs, pricing, trainers, payments, or how to start your free trial. For anything else, the team is always a message away.',
+    text: 'I\u2019d love to help! Try asking about programs, pricing, payments, or how to start your free trial. For anything else, the team is always a message away.',
   }
 }
 

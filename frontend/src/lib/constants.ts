@@ -17,7 +17,7 @@ export const SITE = {
 }
 
 export const PLATFORM_STATS = [
-  { value: 10, suffix: '+', label: 'Expert Trainers' },
+  { value: 10, suffix: '+', label: 'Years Experience' },
   { value: 500, suffix: '+', label: 'Active Members' },
   { value: 50, suffix: '+', label: 'Programs' },
 ]
@@ -611,7 +611,7 @@ export const MEAL_IDEAS = [
 ]
 
 export const ACHIEVEMENTS = [
-  { icon: 'Dumbbell', title: 'Certified Trainer', org: 'NSCA — Certified Strength & Conditioning' },
+  { icon: 'Dumbbell', title: 'Certified Coach', org: 'NSCA — Certified Strength & Conditioning' },
   { icon: 'Apple', title: 'Nutrition Expert', org: 'Precision Nutrition L2' },
   { icon: 'HeartPulse', title: 'Transformation Coach', org: '1,000+ lives transformed since 2016' },
   { icon: 'MonitorPlay', title: 'Fitness Mentor', org: 'Habit & behavior-change certified' },

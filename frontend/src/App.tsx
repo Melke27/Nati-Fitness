@@ -16,8 +16,6 @@ import BlogPost from '@/pages/BlogPost'
 import Contact from '@/pages/Contact'
 import FAQ from '@/pages/FAQ'
 import About from '@/pages/About'
-import Trainers from '@/pages/Trainers'
-import TrainerDetail from '@/pages/TrainerDetail'
 import Templates from '@/pages/Templates'
 import Courses from '@/pages/Courses'
 import Services from '@/pages/Services'
@@ -81,8 +79,6 @@ function Shell() {
             <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/trainers" element={<Trainers />} />
-                <Route path="/trainers/:slug" element={<TrainerDetail />} />
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/programs/:slug" element={<ProgramDetail />} />
                 <Route path="/pricing" element={<Pricing />} />
