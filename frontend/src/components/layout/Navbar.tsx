@@ -11,9 +11,6 @@ const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/#about', label: 'About' },
   { to: '/programs', label: 'Programs' },
-  { to: '/#services', label: 'Services' },
-  { to: '/#transformations', label: 'Transformations' },
-  { to: '/#testimonials', label: 'Testimonials' },
   { to: '/#pricing', label: 'Pricing' },
   { to: '/contact', label: 'Contact' },
 ]

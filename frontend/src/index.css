@@ -17,14 +17,14 @@
   }
 
   .dark {
-    --surface: 11 11 11;
-    --surface-subtle: 18 18 18;
+    --surface: 5 5 5;
+    --surface-subtle: 15 15 15;
     --surface-solid: 255 255 255;
-    --content: 250 250 250;
-    --content-muted: 168 168 168;
+    --content: 255 255 255;
+    --content-muted: 161 161 170;
     --content-faint: 122 122 122;
     --content-inverse: 11 11 11;
-    --border: 40 40 40;
+    --border: 44 44 44;
     --border-strong: 58 58 58;
     color-scheme: dark;
   }
@@ -80,7 +80,7 @@
     -webkit-backdrop-filter: blur(20px) saturate(160%);
   }
   .dark .glass {
-    background: rgba(11, 11, 11, 0.72);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .text-gradient {
@@ -93,7 +93,7 @@
 
   .text-gradient-accent {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #7cff4f 0%, #59e62a 100%);
+    background-image: linear-gradient(135deg, #7cff4f 0%, #4ade80 100%);
   }
 
   .btn-magnetic {

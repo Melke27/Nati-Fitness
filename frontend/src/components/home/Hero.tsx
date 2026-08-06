@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Star, ArrowRight, Users, CalendarClock, HeartHandshake, Headphones } from 'lucide-react'
+import { Star, ArrowRight, Users, CalendarClock, HeartHandshake } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
 
@@ -91,16 +91,13 @@ export function Hero() {
 
       {/* Floating trust cards */}
       <FloatingCard className="right-[6%] top-[18%] hidden lg:block" delay={0.6} duration={6}>
-        <StatCard icon={Users} value="500+" label="Successful Transformations" />
+        <StatCard icon={Users} value="500+" label="Clients" />
       </FloatingCard>
       <FloatingCard className="right-[2%] top-[38%] hidden md:block" delay={1} duration={7}>
+        <StatCard icon={HeartHandshake} value="98%" label="Success Rate" />
+      </FloatingCard>
+      <FloatingCard className="right-[10%] top-[62%] hidden lg:block" delay={1.4} duration={8}>
         <StatCard icon={CalendarClock} value="10+" label="Years Experience" />
-      </FloatingCard>
-      <FloatingCard className="right-[10%] top-[58%] hidden lg:block" delay={1.4} duration={8}>
-        <StatCard icon={HeartHandshake} value="98%" label="Client Satisfaction" />
-      </FloatingCard>
-      <FloatingCard className="right-[4%] top-[80%] hidden md:block" delay={1.8} duration={6.5}>
-        <StatCard icon={Headphones} value="24/7" label="Coach Support" />
       </FloatingCard>
     </section>
   )

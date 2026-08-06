@@ -6,7 +6,7 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0B0B0B',
+          DEFAULT: '#050505',
           soft: '#F8F8F8',
         },
         ink: {
@@ -15,7 +15,7 @@ export default {
         },
         accent: {
           DEFAULT: '#7CFF4F',
-          dark: '#59E62A',
+          dark: '#9AFF70',
         },
         success: '#22C55E',
         warning: '#F59E0B',
@@ -57,8 +57,8 @@ export default {
         'card-dark': '0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 48px -16px rgba(0, 0, 0, 0.6)',
       },
       backgroundImage: {
-        'cta-gradient': 'linear-gradient(135deg, #7CFF4F 0%, #59E62A 100%)',
-        'cta-gradient-hover': 'linear-gradient(135deg, #59E62A 0%, #45C91E 100%)',
+        'cta-gradient': 'linear-gradient(135deg, #7CFF4F 0%, #4ADE80 100%)',
+        'cta-gradient-hover': 'linear-gradient(135deg, #9AFF70 0%, #4ADE80 100%)',
         'hero-glow':
           'radial-gradient(60% 60% at 72% 18%, rgba(124,255,79,0.20) 0%, transparent 60%), radial-gradient(42% 42% at 8% 82%, rgba(124,255,79,0.10) 0%, transparent 60%)',
       },
