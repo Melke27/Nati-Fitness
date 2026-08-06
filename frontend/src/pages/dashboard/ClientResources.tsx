@@ -6,13 +6,13 @@ import { Badge, Card } from '@/components/ui'
 import { Modal } from '@/components/ui'
 
 const LIBRARY = [
-  { icon: Dumbbell, title: 'Goblet Squat — Form Masterclass', cat: 'Exercise', duration: '4:12', color: 'text-accent-dark dark:text-accent' },
-  { icon: Dumbbell, title: 'Romanian Deadlift — How to Hinge', cat: 'Exercise', duration: '3:48', color: 'text-accent-dark dark:text-accent' },
-  { icon: Dumbbell, title: 'Push-up Progression (3 levels)', cat: 'Exercise', duration: '5:01', color: 'text-accent-dark dark:text-accent' },
-  { icon: Sun, title: '10-min Mobility & Hip Openers', cat: 'Recovery', duration: '9:36', color: 'text-warning' },
-  { icon: Salad, title: 'Meal Prep: 5 High-Protein Lunches', cat: 'Nutrition', duration: '12:20', color: 'text-success' },
-  { icon: Dumbbell, title: 'Full Body Dumbbell Workout', cat: 'Workout', duration: '32:00', color: 'text-accent-dark dark:text-accent' },
-  { icon: Sun, title: 'Breathwork for Deep Sleep', cat: 'Recovery', duration: '8:15', color: 'text-warning' },
+  { icon: Dumbbell, title: 'Coach Nati • Goblet Squat — Form Masterclass', cat: 'Exercise', duration: '4:12', color: 'text-accent-dark dark:text-accent' },
+  { icon: Dumbbell, title: 'Coach Nati • Romanian Deadlift — How to Hinge', cat: 'Exercise', duration: '3:48', color: 'text-accent-dark dark:text-accent' },
+  { icon: Dumbbell, title: 'Coach Nati • Push-up Progression (3 levels)', cat: 'Exercise', duration: '5:01', color: 'text-accent-dark dark:text-accent' },
+  { icon: Sun, title: 'Coach Nati • 10-min Mobility & Hip Openers', cat: 'Recovery', duration: '9:36', color: 'text-warning' },
+  { icon: Salad, title: 'Coach Nati • Meal Prep: 5 High-Protein Lunches', cat: 'Nutrition', duration: '12:20', color: 'text-success' },
+  { icon: Dumbbell, title: 'Coach Nati • Full Body Dumbbell Workout', cat: 'Workout', duration: '32:00', color: 'text-accent-dark dark:text-accent' },
+  { icon: Sun, title: 'Coach Nati • Breathwork for Deep Sleep', cat: 'Recovery', duration: '8:15', color: 'text-warning' },
 ]
 
 const GUIDES = [
@@ -32,7 +32,7 @@ export default function ClientResources() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-content">Resources</h1>
-          <p className="text-sm text-content-muted">Video tutorials, guides & downloads</p>
+          <p className="text-sm text-content-muted">Coach Nati’s video tutorials, guides & downloads</p>
         </div>
         <div className="relative">
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-content-faint" />
@@ -122,7 +122,7 @@ export default function ClientResources() {
             </p>
           </div>
           <p className="text-xs text-content-muted">
-            Demo player — connect your video hosting (Vimeo/YouTube) or upload MP4s in the admin panel.
+            Presented by Coach Nati — connect your video hosting (Vimeo/YouTube) or upload MP4s in the admin panel.
           </p>
         </div>
       </Modal>

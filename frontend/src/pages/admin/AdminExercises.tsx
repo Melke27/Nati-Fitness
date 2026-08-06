@@ -37,8 +37,8 @@ export default function AdminExercises() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <PageHeader
-        title="Exercise Library"
-        sub={`${db.exercises.length} movements · organised by muscle group & equipment`}
+        title="Coach Nati Exercise Library"
+        sub={`${db.exercises.length} Coach Nati movements · organised by muscle group & equipment`}
         icon={<Library className="h-5 w-5" />}
         actions={<Button variant="accent" size="md" onClick={() => toast?.success('Exercise added to library')}><Plus className="h-4 w-4" /> Add exercise</Button>}
       />
@@ -64,6 +64,7 @@ export default function AdminExercises() {
             <div className="relative h-32 overflow-hidden">
               <img src={MUSCLE_IMG[e.muscle] ?? MEDIA.gym} alt={e.name} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <span className="absolute left-3 top-3 rounded-full bg-primary/90 px-2.5 py-1 text-[9px] font-black text-content">Coach Nati</span>
               <span className={cn('absolute right-3 top-3 rounded-full px-2.5 py-1 text-[9px] font-black', e.level === 'Beginner' ? 'bg-success text-primary' : e.level === 'Intermediate' ? 'bg-warning text-primary' : 'bg-error text-white')}>{e.level}</span>
               <p className="absolute bottom-3 left-4 text-sm font-black text-white">{e.name}</p>
             </div>

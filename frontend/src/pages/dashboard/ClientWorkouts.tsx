@@ -60,8 +60,8 @@ export default function ClientWorkouts() {
         <Card>
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-black text-content">Today — Lower Body Power</h2>
-              <p className="text-xs font-bold text-content-muted">45 min · Strength · 5 exercises · ~380 kcal</p>
+              <h2 className="text-lg font-black text-content">Today — Coach Nati’s Lower Body Power</h2>
+              <p className="text-xs font-bold text-content-muted">45 min · Strength · 5 Coach Nati exercises · ~380 kcal</p>
             </div>
             <Badge variant={doneToday ? 'success' : 'accent'}>{doneToday ? 'Completed' : 'Ready'}</Badge>
           </div>

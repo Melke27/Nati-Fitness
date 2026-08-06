@@ -54,10 +54,6 @@ export const AVATAR = (seed: string) =>
 export const AVATARS = {
   sarah: AVATAR('Sarah Johnson'),
   david: AVATAR('David Okafor'),
-  hanna: AVATAR('Hanna Tesfaye'),
-  michael: AVATAR('Michael Ross'),
-  lily: AVATAR('Lily Adams'),
-  yonas: AVATAR('Yonas Bekele'),
   coach: AVATAR('Coach Nati'),
 }
 
