@@ -42,6 +42,7 @@ import AdminNutrition from '@/pages/admin/AdminNutrition'
 import AdminProgress from '@/pages/admin/AdminProgress'
 import AdminAssessments from '@/pages/admin/AdminAssessments'
 import AdminGoals from '@/pages/admin/AdminGoals'
+import AdminLiveCoaching from '@/pages/admin/AdminLiveCoaching'
 import AdminAttendance from '@/pages/admin/AdminAttendance'
 import AdminSchedule from '@/pages/admin/AdminSchedule'
 import AdminMessaging from '@/pages/admin/AdminMessaging'
@@ -111,6 +112,7 @@ function Shell() {
                 <Route path="progress" element={<AdminProgress />} />
                 <Route path="assessments" element={<AdminAssessments />} />
                 <Route path="goals" element={<AdminGoals />} />
+                <Route path="live" element={<AdminLiveCoaching />} />
                 <Route path="attendance" element={<AdminAttendance />} />
                 <Route path="schedule" element={<AdminSchedule />} />
                 <Route path="messaging" element={<AdminMessaging />} />

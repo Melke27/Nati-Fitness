@@ -25,6 +25,7 @@ export default {
           DEFAULT: 'rgb(var(--surface) / <alpha-value>)',
           subtle: 'rgb(var(--surface-subtle) / <alpha-value>)',
           solid: 'rgb(var(--surface-solid) / <alpha-value>)',
+          card: 'rgb(var(--card) / <alpha-value>)',
         },
         content: {
           DEFAULT: 'rgb(var(--content) / <alpha-value>)',
