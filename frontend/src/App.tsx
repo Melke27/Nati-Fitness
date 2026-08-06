@@ -3,7 +3,8 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { ToastProvider } from '@/context/ToastContext'
-import { WhatsAppButton, BackToTop, StickyCTA, ScrollProgress, Loader } from '@/components/layout/floating'
+import { StickyCTA, BackToTop, ScrollProgress, Loader } from '@/components/layout/floating'
+import { Chatbot } from '@/components/layout/Chatbot'
 import { PublicLayout } from '@/pages/PublicLayout'
 import Home from '@/pages/Home'
 import Programs from '@/pages/Programs'
@@ -143,8 +144,8 @@ function Shell() {
         </AnimatePresence>
 
         <StickyCTA />
-        <WhatsAppButton />
         <BackToTop />
+        <Chatbot />
       </ToastProvider>
     </ThemeProvider>
   )

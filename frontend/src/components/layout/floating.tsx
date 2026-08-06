@@ -1,22 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
-import { ArrowUp, MessageCircle, GraduationCap } from 'lucide-react'
-import { SITE } from '@/lib/constants'
-
-export function WhatsAppButton() {
-  return (
-    <a
-      href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hi Coach Nati! I want to transform my body. Can we talk?')}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-      className="group fixed bottom-6 right-6 z-[65] flex h-14 w-14 items-center justify-center rounded-2xl bg-[#25D366] text-white shadow-lift transition-all duration-300 hover:scale-105 hover:shadow-glow"
-    >
-      <MessageCircle className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
-    </a>
-  )
-}
+import { ArrowUp, GraduationCap } from 'lucide-react'
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false)
