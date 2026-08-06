@@ -1,5 +1,6 @@
 import { WHY_CHOOSE } from '@/lib/constants'
 import { DynamicIcon } from '@/lib/icons'
+import { Link } from 'react-router-dom'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion'
 import { SectionHeading } from '@/components/ui'
 
@@ -34,9 +35,9 @@ export function WhyChoose() {
         <Reveal dir="up" className="mt-12 text-center">
           <p className="text-sm font-semibold text-content-muted">
             Not sure which program fits?{' '}
-            <a href="/#pricing" className="font-semibold text-accent underline-offset-4 hover:underline">
+            <Link to="/onboarding" className="font-semibold text-accent underline-offset-4 hover:underline">
               Take the free assessment →
-            </a>
+            </Link>
           </p>
         </Reveal>
       </div>

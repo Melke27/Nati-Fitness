@@ -108,6 +108,23 @@ export function About() {
               </div>
             </Reveal>
           </div>
+
+          <Reveal dir="up" delay={0.3}>
+            <ul className="mt-6 space-y-3">
+              {[
+                'Evidence-based programming, reviewed and periodised every 4 weeks',
+                'Hybrid online + in-person coaching across 12 countries',
+                'A dedicated coach in your corner, 7 days a week',
+              ].map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent/15">
+                    <BadgeCheck className="h-4 w-4 text-accent" strokeWidth={2.25} />
+                  </span>
+                  <span className="text-sm leading-relaxed text-content-muted">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </div>
 

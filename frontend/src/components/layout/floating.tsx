@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
-import { ArrowUp, MessageCircle, CalendarClock } from 'lucide-react'
+import { ArrowUp, MessageCircle, GraduationCap } from 'lucide-react'
 import { SITE } from '@/lib/constants'
-import { getSession } from '@/lib/store'
 
 export function WhatsAppButton() {
   return (
@@ -47,7 +46,6 @@ export function BackToTop() {
 export function StickyCTA() {
   const [visible, setVisible] = useState(false)
   const { pathname } = useLocation()
-  const session = getSession()
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 900)
@@ -69,15 +67,15 @@ export function StickyCTA() {
         >
           <div className="container-shell flex items-center justify-between gap-4">
             <div className="hidden min-w-0 sm:block">
-              <p className="truncate text-sm font-semibold text-content">Only 3 coaching spots left this month</p>
-              <p className="text-caption text-content-muted">Book a free consultation before they're gone.</p>
+              <p className="truncate text-sm font-semibold text-content">Train with the best, anytime, anywhere</p>
+              <p className="text-caption text-content-muted">Browse programs, courses, and verified trainers.</p>
             </div>
             <Link
-              to={session ? (session.role === 'admin' ? '/admin' : '/dashboard') : '/#pricing'}
-              className="flex shrink-0 items-center gap-2 rounded-xl bg-cta-gradient px-6 py-3 text-sm font-semibold text-primary shadow-glow transition-all duration-300 hover:bg-cta-gradient-hover active:scale-[0.98]"
+              to="/courses"
+              className="flex shrink-0 items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-white shadow-glow transition-all duration-300 hover:bg-accent-hover active:scale-[0.98]"
             >
-              <CalendarClock className="h-4 w-4" />
-              Book Free Consultation
+              <GraduationCap className="h-4 w-4" />
+              Browse Courses
             </Link>
           </div>
         </motion.div>

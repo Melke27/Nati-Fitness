@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Zap, Star } from 'lucide-react'
-import { AthleteFigure } from '@/components/visuals'
+import { Zap } from 'lucide-react'
+import { MEDIA } from '@/lib/media'
 
 export function AuthShell({ children }: { children: React.ReactNode }) {
   return (
@@ -21,24 +20,20 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
           </Link>
 
           <div className="relative mx-auto w-full max-w-sm">
-            <AthleteFigure className="mx-auto h-[380px] opacity-90 drop-shadow-[0_30px_50px_rgba(124,255,79,0.25)]" />
+            <img
+              src={MEDIA.hero}
+              alt="Coach Nati in training"
+              className="mx-auto h-[440px] w-full rounded-3xl border border-white/10 object-cover object-top shadow-[0_30px_50px_rgba(225,29,72,0.25)]"
+            />
           </div>
 
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="flex items-center gap-1 text-warning"
-            >
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4" fill="currentColor" strokeWidth={0} />
-              ))}
-            </motion.div>
-            <p className="mt-3 text-lg font-black leading-snug text-white">
-              “Best decision I made for my body. The coaching system is on another level.”
+            <p className="text-2xl font-black leading-snug text-white">
+              Train smarter.
+              <br />
+              <span className="text-accent">Build stronger.</span>
             </p>
-            <p className="mt-2 text-sm text-white/50">— Sarah M., lost 14 kg</p>
+            <p className="mt-2 text-sm text-white/50">Premium fitness coaching — personalized, anywhere, anytime.</p>
           </div>
         </div>
       </div>

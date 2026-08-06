@@ -1,28 +1,26 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Zap, Instagram, Youtube, Send, Twitter, ArrowRight, Mail, MapPin, Phone } from 'lucide-react'
+import { Zap, Instagram, Youtube, Send, Twitter, Mail, MapPin, Phone } from 'lucide-react'
 import { SITE } from '@/lib/constants'
-import { addSubscriber } from '@/lib/store'
-import { useToast } from '@/context/ToastContext'
-import { Button } from '@/components/ui'
 
-const QUICK_LINKS = [
-  { label: 'About Coach Nati', to: '/#about' },
-  { label: 'Services', to: '/#services' },
-  { label: 'Programs', to: '/programs' },
-  { label: 'Transformations', to: '/#transformations' },
-  { label: 'Testimonials', to: '/#testimonials' },
-  { label: 'Pricing', to: '/#pricing' },
+const COMPANY_LINKS = [
+  { label: 'About', to: '/about' },
+  { label: 'Trainers', to: '/trainers' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ]
 
 const PROGRAM_LINKS = [
-  'Weight Loss',
-  'Muscle Gain',
-  'Strength Training',
-  'Fat Burning',
-  'Online Coaching',
-  'Personal Training',
+  { label: 'All Programs', to: '/programs' },
+  { label: 'Courses', to: '/courses' },
+  { label: 'Templates', to: '/templates' },
+  { label: 'Pricing', to: '/pricing' },
+]
+
+const SUPPORT_LINKS = [
+  { label: 'FAQ', to: '/faq' },
+  { label: 'Services', to: '/services' },
+  { label: 'Transformations', to: '/transformations' },
+  { label: 'Become a Trainer', to: '/contact' },
 ]
 
 const SOCIALS = [
@@ -33,35 +31,22 @@ const SOCIALS = [
 ]
 
 export function Footer() {
-  const [email, setEmail] = useState('')
-  const { success } = useToast()
-
-  const subscribe = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    addSubscriber(email)
-    success('Subscribed!', 'You will get the weekly training & nutrition digest.')
-    setEmail('')
-  }
-
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-primary text-white">
-      <div className="grid-pattern absolute inset-0 opacity-15" />
-      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/8 blur-[120px]" />
-
-      <div className="container-shell relative">
+    <footer className="border-t border-border bg-footer text-white">
+      <div className="container-shell">
         <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {/* Company */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-2.5">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-primary">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-white">
                 <Zap className="h-6 w-6" fill="currentColor" />
               </span>
               <span className="text-xl font-bold tracking-tight">
                 Coach<span className="text-accent">Nati</span>
               </span>
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-white/60">
-              Train smart. Live strong. Become your best. Premium 1:1 coaching, online and in-person.
+            <p className="max-w-xs text-sm leading-relaxed text-content-muted">
+              {SITE.tagline} Discover trainers, programs, and courses.
             </p>
             <div className="flex gap-2">
               {SOCIALS.map((s) => (
@@ -69,7 +54,7 @@ export function Footer() {
                   key={s.label}
                   href={SITE.socials.instagram}
                   aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-xl border border-border text-white/60 transition-all duration-300 hover:border-accent/50 hover:bg-accent hover:text-primary"
+                  className="grid h-10 w-10 place-items-center rounded-xl border border-border text-content-muted transition-all hover:border-accent hover:bg-accent hover:text-white"
                 >
                   <s.icon className="h-4 w-4" strokeWidth={1.75} />
                 </a>
@@ -77,74 +62,68 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Programs */}
           <div>
-            <h3 className="mb-5 text-caption font-semibold uppercase tracking-widest text-white/40">Quick Links</h3>
+            <h3 className="mb-5 text-caption font-semibold uppercase tracking-widest text-content-faint">Programs</h3>
             <ul className="space-y-3">
-              {QUICK_LINKS.map((l) => (
+              {PROGRAM_LINKS.map((l) => (
                 <li key={l.label}>
-                  {l.to.includes('#') ? (
-                    <a href={`/${l.to}`} className="group inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-accent">
-                      <ArrowRight className="h-3.5 w-3.5 text-accent/40 transition group-hover:translate-x-0.5 group-hover:text-accent" />
-                      {l.label}
-                    </a>
-                  ) : (
-                    <Link to={l.to} className="group inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-accent">
-                      <ArrowRight className="h-3.5 w-3.5 text-accent/40 transition group-hover:translate-x-0.5 group-hover:text-accent" />
-                      {l.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-5 text-caption font-semibold uppercase tracking-widest text-white/40">Programs</h3>
-            <ul className="space-y-3">
-              {PROGRAM_LINKS.map((p) => (
-                <li key={p}>
-                  <Link to="/programs" className="text-sm text-white/60 transition-colors hover:text-accent">
-                    {p}
+                  <Link to={l.to} className="text-sm text-content-muted transition-colors hover:text-accent">
+                    {l.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Support */}
+          <div>
+            <h3 className="mb-5 text-caption font-semibold uppercase tracking-widest text-content-faint">Support</h3>
+            <ul className="space-y-3">
+              {SUPPORT_LINKS.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-sm text-content-muted transition-colors hover:text-accent">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <ul className="mt-6 space-y-3">
+              {COMPANY_LINKS.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-sm text-content-muted transition-colors hover:text-accent">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
           <div className="space-y-5">
-            <h3 className="text-caption font-semibold uppercase tracking-widest text-white/40">Stay in the loop</h3>
-            <p className="text-sm text-white/60">Weekly training tips, nutrition science and exclusive offers. No spam.</p>
-            <form onSubmit={subscribe} className="flex gap-2">
-              <div className="relative flex-1">
-                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" strokeWidth={1.75} />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email"
-                  aria-label="Email address"
-                  className="h-12 w-full rounded-xl border border-border bg-surface-subtle pl-11 pr-4 text-sm text-white placeholder:text-white/40 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-              <Button type="submit" variant="accent" size="md" className="shrink-0 rounded-xl">
-                Join
-              </Button>
-            </form>
-            <div className="space-y-3 text-sm text-white/60">
-              <p className="flex items-center gap-2.5"><Mail className="h-4 w-4 text-accent" strokeWidth={1.75} /> {SITE.email}</p>
-              <p className="flex items-center gap-2.5"><Phone className="h-4 w-4 text-accent" strokeWidth={1.75} /> {SITE.phone}</p>
-              <p className="flex items-start gap-2.5"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} /> {SITE.address}</p>
+            <h3 className="text-caption font-semibold uppercase tracking-widest text-content-faint">Contact</h3>
+            <div className="space-y-4 text-sm text-content-muted">
+              <p className="flex items-center gap-2.5">
+                <Mail className="h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} />
+                <a href={`mailto:${SITE.email}`} className="hover:text-white">{SITE.email}</a>
+              </p>
+              <p className="flex items-center gap-2.5">
+                <Phone className="h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} />
+                <a href={`tel:${SITE.phone}`} className="hover:text-white">{SITE.phone}</a>
+              </p>
+              <p className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} />
+                {SITE.address}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-border py-8 sm:flex-row">
-          <p className="text-caption text-white/40">© {new Date().getFullYear()} Coach Nati. All rights reserved.</p>
-          <div className="flex items-center gap-6 text-caption text-white/40">
+          <p className="text-caption text-content-faint">© {new Date().getFullYear()} Coach Nati. All rights reserved.</p>
+          <div className="flex items-center gap-6 text-caption text-content-faint">
             <Link to="/" className="transition-colors hover:text-accent">Privacy Policy</Link>
             <Link to="/" className="transition-colors hover:text-accent">Terms of Service</Link>
-            <Link to="/" className="transition-colors hover:text-accent">Cookies</Link>
           </div>
         </div>
       </div>

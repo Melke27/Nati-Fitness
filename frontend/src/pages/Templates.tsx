@@ -54,7 +54,7 @@ export default function Templates() {
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-lg font-black text-content">{t.price === 0 ? 'Free' : `$${t.price}`}</p>
+                    <p className="text-lg font-black text-content">{t.price === 0 ? 'Free' : `ETB ${t.price.toLocaleString()}`}</p>
                     <Button variant="outline" size="sm" className="mt-1">Get</Button>
                   </div>
                 </motion.div>

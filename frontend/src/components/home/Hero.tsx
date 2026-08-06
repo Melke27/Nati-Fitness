@@ -1,144 +1,155 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { Star, ArrowRight, Users, CalendarClock, HeartHandshake } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
 
-const container = {
+const SLIDES = [
+  { word1: 'BUILD', word2: 'YOUR', word3: 'MUSCLE', image: MEDIA.hero, alt: 'Trainer building muscle' },
+  { word1: 'GROW', word2: 'YOUR', word3: 'POWER', image: MEDIA.gymDark, alt: 'Trainer lifting in a dark gym' },
+  { word1: 'FORGE', word2: 'YOUR', word3: 'POWER', image: MEDIA.barbell, alt: 'Trainer loading a barbell' },
+]
+
+const STATS = [
+  { value: '10+', label: 'Expert Trainers' },
+  { value: '500+', label: 'Active Members' },
+  { value: '50+', label: 'Programs' },
+]
+
+const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 }
-const item = {
-  hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const } },
+const rise = {
+  hidden: { opacity: 0, y: 36 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
 }
 
 export function Hero() {
-  const { scrollY } = useScroll()
-  const bgY = useTransform(scrollY, [0, 800], [0, 120])
+  const [index, setIndex] = useState(0)
+  const slide = SLIDES[index]
+  const next = () => setIndex((i) => (i + 1) % SLIDES.length)
+  const prev = () => setIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length)
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-16 sm:pt-32">
-      <motion.div style={{ y: bgY }} className="absolute inset-0 -bottom-32">
-        <motion.img
-          src={MEDIA.hero}
-          alt="Coach Nati — professional male personal trainer in a premium gym"
-          initial={{ scale: 1.08 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full w-full object-cover object-[65%_20%]"
-          loading="eager"
-        />
-      </motion.div>
+    <section className="relative flex min-h-screen items-center overflow-hidden bg-[#070707]">
+      {/* Base texture + glows */}
+      <div className="absolute inset-0 grid-pattern opacity-[0.06]" />
+      <div className="pointer-events-none absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-accent/15 blur-[150px]" />
+      <div className="pointer-events-none absolute -bottom-40 right-10 h-[520px] w-[520px] rounded-full bg-accent/10 blur-[160px]" />
 
-      <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/50" />
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-primary/30" />
-      <div className="grid-pattern absolute inset-0 opacity-15 [mask-image:radial-gradient(75%_70%_at_30%_30%,black,transparent)]" />
-      <div className="pointer-events-none absolute -left-20 top-1/3 h-96 w-96 rounded-full bg-accent/8 blur-[120px]" />
+      <div className="container-shell relative z-10 w-full py-24 lg:py-32">
+        <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
+          {/* LEFT — headline */}
+          <div className="flex flex-col justify-center lg:col-span-7 lg:max-w-3xl">
+            <motion.div variants={stagger} initial="hidden" animate="show">
+              {/* Since badge */}
+              <motion.div variants={rise} className="mb-8 flex items-center gap-3">
+                <span className="h-px w-12 bg-accent" />
+                <span className="text-sm font-bold uppercase tracking-[0.3em] text-accent">Since — 2016</span>
+              </motion.div>
 
-      <div className="container-shell relative z-10 w-full">
-        <div className="max-w-3xl">
-          <motion.div variants={container} initial="hidden" animate="show">
-            <motion.div variants={item}>
-              <span className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-surface-card/60 px-4 py-2 text-caption font-semibold text-white backdrop-blur-sm">
-                <span className="flex items-center gap-0.5 text-warning">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5" fill="currentColor" strokeWidth={0} />
-                  ))}
+              {/* Sliding giant headline */}
+              <AnimatePresence mode="wait">
+                <motion.h1
+                    key={index}
+                    initial={{ opacity: 0, y: 60 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -60 }}
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-display text-6xl font-bold uppercase leading-[0.95] tracking-tight text-white [text-shadow:0_4px_30px_rgba(0,0,0,0.6)] sm:text-7xl xl:text-8xl"
+                  >
+                    <span className="block">{slide.word1}</span>
+                    <span className="block">
+                      {slide.word2}
+                      <span className="mx-3 inline-block h-[0.28em] w-[0.28em] rounded-full bg-accent align-middle" />
+                    </span>
+                    <span className="block text-gradient-accent">{slide.word3}</span>
+                  </motion.h1>
+                </AnimatePresence>
+
+              <motion.p
+                variants={rise}
+                className="mt-8 max-w-2xl text-lg leading-relaxed text-content-muted sm:text-xl"
+              >
+                Transform your body. Build your muscle, build your strength. Start your journey now.
+              </motion.p>
+
+              <motion.div variants={rise} className="mt-10 flex flex-wrap items-center gap-4">
+                <Link to="/programs">
+                  <Button variant="accent" size="lg" className="group items-center gap-2 px-8 uppercase tracking-wide shadow-glow">
+                    Explore Programs
+                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button variant="outline" size="lg" className="items-center gap-2 border-white/20 bg-white/5 px-8 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white">
+                    Become a Trainer
+                    <ArrowUpRight className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+                className="mt-12 grid max-w-xl grid-cols-3 gap-3 sm:gap-4"
+              >
+                {STATS.map((s) => (
+                  <div key={s.label} className="glass rounded-2xl border border-white/10 px-4 py-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+                    <p className="text-2xl font-bold tracking-tight text-white [text-shadow:0_2px_14px_rgba(225,29,72,0.5)] sm:text-3xl">{s.value}</p>
+                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-content-muted">{s.label}</p>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* RIGHT — trainer image */}
+          <div className="lg:col-span-5 lg:self-stretch">
+            <div className="relative h-[420px] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c0c10] shadow-[0_60px_120px_-40px_rgba(0,0,0,0.9)] sm:h-[520px] lg:h-full lg:min-h-[560px]">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={index}
+                  src={slide.image}
+                  alt={slide.alt}
+                  loading="eager"
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                />
+              </AnimatePresence>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+              {/* Slide counter + arrows */}
+              <div className="absolute bottom-5 right-5 z-10 flex items-center gap-3">
+                <span className="rounded-full bg-black/50 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-md">
+                  {String(index + 1).padStart(2, '0')} / {String(SLIDES.length).padStart(2, '0')}
                 </span>
-                Trusted Fitness Coach
-              </span>
-            </motion.div>
-
-            <motion.h1
-              variants={item}
-              className="mt-8 text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl"
-            >
-              Transform
-              <br />
-              Your <span className="text-gradient-accent">Body</span>
-              <br />
-              <span className="relative inline-block">
-                Your Life
-                <svg className="absolute -bottom-2 left-0 w-full text-accent" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden>
-                  <path d="M2 9 C 30 3, 90 3, 118 7" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                </svg>
-              </span>
-            </motion.h1>
-
-            <motion.p variants={item} className="mt-6 max-w-xl text-body text-white/70">
-              Personalized training, nutrition guidance and accountability to help you achieve your strongest version.
-            </motion.p>
-
-            <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-4">
-              <Link to="/programs">
-                <Button variant="accent" size="lg" className="group rounded-full">
-                  Start Training
-                  <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link to="/#pricing">
-                <Button variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 text-white hover:border-accent/50 hover:bg-accent/10 hover:text-accent">
-                  Book Consultation
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
+                <button
+                  onClick={prev}
+                  aria-label="Previous slide"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition hover:border-accent hover:bg-accent"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={next}
+                  aria-label="Next slide"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-white shadow-glow transition hover:bg-accent-dark"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <FloatingCard className="right-[6%] top-[20%] hidden lg:block" delay={0.5} duration={6}>
-        <StatCard icon={Users} value="500+" label="Clients" />
-      </FloatingCard>
-      <FloatingCard className="right-[2%] top-[40%] hidden md:block" delay={0.8} duration={7}>
-        <StatCard icon={HeartHandshake} value="98%" label="Success Rate" />
-      </FloatingCard>
-      <FloatingCard className="right-[10%] top-[64%] hidden lg:block" delay={1.1} duration={8}>
-        <StatCard icon={CalendarClock} value="10+" label="Years Experience" />
-      </FloatingCard>
     </section>
-  )
-}
-
-function StatCard({ icon: Icon, value, label }: { icon: typeof Users; value: string; label: string }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent">
-        <Icon className="h-5 w-5" strokeWidth={1.75} />
-      </span>
-      <div>
-        <p className="text-lg font-bold leading-none text-white">{value}</p>
-        <p className="mt-1 text-caption text-white/60">{label}</p>
-      </div>
-    </div>
-  )
-}
-
-function FloatingCard({
-  children,
-  className,
-  delay,
-  duration,
-}: {
-  children: React.ReactNode
-  className?: string
-  delay: number
-  duration: number
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`absolute z-10 ${className ?? ''}`}
-    >
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
-        className="glass rounded-2xl border border-border/60 px-5 py-4 shadow-card"
-      >
-        {children}
-      </motion.div>
-    </motion.div>
   )
 }

@@ -46,8 +46,8 @@ export default function Courses() {
                     </div>
                     <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
                       <div>
-                        <span className="text-xl font-black text-content">${c.price}</span>
-                        {c.compareAt && <span className="ml-2 text-sm text-content-faint line-through">${c.compareAt}</span>}
+                        <span className="text-xl font-black text-content">{c.price === 0 ? 'Free' : `ETB ${c.price.toLocaleString()}`}</span>
+                        {c.compareAt && <span className="ml-2 text-sm text-content-faint line-through">ETB {c.compareAt.toLocaleString()}</span>}
                       </div>
                       <Button variant="accent" size="sm">Enroll</Button>
                     </div>

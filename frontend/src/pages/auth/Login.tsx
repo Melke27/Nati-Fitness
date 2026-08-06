@@ -67,7 +67,7 @@ export default function Login() {
 
           <div className="flex items-center justify-between text-xs font-bold">
             <label className="flex items-center gap-2 text-content-muted">
-              <input type="checkbox" className="h-4 w-4 rounded accent-[#7CFF4F]" defaultChecked /> Remember me
+              <input type="checkbox" className="h-4 w-4 rounded accent-[#E11D48]" defaultChecked /> Remember me
             </label>
             <Link to="/contact" className="text-accent-dark underline-offset-4 hover:underline dark:text-accent">Forgot password?</Link>
           </div>

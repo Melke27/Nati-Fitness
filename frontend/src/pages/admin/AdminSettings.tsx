@@ -44,10 +44,8 @@ export default function AdminSettings() {
           </div>
           <div>
             <label className={label}>Currency</label>
-            <select className={input} defaultValue="USD ($)">
-              <option>USD ($)</option>
+            <select className={input} defaultValue="ETB (Br)">
               <option>ETB (Br)</option>
-              <option>EUR (€)</option>
             </select>
           </div>
           <div>
@@ -62,7 +60,7 @@ export default function AdminSettings() {
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface-subtle/40 p-4 dark:bg-surface-subtle">
           <div>
             <p className="text-sm font-black text-content">Coach Nati Studio</p>
-            <p className="text-xs text-content-muted">Pro plan · $29/mo · renews Aug 24, 2026</p>
+            <p className="text-xs text-content-muted">Pro plan · ETB 850/mo · renews Aug 24, 2026</p>
           </div>
           <Button variant="accent" size="md" onClick={() => toast?.success('Billing portal opened')}>Manage billing</Button>
         </div>

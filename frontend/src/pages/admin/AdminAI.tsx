@@ -64,7 +64,7 @@ Shall I assign this plan to a member?`
     if (p.includes('summar') || p.includes('month') || p.includes('business')) {
       return `Business snapshot 📊
 • Active members: ${db.clients.filter((c) => c.status === 'active').length}
-• Revenue this month: $${db.payments.filter((p) => p.status === 'paid' && new Date(p.createdAt).getMonth() === new Date().getMonth()).reduce((a, p) => a + p.amount, 0)}
+• Revenue this month: ETB ${db.payments.filter((p) => p.status === 'paid' && new Date(p.createdAt).getMonth() === new Date().getMonth()).reduce((a, p) => a + p.amount, 0).toLocaleString()}
 • New leads: ${db.leads.length}
 • Unread messages: ${db.messages.filter((m) => m.sender === 'client' && !m.read).length}
 • Members on-track: ${db.goals.filter((g) => g.status === 'on-track').length}

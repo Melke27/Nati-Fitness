@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Check, ArrowRight, Zap } from 'lucide-react'
 import { registerUser, setSession } from '@/lib/store'
@@ -9,6 +9,7 @@ import { AuthShell } from './AuthShell'
 
 export default function Register() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { success, error } = useToast()
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirm: '' })
   const [loading, setLoading] = useState(false)
@@ -24,7 +25,8 @@ export default function Register() {
       const userId = registerUser({ name: form.name, email: form.email, password: form.password, phone: form.phone })
       setSession({ userId, name: form.name, email: form.email, role: 'client' })
       success('Account created!', 'Let’s build your coaching profile — 2 minutes.')
-      navigate('/onboarding')
+      const goal = searchParams.get('goal')
+      navigate(goal ? `/onboarding?goal=${encodeURIComponent(goal)}` : '/onboarding')
     } catch (err) {
       error('Registration failed', (err as Error).message)
       setLoading(false)
@@ -49,8 +51,8 @@ export default function Register() {
           </div>
 
           <label className="flex items-start gap-2.5 text-xs leading-relaxed text-content-muted">
-            <input type="checkbox" required className="mt-0.5 h-4 w-4 rounded accent-[#7CFF4F]" />
-            I agree to the <a href="/" className="font-black text-accent-dark hover:underline dark:text-accent">Terms</a> and <a href="/" className="font-black text-accent-dark hover:underline dark:text-accent">Privacy Policy</a>
+            <input type="checkbox" required className="mt-0.5 h-4 w-4 rounded accent-[#E11D48]" />
+            I agree to the <Link to="/contact" className="font-black text-accent-dark hover:underline dark:text-accent">Terms</Link> and <Link to="/contact" className="font-black text-accent-dark hover:underline dark:text-accent">Privacy Policy</Link>
           </label>
 
           <Button type="submit" variant="accent" size="lg" className="group w-full" loading={loading}>

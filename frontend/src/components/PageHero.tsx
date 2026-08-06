@@ -52,7 +52,7 @@ export function PageHero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className={cn('mt-5 max-w-4xl text-heading-sm font-bold tracking-tight sm:text-heading lg:text-display-sm', dark ? 'text-white' : 'text-content')}
+          className={cn('mt-5 max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl', dark ? 'text-white' : 'text-content')}
         >
           {title}
         </motion.h1>

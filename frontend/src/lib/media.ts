@@ -5,7 +5,7 @@ const U = (id: string, w = 900) => `https://images.unsplash.com/${id}?auto=forma
 export const MEDIA = {
   coach: U('photo-1571731956672-f2b94d7dd0cb', 1000),
   coachAlt: U('photo-1558611848-73f7eb4001a1', 1000),
-  hero: U('photo-1517836357463-d25dfeac3438', 1400),
+  hero: '/nati-hero.jpg',
   heroAlt: U('photo-1571019613454-1cb2f99b2d8b', 1400),
   gym: U('photo-1534438327276-14e5300c3a48', 1200),
   gymDark: U('photo-1576678927484-cc907957088c', 1200),

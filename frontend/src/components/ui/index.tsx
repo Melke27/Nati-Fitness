@@ -30,7 +30,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
   primary:
     'bg-surface-solid text-content-inverse hover:opacity-90 active:scale-[0.98] shadow-soft',
   accent:
-    'bg-cta-gradient text-primary hover:bg-cta-gradient-hover active:scale-[0.98] shadow-glow btn-ripple',
+    'bg-accent text-white hover:bg-accent-hover active:scale-[0.98] shadow-glow btn-ripple',
   outline:
     'border border-border bg-transparent text-content hover:border-accent/50 hover:bg-accent/5 active:scale-[0.98]',
   ghost: 'text-content-muted hover:bg-surface-subtle hover:text-content active:scale-[0.98]',
@@ -42,7 +42,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
 const buttonSizes: Record<ButtonSize, string> = {
   sm: 'h-9 px-4 text-xs gap-1.5',
   md: 'h-11 px-6 text-sm gap-2',
-  lg: 'h-14 px-8 text-[15px] gap-2.5',
+  lg: 'h-[52px] px-8 text-base gap-2.5 rounded-xl',
   icon: 'h-10 w-10',
 }
 
@@ -52,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       const child = children as ReactElement<{ className?: string }>
       return cloneElement(child, {
         className: cn(
-          'relative inline-flex items-center justify-center gap-2 rounded-full font-bold transition-all duration-300',
+          'relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
           'disabled:cursor-not-allowed disabled:opacity-40 disabled:pointer-events-none',
           buttonVariants[variant],
@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || loading}
         className={cn(
-          'relative inline-flex items-center justify-center gap-2 rounded-full font-bold transition-all duration-300',
+          'relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
           'disabled:cursor-not-allowed disabled:opacity-40 disabled:pointer-events-none',
           buttonVariants[variant],
@@ -427,7 +427,7 @@ export function SectionHeading({
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.08 }}
         className={cn(
-          'max-w-3xl text-balance text-heading-sm font-bold tracking-tight sm:text-heading lg:text-display-sm',
+          'max-w-3xl text-balance text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl',
           dark ? 'text-white' : 'text-content',
         )}
       >
@@ -495,7 +495,7 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface-subtle/50 px-8 py-16 text-center">
       {icon && <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-surface-card text-content-muted">{icon}</div>}
-      <h3 className="text-subheading font-semibold text-content">{title}</h3>
+      <h3 className="text-xl font-semibold text-content">{title}</h3>
       {description && <p className="mt-2 max-w-sm text-sm text-content-muted">{description}</p>}
       {action && <div className="mt-6">{action}</div>}
     </div>

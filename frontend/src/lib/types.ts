@@ -225,11 +225,12 @@ export interface Payment {
   amount: number
   plan: string
   program: string
-  method: 'Card' | 'Bank Transfer' | 'Mobile Money'
+  method: 'Card' | 'Bank Transfer' | 'CBE' | 'Telebirr' | 'Mobile Money'
   status: 'paid' | 'pending' | 'refunded'
   coupon?: string
   createdAt: string
   reference: string
+  paymentRef?: string
 }
 
 export interface Referral {
@@ -314,26 +315,12 @@ export interface Partner {
   role: string
   bio: string
   specialties: string[]
+  experience: number
   clients: number
   programs: number
   rating: number
   location: string
   verified: boolean
-}
-
-export interface Product {
-  id: string
-  slug: string
-  name: string
-  category: 'equipment' | 'supplement' | 'apparel' | 'digital'
-  image: string
-  price: number
-  compareAt?: number
-  rating: number
-  reviews: number
-  badge?: string
-  description: string
-  partnerSlug?: string
 }
 
 export interface Template {
@@ -402,7 +389,6 @@ export interface DB {
   files: ClientFile[]
   goals: Goal[]
   partners: Partner[]
-  products: Product[]
   templates: Template[]
   courses: Course[]
   services: Service[]

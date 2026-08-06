@@ -63,7 +63,7 @@ export function StatCard({
 }
 
 /* ---------- Sparkline ---------- */
-export function Sparkline({ data, className, color = '#7CFF4F' }: { data: number[]; className?: string; color?: string }) {
+export function Sparkline({ data, className, color = '#E11D48' }: { data: number[]; className?: string; color?: string }) {
   if (data.length < 2) return null
   const W = 100
   const H = 32
@@ -164,7 +164,7 @@ export function EmptyState({ title, sub, action, icon }: { title: string; sub?: 
 }
 
 /* ---------- Progress ring ---------- */
-export function Ring({ value, size = 44, stroke = 5, color = '#7CFF4F', label, className }: { value: number; size?: number; stroke?: number; color?: string; label?: ReactNode; className?: string }) {
+export function Ring({ value, size = 44, stroke = 5, color = '#E11D48', label, className }: { value: number; size?: number; stroke?: number; color?: string; label?: ReactNode; className?: string }) {
   const r = (size - stroke) / 2
   const c = 2 * Math.PI * r
   const v = Math.min(100, Math.max(0, value))

@@ -5,30 +5,16 @@
 @layer base {
   :root {
     --surface: 5 5 5;
-    --surface-subtle: 17 17 17;
+    --surface-subtle: 8 8 8;
     --surface-solid: 255 255 255;
-    --card: 24 24 27;
+    --card: 17 17 17;
     --content: 255 255 255;
     --content-muted: 161 161 170;
     --content-faint: 113 113 122;
     --content-inverse: 5 5 5;
-    --border: 42 42 42;
-    --border-strong: 58 58 58;
+    --border: 39 39 42;
+    --border-strong: 39 39 42;
     color-scheme: dark;
-  }
-
-  .light {
-    --surface: 255 255 255;
-    --surface-subtle: 248 248 248;
-    --surface-solid: 5 5 5;
-    --card: 255 255 255;
-    --content: 5 5 5;
-    --content-muted: 82 82 91;
-    --content-faint: 113 113 122;
-    --content-inverse: 255 255 255;
-    --border: 228 228 231;
-    --border-strong: 212 212 216;
-    color-scheme: light;
   }
 
   * {
@@ -47,8 +33,15 @@
     font-feature-settings: 'ss01', 'cv01';
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
   ::selection {
-    background: rgba(124, 255, 79, 0.3);
+    background: rgba(225, 29, 72, 0.35);
     color: #ffffff;
   }
 
@@ -60,15 +53,15 @@
     background: #050505;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2a2a2a;
+    background: #27272a;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(124, 255, 79, 0.4);
+    background: #E11D48;
   }
 
   :focus-visible {
-    outline: 2px solid #7cff4f;
+    outline: 2px solid #E11D48;
     outline-offset: 2px;
   }
 }
@@ -79,29 +72,22 @@
   }
 
   .section-padding {
-    @apply py-20 lg:py-28;
+    @apply py-20 lg:py-32;
   }
 
   .glass {
-    background: rgba(24, 24, 27, 0.8);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-  }
-  .light .glass {
-    background: rgba(255, 255, 255, 0.85);
-  }
-
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(120deg, #ffffff 0%, #a1a1aa 55%, #7cff4f 120%);
-  }
-  .light .text-gradient {
-    background-image: linear-gradient(120deg, #050505 0%, #52525b 55%, #7cff4f 120%);
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
   }
 
   .text-gradient-accent {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #7cff4f 0%, #95ff66 100%);
+    background-image: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+  }
+
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.25);
   }
 
   .card-surface {
@@ -109,11 +95,11 @@
   }
 
   .card-surface-hover {
-    @apply card-surface transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-hover;
+    @apply card-surface transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lift;
   }
 
   .input-base {
-    @apply h-12 w-full rounded-xl border border-border bg-surface-subtle px-4 text-sm text-content placeholder:text-content-faint transition-all duration-200;
+    @apply h-12 w-full rounded-xl border border-border bg-surface-card px-4 text-sm text-content placeholder:text-content-faint transition-all duration-200;
     @apply focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20;
   }
 
@@ -124,7 +110,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
     transform: scale(0);
     opacity: 0;
     transition: transform 0.4s ease, opacity 0.4s ease;
@@ -139,34 +125,34 @@
     @apply w-full text-left text-sm;
   }
   .table-premium thead tr {
-    @apply border-b border-border text-caption font-semibold uppercase tracking-wider text-content-faint;
+    @apply border-b border-divider text-caption font-semibold uppercase tracking-wider text-content-faint;
   }
   .table-premium th {
     @apply px-5 py-4;
   }
   .table-premium tbody tr {
-    @apply border-b border-border/60 transition-colors duration-200 last:border-0 hover:bg-surface-subtle/50;
+    @apply border-b border-divider/60 transition-colors duration-200 last:border-0 hover:bg-surface-subtle/50;
   }
   .table-premium td {
     @apply px-5 py-4 text-content-muted;
   }
 
+  .grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(225, 29, 72, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(225, 29, 72, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
   .shimmer {
     background: linear-gradient(
       90deg,
-      rgba(124, 255, 79, 0) 0%,
-      rgba(124, 255, 79, 0.08) 50%,
-      rgba(124, 255, 79, 0) 100%
+      rgba(225, 29, 72, 0) 0%,
+      rgba(225, 29, 72, 0.06) 50%,
+      rgba(225, 29, 72, 0) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 1.8s linear infinite;
-  }
-
-  .grid-pattern {
-    background-image:
-      linear-gradient(to right, rgba(124, 255, 79, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(124, 255, 79, 0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
   }
 }
 

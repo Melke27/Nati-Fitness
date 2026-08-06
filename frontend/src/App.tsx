@@ -15,9 +15,8 @@ import BlogPost from '@/pages/BlogPost'
 import Contact from '@/pages/Contact'
 import FAQ from '@/pages/FAQ'
 import About from '@/pages/About'
-import Partners from '@/pages/Partners'
-import PartnerDetail from '@/pages/PartnerDetail'
-import Shop from '@/pages/Shop'
+import Trainers from '@/pages/Trainers'
+import TrainerDetail from '@/pages/TrainerDetail'
 import Templates from '@/pages/Templates'
 import Courses from '@/pages/Courses'
 import Services from '@/pages/Services'
@@ -81,12 +80,11 @@ function Shell() {
             <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/partners" element={<Partners />} />
-                <Route path="/partners/:slug" element={<PartnerDetail />} />
+                <Route path="/trainers" element={<Trainers />} />
+                <Route path="/trainers/:slug" element={<TrainerDetail />} />
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/programs/:slug" element={<ProgramDetail />} />
                 <Route path="/pricing" element={<Pricing />} />
-                <Route path="/shop" element={<Shop />} />
                 <Route path="/templates" element={<Templates />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/services" element={<Services />} />

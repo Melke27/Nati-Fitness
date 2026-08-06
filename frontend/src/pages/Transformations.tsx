@@ -48,7 +48,7 @@ export default function Transformations() {
           </Stagger>
 
           <Reveal dir="up" className="mt-12 text-center">
-            <Link to="/#pricing" className="inline-flex items-center gap-2 rounded-full bg-cta-gradient px-8 py-4 text-sm font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-1">
+            <Link to="/register" className="inline-flex items-center gap-2 rounded-full bg-cta-gradient px-8 py-4 text-sm font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-1">
               Your story could be next — start today <ArrowRight className="h-4 w-4" />
             </Link>
           </Reveal>

@@ -124,7 +124,7 @@ function BeforeAfterSlider() {
 
           {/* Handle */}
           <div className="absolute inset-y-0" style={{ left: `${pos}%` }}>
-            <div className="absolute inset-y-0 -left-px w-0.5 bg-accent shadow-[0_0_20px_rgba(124,255,79,0.8)]" />
+            <div className="absolute inset-y-0 -left-px w-0.5 bg-accent shadow-[0_0_20px_rgba(225,29,72,0.8)]" />
             <button
               aria-label="Drag to compare"
               className="absolute top-1/2 grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-accent bg-primary text-accent shadow-glow"

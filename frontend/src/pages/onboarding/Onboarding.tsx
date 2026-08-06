@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ArrowLeft, ArrowRight, Check, Sparkles, Scale, User, HeartPulse, Dumbbell, Target,
@@ -58,13 +58,14 @@ const GOALS: { id: Goal; emoji: string }[] = [
   { id: 'Overall Fitness', emoji: '⚡' },
 ]
 
-function initialForm(): Form {
+function initialForm(goal?: string | null): Form {
   const today = new Date()
   const d = new Date(today)
   d.setMonth(d.getMonth() + 3)
+  const validGoals: Goal[] = ['Weight Loss', 'Muscle Gain', 'Body Recomposition', 'Strength Training', 'Overall Fitness']
   return {
     age: 28, gender: 'Male', heightCm: 175, weightKg: 75, targetWeightKg: 70,
-    targetDate: d.toISOString().split('T')[0], level: 'Beginner', goal: 'Weight Loss',
+    targetDate: d.toISOString().split('T')[0], level: 'Beginner', goal: (validGoals.find((g) => g === goal) ?? 'Weight Loss') as Goal,
     medicalConditions: ['None'], experience: 'Never trained', trainingDays: ['Monday', 'Wednesday', 'Friday'],
     equipment: ['No equipment'], foodPreferences: [], lifestyle: 'Office job', programId: '', planId: 'pro',
   }
@@ -82,8 +83,9 @@ export default function Onboarding() {
   const navigate = useNavigate()
   const db = useDB()
   const { success } = useToast()
+  const [searchParams] = useSearchParams()
   const [step, setStep] = useState(0)
-  const [form, setForm] = useState<Form>(initialForm)
+  const [form, setForm] = useState<Form>(() => initialForm(searchParams.get('goal')))
   const session = getSession()
   const isDone = step === STEPS.length - 1
 

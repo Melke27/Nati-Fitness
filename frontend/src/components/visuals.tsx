@@ -6,8 +6,8 @@ export function AthleteFigure({ className, flip = false }: { className?: string;
     <svg viewBox="0 0 320 560" className={className} role="img" aria-label="Stylized athlete silhouette">
       <defs>
         <linearGradient id="ath-body" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#7CFF4F" />
-          <stop offset="100%" stopColor="#95FF66" />
+          <stop offset="0%" stopColor="#E11D48" />
+          <stop offset="100%" stopColor="#F43F5E" />
         </linearGradient>
       </defs>
       <g transform={flip ? 'translate(320 0) scale(-1 1)' : undefined}>
@@ -42,8 +42,8 @@ export function Rings({ className, speed = 'animate-spin-slow' }: { className?: 
     <svg viewBox="0 0 400 400" className={cn(speed, className)} aria-hidden>
       <defs>
         <linearGradient id="rings-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#7CFF4F" stopOpacity="0.7" />
-          <stop offset="100%" stopColor="#95FF66" stopOpacity="0.15" />
+          <stop offset="0%" stopColor="#E11D48" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#F43F5E" stopOpacity="0.15" />
         </linearGradient>
       </defs>
       {[60, 95, 130, 165, 200].map((r, i) => (

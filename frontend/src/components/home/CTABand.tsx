@@ -41,7 +41,7 @@ export function CTABand() {
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/#pricing"
+                to="/register"
                 className="group flex items-center gap-2 rounded-full bg-cta-gradient px-8 py-4 text-base font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-1"
               >
                 <CalendarClock className="h-5 w-5" />
