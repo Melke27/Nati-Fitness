@@ -78,15 +78,15 @@ export function Hero() {
 
               <motion.div variants={rise} className="mt-10 flex flex-wrap items-center gap-4">
                 <Link to="/programs">
-                  <Button variant="accent" size="lg" className="group items-center gap-2 px-8 uppercase tracking-wide shadow-glow">
+                  <Button variant="accent" size="xl" className="group items-center gap-3 uppercase tracking-wide shadow-glow">
                     Explore Programs
-                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </Link>
                 <Link to="/contact">
-                  <Button variant="outline" size="lg" className="items-center gap-2 border-white/20 bg-white/5 px-8 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white">
+                  <Button variant="outline" size="xl" className="items-center gap-3 border-white/20 bg-white/5 px-10 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white">
                     Become a Trainer
-                    <ArrowUpRight className="h-5 w-5" />
+                    <ArrowUpRight className="h-6 w-6" />
                   </Button>
                 </Link>
               </motion.div>

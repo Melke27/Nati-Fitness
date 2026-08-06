@@ -1,10 +1,84 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, BadgeCheck, LayoutGrid, Sparkles, HeartPulse, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { getSession } from '@/lib/store'
+import { getSession, useDB } from '@/lib/store'
 import { Button } from '@/components/ui'
+
+/* ----------------------- Mega menu data ----------------------- */
+const PROGRAMS_MENU = [
+  { to: '/programs', icon: Dumbbell, title: 'Programs', desc: 'Explore science-based training programs.' },
+  { to: '/templates', icon: LayoutGrid, title: 'Templates', desc: 'Ready-made training templates & plans.' },
+  { to: '/courses', icon: HeartPulse, title: 'Courses', desc: 'Structured courses with video lessons.' },
+]
+
+const ABOUT_MENU = [
+  { to: '/about', icon: Users, title: 'About Coach Nati', desc: 'Meet your head coach & transformation specialist.' },
+  { to: '/trainers', icon: BadgeCheck, title: 'Our Trainers', desc: 'A team of certified, passionate coaches.' },
+  { to: '/contact', icon: Sparkles, title: 'Contact', desc: 'Book a free call and start your journey.' },
+]
+
+function DropdownPanel({ items }: { items: { to: string; icon: typeof Dumbbell; title: string; desc: string }[] }) {
+  return (
+    <div className="w-72 rounded-2xl border border-border bg-surface-card p-3 shadow-card-hover">
+      {items.map((it) => (
+        <Link key={it.to} to={it.to} className="group flex items-start gap-3 rounded-xl p-3 transition hover:bg-surface-subtle">
+          <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent transition group-hover:bg-accent group-hover:text-white">
+            <it.icon className="h-5 w-5" />
+          </span>
+          <span className="min-w-0">
+            <span className="flex items-center gap-1 text-sm font-bold text-content">
+              {it.title}
+              <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100" />
+            </span>
+            <span className="mt-0.5 block text-xs leading-relaxed text-content-muted">{it.desc}</span>
+          </span>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+function MenuGroup({
+  label,
+  open,
+  onToggle,
+  panel,
+}: {
+  label: string
+  open: boolean
+  onToggle: (v: boolean) => void
+  panel: React.ReactNode
+}) {
+  return (
+    <div className="relative" onMouseEnter={() => onToggle(true)} onMouseLeave={() => onToggle(false)}>
+      <button
+        onClick={() => onToggle(!open)}
+        className={cn(
+          'flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-semibold transition-colors',
+          open ? 'text-accent' : 'text-content-muted hover:text-white',
+        )}
+      >
+        {label}
+        <ChevronDown className={cn('h-4 w-4 transition-transform duration-300', open && 'rotate-180')} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.18 }}
+            className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3"
+          >
+            {panel}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 const LINKS = [
   { to: '/', label: 'Home' },
@@ -17,9 +91,12 @@ const LINKS = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [menu, setMenu] = useState<'programs' | 'about' | null>(null)
   const location = useLocation()
   const navigate = useNavigate()
   const session = getSession()
+  const db = useDB()
+  const featured = db.partners.slice(0, 4)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -30,6 +107,7 @@ export function Navbar() {
 
   useEffect(() => {
     setOpen(false)
+    setMenu(null)
   }, [location.pathname])
 
   useEffect(() => {
@@ -47,7 +125,8 @@ export function Navbar() {
           scrolled ? 'glass border-b border-border py-3' : 'bg-nav/80 py-4 backdrop-blur-md',
         )}
       >
-        <div className="container-shell flex items-center justify-between">
+        <div className="container-shell relative flex items-center justify-between">
+          {/* Logo */}
           <Link to="/" className="group flex shrink-0 items-center gap-2.5" aria-label="Coach Nati home">
             <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent text-white transition-transform duration-300 group-hover:scale-105">
               <Zap className="h-5 w-5" fill="currentColor" />
@@ -57,28 +136,33 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav
-            className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex"
-            aria-label="Main navigation"
-          >
+          {/* Centered nav */}
+          <nav className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex" aria-label="Main navigation">
             <div className="pointer-events-auto flex items-center gap-1">
-              {LINKS.map((l) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  className={({ isActive }) =>
-                    cn(
-                      'rounded-xl px-3 py-2 text-sm font-medium transition-colors',
-                      isActive ? 'text-white' : 'text-content-muted hover:text-white',
-                    )
-                  }
-                >
-                  {l.label}
-                </NavLink>
-              ))}
+              {LINKS.map((l) =>
+                l.to === '/programs' ? (
+                  <MenuGroup key={l.to} label={l.label} open={menu === 'programs'} onToggle={(v) => setMenu(v ? 'programs' : null)} panel={<DropdownPanel items={PROGRAMS_MENU} />} />
+                ) : l.to === '/about' ? (
+                  <MenuGroup key={l.to} label={l.label} open={menu === 'about'} onToggle={(v) => setMenu(v ? 'about' : null)} panel={<DropdownPanel items={ABOUT_MENU} />} />
+                ) : (
+                  <NavLink
+                    key={l.to}
+                    to={l.to}
+                    className={({ isActive }) =>
+                      cn(
+                        'rounded-xl px-3 py-2 text-sm font-medium transition-colors',
+                        isActive ? 'text-white' : 'text-content-muted hover:text-white',
+                      )
+                    }
+                  >
+                    {l.label}
+                  </NavLink>
+                ),
+              )}
             </div>
           </nav>
 
+          {/* Right actions */}
           <div className="flex shrink-0 items-center gap-2">
             <div className="hidden items-center gap-3 md:flex">
               {session ? (
@@ -110,12 +194,12 @@ export function Navbar() {
         </div>
       </header>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} featured={featured} />
     </>
   )
 }
 
-function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+function MobileMenu({ open, onClose, featured }: { open: boolean; onClose: () => void; featured: { id: string; slug: string; name: string; avatar: string }[] }) {
   const session = getSession()
 
   return (
@@ -148,6 +232,21 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 </Link>
               </motion.div>
             ))}
+
+            {/* Featured trainers */}
+            {featured.length > 0 && (
+              <div className="mt-6">
+                <p className="mb-3 text-xs font-black uppercase tracking-widest text-content-muted">Trainers</p>
+                <div className="space-y-2">
+                  {featured.map((t) => (
+                    <Link key={t.id} to={`/trainers/${t.slug}`} onClick={onClose} className="flex items-center gap-3 rounded-xl p-2 hover:bg-surface-subtle">
+                      <img src={t.avatar} alt={t.name} className="h-10 w-10 rounded-full object-cover" />
+                      <span className="text-sm font-semibold text-white/90">{t.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="mt-8 space-y-3 pb-10">
               <Link to="/register" onClick={onClose} className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white">
