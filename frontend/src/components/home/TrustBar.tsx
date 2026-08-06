@@ -4,9 +4,9 @@ import { Counter } from '@/components/ui'
 
 export function TrustBar() {
   return (
-    <section className="border-y border-border bg-surface-subtle/50 py-14">
+    <section className="border-y border-border bg-surface-subtle py-16 lg:py-20">
       <div className="container-shell">
-        <p className="mb-8 text-center text-xs font-black uppercase tracking-[0.25em] text-content-faint">
+        <p className="mb-8 text-center text-caption font-semibold uppercase tracking-[0.2em] text-content-faint">
           Trusted by 1,000+ athletes, professionals and beginners worldwide
         </p>
 

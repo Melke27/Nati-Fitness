@@ -1,7 +1,7 @@
-import type { DB, Client, Message, Announcement, Notification, WorkoutSession, MealEntry, WaterEntry, Payment, Coupon, Referral, Exercise, Recipe, AttendanceRecord, Assessment, ClientFile, Goal } from './types'
+import type { DB, Client, Message, Announcement, Notification, WorkoutSession, MealEntry, WaterEntry, Payment, Coupon, Referral, Exercise, Recipe, AttendanceRecord, Assessment, ClientFile, Goal, Partner, Template, Course, Service } from './types'
 import { PROGRAMS, PLANS, TESTIMONIALS, BLOG_POSTS, FAQS } from './constants'
 import { addDays, todayKey } from './utils'
-import { AVATARS } from './media'
+import { AVATARS, MEDIA } from './media'
 
 const today = new Date()
 
@@ -206,6 +206,42 @@ export function buildSeed(): DB {
     { id: 'g5', clientId: 'client_david', title: 'Bench 110kg', target: 'Strength PR', deadline: addDays(today, 45).toISOString(), progress: 91, status: 'achieved' },
   ]
 
+  const partners: Partner[] = [
+    { id: 'partner_nati', slug: 'coach-nati', name: 'Coach Nati', avatar: AVATARS.coach, cover: MEDIA.gym, role: 'Head Coach · Transformation Specialist', bio: 'Elite coach with 10+ years transforming bodies and minds. Certified CSCS, Precision Nutrition L2, and former competitive athlete. I build sustainable systems — not quick fixes.', specialties: ['Weight Loss', 'Muscle Gain', 'Strength', 'Nutrition'], experience: 10, clients: 500, programs: 12, rating: 4.9, location: 'Addis Ababa', verified: true },
+    { id: 'partner_saron', slug: 'saron', name: 'Saron Tesfaye', avatar: MEDIA.womanFit, cover: MEDIA.yoga, role: 'Yoga & Mobility Coach', bio: 'Helping busy professionals move better, stress less, and build a body that feels as good as it looks through yoga and mobility.', specialties: ['Yoga', 'Mobility', 'Flexibility', 'Recovery'], experience: 7, clients: 210, programs: 6, rating: 4.8, location: 'Addis Ababa', verified: true },
+    { id: 'partner_yosef', slug: 'yosef-aklilu', name: 'Yosef Aklilu', avatar: MEDIA.trainer, cover: MEDIA.boxing, role: 'Boxing & Conditioning Coach', bio: 'Former national boxing champion. I turn beginners into fighters and fighters into athletes with brutal, fun conditioning.', specialties: ['Boxing', 'HIIT', 'Cardio', 'Conditioning'], experience: 7, clients: 180, programs: 5, rating: 4.9, location: 'Addis Ababa', verified: true },
+    { id: 'partner_biruktawit', slug: 'biruktawit-fikre', name: 'Biruktawit Fikre', avatar: MEDIA.womanFit2, cover: MEDIA.runWoman, role: 'Women\'s Fitness Coach', bio: 'Empowering women to become the strongest version of themselves. Pre/post-natal specialist and women\'s strength expert.', specialties: ['Women\'s Fitness', 'Pre-natal', 'Strength', 'Tone'], experience: 5, clients: 320, programs: 8, rating: 4.9, location: 'Addis Ababa', verified: true },
+    { id: 'partner_hayder', slug: 'hayder-hairu', name: 'Hayder Hairu', avatar: MEDIA.deadlift, cover: MEDIA.barbell, role: 'Powerlifting Coach', bio: 'Strength is the foundation. I coach intermediate to advanced lifters to smash PRs safely and consistently.', specialties: ['Powerlifting', 'Strength', 'Muscle Mass'], experience: 11, clients: 140, programs: 4, rating: 4.8, location: 'Addis Ababa', verified: true },
+    { id: 'partner_dagmawi', slug: 'dagmawi-ashenafi', name: 'Dagmawi Ashenafi', avatar: MEDIA.athlete, cover: MEDIA.plyo, role: 'Athletic Performance', bio: 'Sport-specific conditioning for competitive athletes. Speed, power, agility — built for game day.', specialties: ['Athletic Performance', 'Speed', 'Plyometrics', 'Agility'], experience: 6, clients: 95, programs: 5, rating: 4.7, location: 'Addis Ababa', verified: true },
+  ]
+
+  const templates: Template[] = [
+    { id: 'tmp1', slug: 'fat-loss-workout', title: '12-Week Fat Loss Workout Plan', category: 'workout', image: MEDIA.runWoman, price: 2000, description: 'Progressive cardio + strength program designed to melt fat while keeping muscle.', items: 36, partnerSlug: 'coach-nati', rating: 4.9, downloads: 1240 },
+    { id: 'tmp2', slug: 'muscle-building-split', title: 'Push/Pull/Legs Split Template', category: 'workout', image: MEDIA.deadlift, price: 2400, description: '6-day PPL optimized for hypertrophy with progressive overload built in.', items: 42, partnerSlug: 'coach-nati', rating: 4.8, downloads: 980 },
+    { id: 'tmp3', slug: 'high-protein-meal-plan', title: 'High-Protein Meal Plan', category: 'meal-plan', image: MEDIA.mealPrep, price: 1600, description: '7-day meal plan hitting 180g protein daily with grocery list included.', items: 21, partnerSlug: 'biruktawit-fikre', rating: 4.9, downloads: 2100 },
+    { id: 'tmp4', slug: 'beginner-fullbody', title: 'Beginner Full-Body Routine', category: 'workout', image: MEDIA.womanFit, price: 0, description: 'The perfect starting point. 3 days/week, zero equipment needed.', items: 18, partnerSlug: 'saron', rating: 4.7, downloads: 3400 },
+    { id: 'tmp5', slug: 'macro-template', title: 'Macro & Calorie Tracker', category: 'nutrition', image: MEDIA.nutrition, price: 800, description: 'Spreadsheet template to track calories, macros, and weekly averages.', items: 1, partnerSlug: 'coach-nati', rating: 4.8, downloads: 1560 },
+    { id: 'tmp6', slug: 'flexibility-flow', title: '30-Day Flexibility Flow', category: 'workout', image: MEDIA.yoga, price: 1200, description: 'Daily 15-minute mobility routine to eliminate stiffness and improve range.', items: 30, partnerSlug: 'saron', rating: 4.6, downloads: 870 },
+  ]
+
+  const courses: Course[] = [
+    { id: 'crs1', slug: 'fat-loss-masterclass', title: 'Fat Loss Masterclass', image: MEDIA.runWoman, price: 6000, compareAt: 8000, description: 'The complete science of fat loss — training, nutrition, mindset, and sustainability.', lessons: 24, hours: 8, level: 'All levels', partnerSlug: 'coach-nati', rating: 4.9, students: 1840, badge: 'Best Seller' },
+    { id: 'crs2', slug: 'muscle-building-blueprint', title: 'Muscle Building Blueprint', image: MEDIA.barbell, price: 7200, description: 'Everything you need to build your best physique — programming, nutrition, recovery.', lessons: 32, hours: 12, level: 'Intermediate', partnerSlug: 'coach-nati', rating: 4.8, students: 1220 },
+    { id: 'crs3', slug: 'yoga-foundations', title: 'Yoga Foundations', image: MEDIA.yoga, price: 4000, description: 'Build a sustainable yoga practice from scratch. Flexibility, strength, and calm.', lessons: 20, hours: 6, level: 'Beginner', partnerSlug: 'saron', rating: 4.9, students: 2100, badge: 'Popular' },
+    { id: 'crs4', title: 'Boxing Conditioning', slug: 'boxing-conditioning', image: MEDIA.boxing, price: 5200, description: 'Train like a fighter. Cardio, power, footwork — no sparring required.', lessons: 16, hours: 5, level: 'All levels', partnerSlug: 'yosef-aklilu', rating: 4.8, students: 890 },
+    { id: 'crs5', slug: 'womens-strength', title: 'Women\'s Strength 101', image: MEDIA.womanFit2, price: 4800, description: 'Confidently step into the weight room. Form, programming, and progressive overload.', lessons: 18, hours: 7, level: 'Beginner', partnerSlug: 'biruktawit-fikre', rating: 4.9, students: 1560 },
+    { id: 'crs6', slug: 'powerlifting-101', title: 'Powerlifting 101', image: MEDIA.deadlift, price: 6400, description: 'Master squat, bench, and deadlift. Build a 300kg+ total safely.', lessons: 28, hours: 10, level: 'Intermediate', partnerSlug: 'hayder-hairu', rating: 4.7, students: 640 },
+  ]
+
+  const services: Service[] = [
+    { id: 'svc1', title: '1:1 Personal Training', icon: 'Dumbbell', description: 'In-person sessions engineered around your body, your schedule, and your goals.', features: ['Custom programming', 'Form coaching', 'Nutrition guidance', 'Weekly check-ins'] },
+    { id: 'svc2', title: 'Online Coaching', icon: 'MonitorPlay', description: 'Full remote coaching with daily support, video feedback, and a personal dashboard.', features: ['App dashboard', 'Daily messaging', 'Video form reviews', 'Weekly adjustments'] },
+    { id: 'svc3', title: 'Custom Meal Plans', icon: 'Apple', description: 'Flexible macro-based nutrition built on whole foods you actually enjoy.', features: ['Macro calculations', 'Grocery lists', 'Recipe library', 'Weekly updates'] },
+    { id: 'svc4', title: 'Fitness Assessment', icon: 'Activity', description: 'Deep body composition, movement, and mobility analysis to build your baseline.', features: ['Body composition', 'Movement screen', 'Blood work review', 'Goal mapping'] },
+    { id: 'svc5', title: 'Lifestyle Coaching', icon: 'HeartPulse', description: 'Sleep, stress, and habit systems that make your transformation permanent.', features: ['Sleep optimization', 'Stress management', 'Habit building', 'Accountability'] },
+    { id: 'svc6', title: 'Group Training', icon: 'Users', description: 'Small group sessions for motivation, community, and serious results.', features: ['Max 8 people', 'Scalable workouts', 'Team challenges', 'Community'] },
+  ]
+
   return {
     users: [
       { id: coachId, name: 'Coach Nati', email: 'admin@coachnati.com', password: 'admin123', role: 'admin', avatar: AVATARS.coach, createdAt: addDays(today, -400).toISOString() },
@@ -236,5 +272,9 @@ export function buildSeed(): DB {
     assessments,
     files,
     goals,
+    partners,
+    templates,
+    courses,
+    services,
   }
 }

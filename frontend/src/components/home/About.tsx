@@ -6,7 +6,7 @@ import { MEDIA } from '@/lib/media'
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden py-24 lg:py-32">
+    <section id="about" className="section-padding relative overflow-hidden">
       <div className="container-shell grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         {/* Visual */}
         <Reveal dir="right" className="relative order-2 lg:order-1">
@@ -86,8 +86,8 @@ export function About() {
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
             <Reveal dir="up" delay={0.1}>
-              <div className="rounded-2xl border border-border bg-surface-subtle/60 p-5 dark:bg-surface-subtle">
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-primary dark:text-accent">
+              <div className="rounded-2xl border border-border bg-surface-card p-6">
+                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                   <Target className="h-5 w-5" />
                 </div>
                 <p className="font-black text-content">My Mission</p>
@@ -97,8 +97,8 @@ export function About() {
               </div>
             </Reveal>
             <Reveal dir="up" delay={0.2}>
-              <div className="rounded-2xl border border-border bg-surface-subtle/60 p-5 dark:bg-surface-subtle">
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-primary dark:text-accent">
+              <div className="rounded-2xl border border-border bg-surface-card p-6">
+                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
                   <Eye className="h-5 w-5" />
                 </div>
                 <p className="font-black text-content">My Vision</p>
@@ -108,6 +108,23 @@ export function About() {
               </div>
             </Reveal>
           </div>
+
+          <Reveal dir="up" delay={0.3}>
+            <ul className="mt-6 space-y-3">
+              {[
+                'Evidence-based programming, reviewed and periodised every 4 weeks',
+                'Hybrid online + in-person coaching across 12 countries',
+                'A dedicated coach in your corner, 7 days a week',
+              ].map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent/15">
+                    <BadgeCheck className="h-4 w-4 text-accent" strokeWidth={2.25} />
+                  </span>
+                  <span className="text-sm leading-relaxed text-content-muted">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </div>
 
@@ -116,9 +133,9 @@ export function About() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {ACHIEVEMENTS.map((a, i) => (
             <Reveal key={a.title} dir="up" delay={i * 0.07}>
-              <div className="group h-full rounded-2xl border border-border bg-surface-subtle/60 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/5 dark:bg-surface-subtle">
+              <div className="group h-full rounded-2xl border border-border bg-surface-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-hover">
                 <div className="mb-4 flex items-center gap-2">
-                  <BadgeCheck className="h-5 w-5 text-accent-dark dark:text-accent" />
+                  <BadgeCheck className="h-5 w-5 text-accent" strokeWidth={1.75} />
                 </div>
                 <p className="text-sm font-black text-content">{a.title}</p>
                 <p className="mt-1 text-xs leading-relaxed text-content-muted">{a.org}</p>

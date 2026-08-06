@@ -225,11 +225,12 @@ export interface Payment {
   amount: number
   plan: string
   program: string
-  method: 'Card' | 'Bank Transfer' | 'Mobile Money'
+  method: 'Card' | 'Bank Transfer' | 'CBE' | 'Telebirr' | 'Mobile Money'
   status: 'paid' | 'pending' | 'refunded'
   coupon?: string
   createdAt: string
   reference: string
+  paymentRef?: string
 }
 
 export interface Referral {
@@ -305,6 +306,62 @@ export interface Goal {
   status: 'on-track' | 'at-risk' | 'achieved' | 'upcoming'
 }
 
+export interface Partner {
+  id: string
+  slug: string
+  name: string
+  avatar: string
+  cover: string
+  role: string
+  bio: string
+  specialties: string[]
+  experience: number
+  clients: number
+  programs: number
+  rating: number
+  location: string
+  verified: boolean
+}
+
+export interface Template {
+  id: string
+  slug: string
+  title: string
+  category: 'workout' | 'nutrition' | 'meal-plan' | 'assessment'
+  image: string
+  price: number
+  description: string
+  items: number
+  partnerSlug: string
+  rating: number
+  downloads: number
+}
+
+export interface Course {
+  id: string
+  slug: string
+  title: string
+  image: string
+  price: number
+  compareAt?: number
+  description: string
+  lessons: number
+  hours: number
+  level: FitnessLevel
+  partnerSlug: string
+  rating: number
+  students: number
+  badge?: string
+}
+
+export interface Service {
+  id: string
+  title: string
+  icon: string
+  description: string
+  features: string[]
+}
+
 export interface DB {
   users: User[]
   clients: Client[]
@@ -331,4 +388,8 @@ export interface DB {
   assessments: Assessment[]
   files: ClientFile[]
   goals: Goal[]
+  partners: Partner[]
+  templates: Template[]
+  courses: Course[]
+  services: Service[]
 }

@@ -107,7 +107,7 @@ export default function AdminAssessments() {
                 </div>
                 <div>
                   <label className="mb-1.5 block text-xs font-black text-content-muted">Score · {form.score}</label>
-                  <input type="range" min={0} max={100} value={form.score} onChange={(e) => setForm({ ...form, score: +e.target.value })} className="w-full accent-[#7CFF4F]" />
+                  <input type="range" min={0} max={100} value={form.score} onChange={(e) => setForm({ ...form, score: +e.target.value })} className="w-full accent-[#E11D48]" />
                 </div>
                 <div>
                   <label className="mb-1.5 block text-xs font-black text-content-muted">Notes</label>

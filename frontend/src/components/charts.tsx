@@ -10,7 +10,7 @@ interface Point {
 export function LineChart({
   data,
   className,
-  stroke = '#7CFF4F',
+  stroke = '#E11D48',
   height = 180,
 }: {
   data: Point[]
@@ -94,7 +94,7 @@ export function LineChart({
   )
 }
 
-export function BarChart({ data, className, height = 180, color = '#7CFF4F' }: { data: Point[]; className?: string; height?: number; color?: string }) {
+export function BarChart({ data, className, height = 180, color = '#E11D48' }: { data: Point[]; className?: string; height?: number; color?: string }) {
   const W = 600
   const H = height
   const PAD = 24
@@ -149,7 +149,7 @@ export function RingChart({
   value,
   size = 140,
   stroke = 10,
-  color = '#7CFF4F',
+  color = '#E11D48',
   label,
   sublabel,
   className,

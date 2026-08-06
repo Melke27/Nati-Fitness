@@ -4,7 +4,7 @@ import { Reveal } from '@/components/motion'
 
 export function Process() {
   return (
-    <section id="process" className="relative py-24 lg:py-32">
+    <section id="process" className="section-padding relative">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Coaching process"
@@ -27,9 +27,9 @@ export function Process() {
 
                   <div className={`pl-16 sm:w-1/2 sm:pl-0 ${left ? 'sm:pr-14' : 'sm:ml-auto sm:pl-14'}`}>
                     <Reveal dir={left ? 'left' : 'right'}>
-                      <div className="group relative rounded-2xl border border-border bg-surface-subtle/60 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lift dark:bg-surface-subtle">
+                      <div className="group relative rounded-2xl border border-border bg-surface-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-card-hover">
                         <div className="flex items-center gap-3">
-                          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-lg font-black text-primary dark:text-accent">
+                          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/10 text-lg font-bold text-accent">
                             {String(i + 1).padStart(2, '0')}
                           </span>
                           <h3 className="text-lg font-black text-content">{step.title}</h3>

@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  LayoutDashboard, Users, MessageSquareText, Dumbbell, Library, Apple, HeartPulse, ClipboardList,
+  LayoutDashboard, Users, MessageSquareText,   Dumbbell, Library, Apple, HeartPulse, ClipboardList,
   Target, CalendarCheck2, CalendarDays, BarChart3, Wallet, FileText, FolderOpen, BellRing,
   UserRound, Settings, Sparkles, Send, ChevronLeft, ChevronRight, LogOut, Sun, Moon, Search,
-  Zap, Menu, X, ExternalLink, TrendingUp,
+  Zap, Menu, X, ExternalLink, TrendingUp, Video,
 } from 'lucide-react'
 import { getSession, setSession, useDB } from '@/lib/store'
 import { useTheme } from '@/context/ThemeContext'
@@ -30,6 +30,7 @@ const NAV_GROUPS: { title: string; items: { to: string; label: string; icon: typ
       { to: '/admin/workouts', label: 'Workout Plans', icon: Dumbbell },
       { to: '/admin/exercises', label: 'Exercise Library', icon: Library },
       { to: '/admin/nutrition', label: 'Nutrition Plans', icon: Apple },
+      { to: '/admin/live', label: 'Live Coaching', icon: Video },
       { to: '/admin/programs', label: 'Public Programs', icon: Zap },
       { to: '/admin/assign', label: 'Assign Work', icon: Send },
     ],

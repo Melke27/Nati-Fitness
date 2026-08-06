@@ -62,7 +62,7 @@ export default function ClientNutrition() {
           <RingChart value={(totals.calories / TARGETS.calories) * 100} size={84} stroke={8} color="#F59E0B" label={`${Math.round((totals.calories / TARGETS.calories) * 100)}%`} />
         </Card>
         {[
-          { label: 'Protein', value: totals.protein, target: TARGETS.protein, icon: Drumstick, color: '#7CFF4F' },
+          { label: 'Protein', value: totals.protein, target: TARGETS.protein, icon: Drumstick, color: '#E11D48' },
           { label: 'Carbs', value: totals.carbs, target: TARGETS.carbs, icon: Wheat, color: '#F59E0B' },
           { label: 'Water', value: water, target: WATER_TARGET, icon: Droplets, color: '#22C55E' },
         ].map((m) => (

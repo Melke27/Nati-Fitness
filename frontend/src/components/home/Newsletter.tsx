@@ -29,7 +29,7 @@ export function Newsletter() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-border bg-surface-subtle/70 p-8 sm:p-10 dark:bg-surface-subtle">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-surface-card p-8 sm:p-10">
       <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/15 blur-[80px]" />
       <div className="relative grid items-center gap-6 lg:grid-cols-[1.2fr_1fr]">
         <div>
@@ -48,12 +48,12 @@ export function Newsletter() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               aria-label="Email address"
-              className="h-14 w-full rounded-full border border-border bg-surface pl-11 pr-4 text-sm text-content placeholder:text-content-faint focus:border-accent-dark focus:outline-none focus:ring-4 focus:ring-accent/20 dark:bg-surface-subtle"
+              className="input-base h-14 rounded-xl pl-11"
             />
           </div>
           <button
             type="submit"
-            className="group flex shrink-0 items-center gap-2 rounded-full bg-cta-gradient px-6 py-4 text-sm font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-0.5"
+            className="group flex shrink-0 items-center gap-2 rounded-xl bg-cta-gradient px-6 py-4 text-sm font-semibold text-primary shadow-glow transition-all duration-300 hover:bg-cta-gradient-hover active:scale-[0.98]"
           >
             <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             Send me it

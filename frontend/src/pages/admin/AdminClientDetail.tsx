@@ -151,7 +151,7 @@ export default function AdminClientDetail() {
               {goals.length === 0 && <p className="py-2 text-center text-xs text-content-faint">No goals assigned yet</p>}
               {goals.slice(0, 3).map((g) => (
                 <div key={g.id} className="flex items-center gap-3 rounded-xl bg-surface-subtle/60 p-3 dark:bg-surface-subtle">
-                  <Ring value={g.progress} size={40} stroke={4} color={g.status === 'achieved' ? '#22C55E' : g.status === 'at-risk' ? '#EF4444' : '#7CFF4F'} />
+                  <Ring value={g.progress} size={40} stroke={4} color={g.status === 'achieved' ? '#22C55E' : g.status === 'at-risk' ? '#EF4444' : '#E11D48'} />
                   <div className="min-w-0">
                     <p className="truncate text-xs font-black text-content">{g.title}</p>
                     <p className="text-[10px] text-content-muted">{g.target} · {formatDate(g.deadline)}</p>

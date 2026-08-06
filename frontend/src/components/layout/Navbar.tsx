@@ -1,33 +1,105 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowRight, Sun, Moon, Zap } from 'lucide-react'
+import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, BadgeCheck, LayoutGrid, Sparkles, HeartPulse, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useTheme } from '@/context/ThemeContext'
-import { getSession } from '@/lib/store'
+import { getSession, useDB } from '@/lib/store'
 import { Button } from '@/components/ui'
+
+/* ----------------------- Mega menu data ----------------------- */
+const PROGRAMS_MENU = [
+  { to: '/programs', icon: Dumbbell, title: 'Programs', desc: 'Explore science-based training programs.' },
+  { to: '/templates', icon: LayoutGrid, title: 'Templates', desc: 'Ready-made training templates & plans.' },
+  { to: '/courses', icon: HeartPulse, title: 'Courses', desc: 'Structured courses with video lessons.' },
+]
+
+const ABOUT_MENU = [
+  { to: '/about', icon: Users, title: 'About Coach Nati', desc: 'Meet your head coach & transformation specialist.' },
+  { to: '/trainers', icon: BadgeCheck, title: 'Our Trainers', desc: 'A team of certified, passionate coaches.' },
+  { to: '/contact', icon: Sparkles, title: 'Contact', desc: 'Book a free call and start your journey.' },
+]
+
+function DropdownPanel({ items }: { items: { to: string; icon: typeof Dumbbell; title: string; desc: string }[] }) {
+  return (
+    <div className="w-72 rounded-2xl border border-border bg-surface-card p-3 shadow-card-hover">
+      {items.map((it) => (
+        <Link key={it.to} to={it.to} className="group flex items-start gap-3 rounded-xl p-3 transition hover:bg-surface-subtle">
+          <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent transition group-hover:bg-accent group-hover:text-white">
+            <it.icon className="h-5 w-5" />
+          </span>
+          <span className="min-w-0">
+            <span className="flex items-center gap-1 text-sm font-bold text-content">
+              {it.title}
+              <ArrowRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100" />
+            </span>
+            <span className="mt-0.5 block text-xs leading-relaxed text-content-muted">{it.desc}</span>
+          </span>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+function MenuGroup({
+  label,
+  open,
+  onToggle,
+  panel,
+}: {
+  label: string
+  open: boolean
+  onToggle: (v: boolean) => void
+  panel: React.ReactNode
+}) {
+  return (
+    <div className="relative" onMouseEnter={() => onToggle(true)} onMouseLeave={() => onToggle(false)}>
+      <button
+        onClick={() => onToggle(!open)}
+        className={cn(
+          'flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-semibold transition-colors',
+          open ? 'text-accent' : 'text-content-muted hover:text-white',
+        )}
+      >
+        {label}
+        <ChevronDown className={cn('h-4 w-4 transition-transform duration-300', open && 'rotate-180')} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.18 }}
+            className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3"
+          >
+            {panel}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 const LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/#about', label: 'About' },
   { to: '/programs', label: 'Programs' },
-  { to: '/#services', label: 'Services' },
-  { to: '/#transformations', label: 'Transformations' },
-  { to: '/#testimonials', label: 'Testimonials' },
-  { to: '/#pricing', label: 'Pricing' },
+  { to: '/trainers', label: 'Trainers' },
+  { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const { theme, toggle } = useTheme()
+  const [menu, setMenu] = useState<'programs' | 'about' | null>(null)
   const location = useLocation()
   const navigate = useNavigate()
   const session = getSession()
+  const db = useDB()
+  const featured = db.partners.slice(0, 4)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -35,6 +107,7 @@ export function Navbar() {
 
   useEffect(() => {
     setOpen(false)
+    setMenu(null)
   }, [location.pathname])
 
   useEffect(() => {
@@ -44,199 +117,151 @@ export function Navbar() {
     }
   }, [open])
 
-  const handleHash = (to: string) => {
-    if (to.startsWith('/#')) {
-      navigate('/')
-      setTimeout(() => {
-        document.querySelector(to.slice(2))?.scrollIntoView({ behavior: 'smooth' })
-      }, 120)
-    }
-  }
-
   return (
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-[60] transition-all duration-500',
-          scrolled ? 'glass border-b border-border py-2.5 shadow-soft' : 'bg-transparent py-4',
+          'fixed inset-x-0 top-0 z-[60] transition-all duration-300',
+          scrolled ? 'glass border-b border-border py-3' : 'bg-nav/80 py-4 backdrop-blur-md',
         )}
       >
-        <div className="container-shell flex items-center justify-between">
-          <Link to="/" className="group flex items-center gap-2.5" aria-label="Coach Nati home">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary text-accent transition-transform duration-300 group-hover:rotate-6">
+        <div className="container-shell relative flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="group flex shrink-0 items-center gap-2.5" aria-label="Coach Nati home">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent text-white transition-transform duration-300 group-hover:scale-105">
               <Zap className="h-5 w-5" fill="currentColor" />
             </span>
-            <span className="text-lg font-black tracking-tight text-content">
-              Coach<span className="text-gradient-accent">Nati</span>
+            <span className="text-lg font-bold tracking-tight text-white">
+              Coach<span className="text-accent">Nati</span>
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
-            {LINKS.map((l) =>
-              l.to.includes('#') ? (
-                <button
-                  key={l.to}
-                  onClick={() => handleHash(l.to)}
-                  className="rounded-full px-4 py-2 text-sm font-semibold text-content-muted transition hover:bg-surface-subtle hover:text-content"
-                >
-                  {l.label}
-                </button>
-              ) : (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  className={({ isActive }) =>
-                    cn(
-                      'rounded-full px-4 py-2 text-sm font-semibold transition',
-                      isActive ? 'bg-surface-subtle text-content' : 'text-content-muted hover:bg-surface-subtle hover:text-content',
-                    )
-                  }
-                >
-                  {l.label}
-                </NavLink>
-              ),
-            )}
+          {/* Centered nav */}
+          <nav className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex" aria-label="Main navigation">
+            <div className="pointer-events-auto flex items-center gap-1">
+              {LINKS.map((l) =>
+                l.to === '/programs' ? (
+                  <MenuGroup key={l.to} label={l.label} open={menu === 'programs'} onToggle={(v) => setMenu(v ? 'programs' : null)} panel={<DropdownPanel items={PROGRAMS_MENU} />} />
+                ) : l.to === '/about' ? (
+                  <MenuGroup key={l.to} label={l.label} open={menu === 'about'} onToggle={(v) => setMenu(v ? 'about' : null)} panel={<DropdownPanel items={ABOUT_MENU} />} />
+                ) : (
+                  <NavLink
+                    key={l.to}
+                    to={l.to}
+                    className={({ isActive }) =>
+                      cn(
+                        'rounded-xl px-3 py-2 text-sm font-medium transition-colors',
+                        isActive ? 'text-white' : 'text-content-muted hover:text-white',
+                      )
+                    }
+                  >
+                    {l.label}
+                  </NavLink>
+                ),
+              )}
+            </div>
           </nav>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggle}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="hidden h-10 w-10 place-items-center rounded-full border border-border text-content-muted transition hover:bg-surface-subtle hover:text-content sm:grid"
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
-
+          {/* Right actions */}
+          <div className="flex shrink-0 items-center gap-2">
             <div className="hidden items-center gap-3 md:flex">
               {session ? (
                 <Link to={session.role === 'admin' ? '/admin' : '/dashboard'}>
-                  <Button variant="outline" size="sm">
+                  <Button variant="ghost" size="sm" className="text-content-muted hover:text-white">
                     Dashboard
                   </Button>
                 </Link>
               ) : (
                 <Link to="/login">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="text-content-muted hover:text-white">
                     Sign in
                   </Button>
                 </Link>
               )}
-              <Button
-                variant="accent"
-                size="sm"
-                onClick={() => navigate('/#pricing')}
-                className="group"
-              >
-                Book Consultation
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <Button variant="accent" size="sm" onClick={() => navigate('/register')} className="group">
+                Get Started
               </Button>
             </div>
 
             <button
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="grid h-10 w-10 place-items-center rounded-full border border-border text-content transition hover:bg-surface-subtle lg:hidden"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-border text-white transition-colors hover:bg-surface-subtle xl:hidden"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" strokeWidth={1.75} />
             </button>
           </div>
         </div>
       </header>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} onHash={handleHash} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} featured={featured} />
     </>
   )
 }
 
-function MobileMenu({ open, onClose, onHash }: { open: boolean; onClose: () => void; onHash: (to: string) => void }) {
-  const { theme, toggle } = useTheme()
+function MobileMenu({ open, onClose, featured }: { open: boolean; onClose: () => void; featured: { id: string; slug: string; name: string; avatar: string }[] }) {
   const session = getSession()
 
   return (
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ clipPath: 'circle(0% at 100% 0%)' }}
-          animate={{ clipPath: 'circle(150% at 100% 0%)' }}
-          exit={{ clipPath: 'circle(0% at 100% 0%)' }}
-          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[90] flex flex-col bg-primary"
+          initial={{ opacity: 0, x: '100%' }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: '100%' }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[90] flex flex-col bg-nav"
         >
-          <div className="grid-pattern absolute inset-0 opacity-40" />
-          <div className="relative container-shell flex items-center justify-between py-4">
-            <span className="flex items-center gap-2.5 text-lg font-black tracking-tight text-white">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent text-primary">
+          <div className="container-shell flex items-center justify-between py-4">
+            <span className="flex items-center gap-2.5 text-lg font-bold text-white">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent text-white">
                 <Zap className="h-5 w-5" fill="currentColor" />
               </span>
               Coach<span className="text-accent">Nati</span>
             </span>
-            <button
-              onClick={onClose}
-              aria-label="Close menu"
-              className="grid h-11 w-11 place-items-center rounded-full border border-white/15 text-white transition hover:bg-white/10"
-            >
+            <button onClick={onClose} aria-label="Close menu" className="grid h-11 w-11 place-items-center rounded-xl border border-border text-white">
               <X className="h-5 w-5" />
             </button>
           </div>
 
-          <nav className="relative container-shell mt-6 flex flex-1 flex-col gap-1 overflow-y-auto" aria-label="Mobile navigation">
+          <nav className="container-shell flex flex-1 flex-col gap-1 overflow-y-auto py-4" aria-label="Mobile navigation">
             {LINKS.map((l, i) => (
-              <motion.div
-                key={l.to}
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.15 + i * 0.06 }}
-              >
-                {l.to.includes('#') ? (
-                  <button
-                    onClick={() => {
-                      onClose()
-                      onHash(l.to)
-                    }}
-                    className="block w-full border-b border-white/10 py-4 text-left text-3xl font-black tracking-tight text-white/90 transition hover:text-accent"
-                  >
-                    {l.label}
-                  </button>
-                ) : (
-                  <Link
-                    to={l.to}
-                    onClick={onClose}
-                    className="block border-b border-white/10 py-4 text-3xl font-black tracking-tight text-white/90 transition hover:text-accent"
-                  >
-                    {l.label}
-                  </Link>
-                )}
+              <motion.div key={l.to} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
+                <Link to={l.to} onClick={onClose} className="block border-b border-border py-4 text-xl font-semibold text-white/90 hover:text-accent">
+                  {l.label}
+                </Link>
               </motion.div>
             ))}
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-8 space-y-3 pb-10"
-            >
-              <Link to="/#pricing" onClick={onClose} className="flex items-center justify-center gap-2 rounded-full bg-cta-gradient py-4 text-base font-black text-primary">
-                Book Consultation <ArrowRight className="h-4 w-4" />
-              </Link>
-              <div className="flex gap-3">
-                {session ? (
-                  <Link to={session.role === 'admin' ? '/admin' : '/dashboard'} onClick={onClose} className="flex-1 rounded-full border border-white/20 py-4 text-center text-base font-bold text-white">
-                    Dashboard
-                  </Link>
-                ) : (
-                  <Link to="/login" onClick={onClose} className="flex-1 rounded-full border border-white/20 py-4 text-center text-base font-bold text-white">
-                    Sign in
-                  </Link>
-                )}
-                <button
-                  onClick={toggle}
-                  className="grid w-14 place-items-center rounded-full border border-white/20 text-white"
-                  aria-label="Toggle theme"
-                >
-                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                </button>
+            {/* Featured trainers */}
+            {featured.length > 0 && (
+              <div className="mt-6">
+                <p className="mb-3 text-xs font-black uppercase tracking-widest text-content-muted">Trainers</p>
+                <div className="space-y-2">
+                  {featured.map((t) => (
+                    <Link key={t.id} to={`/trainers/${t.slug}`} onClick={onClose} className="flex items-center gap-3 rounded-xl p-2 hover:bg-surface-subtle">
+                      <img src={t.avatar} alt={t.name} className="h-10 w-10 rounded-full object-cover" />
+                      <span className="text-sm font-semibold text-white/90">{t.name}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </motion.div>
+            )}
+
+            <div className="mt-8 space-y-3 pb-10">
+              <Link to="/register" onClick={onClose} className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white">
+                Get Started
+              </Link>
+              {session ? (
+                <Link to={session.role === 'admin' ? '/admin' : '/dashboard'} onClick={onClose} className="block rounded-xl border border-border py-4 text-center font-semibold text-white">
+                  Dashboard
+                </Link>
+              ) : (
+                <Link to="/login" onClick={onClose} className="block rounded-xl border border-border py-4 text-center font-semibold text-white">
+                  Sign in
+                </Link>
+              )}
+            </div>
           </nav>
         </motion.div>
       )}

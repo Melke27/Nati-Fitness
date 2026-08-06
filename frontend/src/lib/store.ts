@@ -10,12 +10,44 @@ let db: DB = load()
 let version = 0
 const listeners = new Set<() => void>()
 
+const REQUIRED_COLLECTIONS = [
+  'users',
+  'clients',
+  'programs',
+  'plans',
+  'testimonials',
+  'blogPosts',
+  'faqs',
+  'coupons',
+  'payments',
+  'referrals',
+  'messages',
+  'announcements',
+  'notifications',
+  'workouts',
+  'meals',
+  'water',
+  'appointments',
+  'subscribers',
+  'leads',
+  'exercises',
+  'recipes',
+  'attendance',
+  'assessments',
+  'files',
+  'goals',
+  'partners',
+  'templates',
+  'courses',
+  'services',
+] as const
+
 function load(): DB {
   try {
     const raw = localStorage.getItem(DB_KEY)
     if (raw) {
       const parsed = JSON.parse(raw) as DB
-      if (parsed && parsed.users && parsed.clients) return parsed
+      if (parsed && REQUIRED_COLLECTIONS.every((k) => Array.isArray(parsed[k]))) return parsed
     }
   } catch {
     /* corrupted storage — reseed */
@@ -167,7 +199,7 @@ export function saveOnboarding(userId: string, payload: { profile: unknown; prog
   })
 }
 
-export function addPayment(data: { clientId: string; clientName: string; amount: number; plan: string; program: string; method: PaymentMethod }) {
+export function addPayment(data: { clientId: string; clientName: string; amount: number; plan: string; program: string; method: PaymentMethod; paymentRef?: string }) {
   const payment = {
     id: `pay_${uid()}`,
     clientId: data.clientId,
@@ -179,12 +211,13 @@ export function addPayment(data: { clientId: string; clientName: string; amount:
     status: 'paid' as const,
     createdAt: new Date().toISOString(),
     reference: `CN-${new Date().getFullYear()}-${String(db.payments.length + 1).padStart(4, '0')}`,
+    ...(data.paymentRef ? { paymentRef: data.paymentRef } : {}),
   }
   mutate((d) => d.payments.push(payment))
   return payment
 }
 
-export type PaymentMethod = 'Card' | 'Bank Transfer' | 'Mobile Money'
+export type PaymentMethod = 'Card' | 'Bank Transfer' | 'CBE' | 'Telebirr' | 'Mobile Money'
 
 export function logWorkout(data: { clientId: string; name: string; durationMin: number; calories: number; date?: string }) {
   const w = {

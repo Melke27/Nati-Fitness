@@ -16,7 +16,7 @@ const PAIRS = [
 
 export function Transformations() {
   return (
-    <section id="transformations" className="relative overflow-hidden bg-primary py-24 text-white lg:py-32">
+    <section id="transformations" className="section-padding relative overflow-hidden bg-primary text-white">
       <div className="pointer-events-none absolute inset-0 grid-pattern opacity-20" />
       <div className="pointer-events-none absolute -top-40 right-0 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[140px]" />
 
@@ -44,7 +44,7 @@ export function Transformations() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur"
+              className="rounded-2xl border border-border bg-surface-card p-6 text-center"
             >
               <s.icon className="mx-auto mb-3 h-6 w-6 text-accent" />
               <p className="text-3xl font-black text-white">{s.value}</p>
@@ -124,7 +124,7 @@ function BeforeAfterSlider() {
 
           {/* Handle */}
           <div className="absolute inset-y-0" style={{ left: `${pos}%` }}>
-            <div className="absolute inset-y-0 -left-px w-0.5 bg-accent shadow-[0_0_20px_rgba(124,255,79,0.8)]" />
+            <div className="absolute inset-y-0 -left-px w-0.5 bg-accent shadow-[0_0_20px_rgba(225,29,72,0.8)]" />
             <button
               aria-label="Drag to compare"
               className="absolute top-1/2 grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-accent bg-primary text-accent shadow-glow"

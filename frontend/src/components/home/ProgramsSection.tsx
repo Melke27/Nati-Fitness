@@ -32,7 +32,7 @@ const PROGRAM_IMG: Record<string, string> = {
 export function ProgramsSection({ limit }: { limit?: number }) {
   const list = limit ? PROGRAMS.slice(0, limit) : PROGRAMS
   return (
-    <section id="programs" className="relative py-24 lg:py-32">
+    <section id="programs" className="section-padding relative">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Programs"
@@ -45,16 +45,16 @@ export function ProgramsSection({ limit }: { limit?: number }) {
             <StaggerItem key={p.id} className="h-full">
               <Link
                 to={`/programs/${p.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-subtle/60 transition-all duration-300 hover:-translate-y-2 hover:border-accent/50 hover:shadow-lift dark:bg-surface-subtle"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-hover"
               >
-                <div className="relative h-44 overflow-hidden">
+                <div className="relative h-52 overflow-hidden sm:h-60">
                   <img
                     src={PROGRAM_IMG[p.slug] ?? MEDIA.gym}
                     alt={p.name}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                   <div
                     className="absolute left-5 top-5 grid h-12 w-12 place-items-center rounded-2xl backdrop-blur-md transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
                     style={{ background: `${p.color}33`, color: '#fff' }}
@@ -64,6 +64,10 @@ export function ProgramsSection({ limit }: { limit?: number }) {
                   <Badge className={`absolute right-5 top-5 ${levelColor[p.level]}`}>{p.level}</Badge>
                   <div className="absolute inset-x-5 bottom-4">
                     <p className="text-sm font-semibold text-white/70">{p.tagline}</p>
+                  </div>
+                  <div className="absolute right-5 bottom-4 rounded-full bg-black/45 px-3.5 py-1.5 text-sm font-black text-white backdrop-blur-md">
+                    {formatCurrency(p.price)}
+                    <span className="text-[10px] font-semibold text-white/70">/mo</span>
                   </div>
                 </div>
 
@@ -92,12 +96,11 @@ export function ProgramsSection({ limit }: { limit?: number }) {
                   </ul>
 
                   <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
-                    <div>
-                      <span className="text-2xl font-black text-content">{formatCurrency(p.price)}</span>
-                      <span className="text-xs font-semibold text-content-faint">/mo</span>
-                    </div>
                     <span className="flex items-center gap-1.5 text-sm font-black text-content transition-all duration-300 group-hover:gap-3 group-hover:text-accent-dark dark:group-hover:text-accent">
                       View program <ArrowRight className="h-4 w-4" />
+                    </span>
+                    <span className="flex items-center gap-1.5 text-xs font-bold text-content-muted">
+                      <Clock className="h-3.5 w-3.5 text-accent-dark dark:text-accent" /> {p.duration}
                     </span>
                   </div>
                 </div>

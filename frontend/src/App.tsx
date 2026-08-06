@@ -3,7 +3,8 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { ToastProvider } from '@/context/ToastContext'
-import { WhatsAppButton, BackToTop, StickyCTA, MouseFollower, ScrollProgress, Loader } from '@/components/layout/floating'
+import { StickyCTA, BackToTop, ScrollProgress, Loader } from '@/components/layout/floating'
+import { Chatbot } from '@/components/layout/Chatbot'
 import { PublicLayout } from '@/pages/PublicLayout'
 import Home from '@/pages/Home'
 import Programs from '@/pages/Programs'
@@ -15,6 +16,11 @@ import BlogPost from '@/pages/BlogPost'
 import Contact from '@/pages/Contact'
 import FAQ from '@/pages/FAQ'
 import About from '@/pages/About'
+import Trainers from '@/pages/Trainers'
+import TrainerDetail from '@/pages/TrainerDetail'
+import Templates from '@/pages/Templates'
+import Courses from '@/pages/Courses'
+import Services from '@/pages/Services'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
 import Onboarding from '@/pages/onboarding/Onboarding'
@@ -42,6 +48,7 @@ import AdminNutrition from '@/pages/admin/AdminNutrition'
 import AdminProgress from '@/pages/admin/AdminProgress'
 import AdminAssessments from '@/pages/admin/AdminAssessments'
 import AdminGoals from '@/pages/admin/AdminGoals'
+import AdminLiveCoaching from '@/pages/admin/AdminLiveCoaching'
 import AdminAttendance from '@/pages/admin/AdminAttendance'
 import AdminSchedule from '@/pages/admin/AdminSchedule'
 import AdminMessaging from '@/pages/admin/AdminMessaging'
@@ -57,7 +64,7 @@ function Shell() {
   const location = useLocation()
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1400)
+    const t = setTimeout(() => setLoading(false), 800)
     return () => clearTimeout(t)
   }, [])
 
@@ -65,7 +72,6 @@ function Shell() {
     <ThemeProvider>
       <ToastProvider>
         <ScrollProgress />
-        <MouseFollower />
         <AnimatePresence mode="wait">
           {loading && <Loader key="loader" />}
         </AnimatePresence>
@@ -75,9 +81,14 @@ function Shell() {
             <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/trainers" element={<Trainers />} />
+                <Route path="/trainers/:slug" element={<TrainerDetail />} />
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/programs/:slug" element={<ProgramDetail />} />
                 <Route path="/pricing" element={<Pricing />} />
+                <Route path="/templates" element={<Templates />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/services" element={<Services />} />
                 <Route path="/transformations" element={<Transformations />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
@@ -111,6 +122,7 @@ function Shell() {
                 <Route path="progress" element={<AdminProgress />} />
                 <Route path="assessments" element={<AdminAssessments />} />
                 <Route path="goals" element={<AdminGoals />} />
+                <Route path="live" element={<AdminLiveCoaching />} />
                 <Route path="attendance" element={<AdminAttendance />} />
                 <Route path="schedule" element={<AdminSchedule />} />
                 <Route path="messaging" element={<AdminMessaging />} />
@@ -132,8 +144,8 @@ function Shell() {
         </AnimatePresence>
 
         <StickyCTA />
-        <WhatsAppButton />
         <BackToTop />
+        <Chatbot />
       </ToastProvider>
     </ThemeProvider>
   )

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HelpCircle } from 'lucide-react'
 import { FAQS } from '@/lib/constants'
@@ -15,7 +16,7 @@ export function FAQSection() {
   const list = cat === 'All' ? FAQS : FAQS.filter((f) => f.category === cat)
 
   return (
-    <section id="faq" className="relative py-24 lg:py-32">
+    <section id="faq" className="section-padding relative">
       <div className="container-shell">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
@@ -34,8 +35,8 @@ export function FAQSection() {
                     className={cn(
                       'rounded-full border px-4 py-2 text-xs font-bold transition-all duration-300',
                       cat === c
-                        ? 'border-accent bg-accent/15 text-primary dark:text-accent'
-                        : 'border-border text-content-muted hover:border-accent/40',
+                        ? 'border-accent/30 bg-accent/10 text-accent'
+                        : 'border-border text-content-muted hover:border-accent/30 hover:bg-surface-subtle',
                     )}
                   >
                     {c}
@@ -45,12 +46,12 @@ export function FAQSection() {
             </Reveal>
             <Reveal dir="up" className="mt-8">
               <div className="flex items-start gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-5">
-                <HelpCircle className="mt-0.5 h-5 w-5 shrink-0 text-accent-dark dark:text-accent" />
+                <HelpCircle className="mt-0.5 h-5 w-5 shrink-0 text-accent" strokeWidth={1.75} />
                 <p className="text-sm text-content-muted">
                   Can't find your answer?{' '}
-                  <a href="/contact" className="font-black text-accent-dark underline-offset-4 hover:underline dark:text-accent">
+                  <Link to="/contact" className="font-semibold text-accent underline-offset-4 hover:underline">
                     Book a free consultation
-                  </a>{' '}
+                  </Link>{' '}
                   and ask me anything.
                 </p>
               </div>
@@ -60,7 +61,7 @@ export function FAQSection() {
           <div className="space-y-3">
             {list.map((f, i) => (
               <Reveal key={f.id} dir="up" delay={i * 0.05}>
-                <div className={cn('overflow-hidden rounded-2xl border transition-all duration-300', openId === f.id ? 'border-accent/50 bg-accent/5' : 'border-border bg-surface-subtle/60 dark:bg-surface-subtle')}>
+                <div className={cn('overflow-hidden rounded-2xl border transition-all duration-300', openId === f.id ? 'border-accent/30 bg-accent/5' : 'border-border bg-surface-card')}>
                   <button
                     onClick={() => setOpenId(openId === f.id ? null : f.id)}
                     aria-expanded={openId === f.id}

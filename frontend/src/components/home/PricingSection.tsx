@@ -26,7 +26,7 @@ export function PricingSection({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <section id="pricing" className="relative overflow-hidden py-24 lg:py-32">
+    <section id="pricing" className="section-padding relative overflow-hidden">
       <div className="pointer-events-none absolute -right-32 top-40 h-96 w-96 rounded-full bg-accent/10 blur-[130px]" />
       <div className="container-shell relative">
         <SectionHeading
@@ -63,10 +63,10 @@ export function PricingSection({ compact = false }: { compact?: boolean }) {
             <StaggerItem key={plan.id} className="h-full">
               <div
                 className={cn(
-                  'relative flex h-full flex-col rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-2',
+                  'relative flex h-full flex-col rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1',
                   plan.popular
-                    ? 'border-accent/60 bg-primary text-white shadow-glow dark:bg-surface-solid'
-                    : 'border-border bg-surface-subtle/60 hover:border-accent/40 hover:shadow-lift dark:bg-surface-subtle',
+                    ? 'border-accent/40 bg-surface-card text-white shadow-glow'
+                    : 'border-border bg-surface-card hover:border-accent/30 hover:shadow-card-hover',
                 )}
               >
                 {plan.popular && (
@@ -129,18 +129,18 @@ export function PricingSection({ compact = false }: { compact?: boolean }) {
 
         {!compact && (
           <Reveal dir="up" className="mt-14">
-            <div className="mx-auto max-w-4xl overflow-hidden rounded-3xl border border-border bg-surface-subtle/60 dark:bg-surface-subtle">
+            <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-border bg-surface-card">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[640px] text-left text-sm">
+                <table className="table-premium min-w-[640px]">
                   <thead>
-                    <tr className="border-b border-border text-xs font-black uppercase tracking-wider text-content-faint">
-                      <th className="p-5">What's included</th>
-                      <th className="p-5">Starter</th>
-                      <th className="p-5 text-accent-dark dark:text-accent">Pro</th>
-                      <th className="p-5">Elite</th>
+                    <tr>
+                      <th>What's included</th>
+                      <th>Starter</th>
+                      <th className="text-accent">Pro</th>
+                      <th>Elite</th>
                     </tr>
                   </thead>
-                  <tbody className="text-content-muted">
+                  <tbody>
                     {[
                       ['Personalized workout plan', false, true, true],
                       ['Custom meal plan & macros', false, true, true],
@@ -150,10 +150,10 @@ export function PricingSection({ compact = false }: { compact?: boolean }) {
                       ['24/7 priority messaging', false, false, true],
                       ['In-person sessions', false, false, true],
                     ].map((row) => (
-                      <tr key={row[0] as string} className="border-b border-border/60 last:border-0">
-                        <td className="p-5 font-semibold text-content">{row[0]}</td>
+                      <tr key={row[0] as string}>
+                        <td className="font-semibold text-content">{row[0]}</td>
                         {[1, 2, 3].map((i) => (
-                          <td key={i} className="p-5">
+                          <td key={i}>
                             {row[i] ? (
                               <Check className="h-4 w-4 text-success" strokeWidth={3} />
                             ) : (

@@ -8,8 +8,8 @@ export function Glass({ className, children, hover = false }: { className?: stri
   return (
     <div
       className={cn(
-        'rounded-2xl border border-border bg-surface-subtle/60 shadow-[0_1px_2px_rgba(17,17,17,0.04)] dark:bg-surface-subtle',
-        hover && 'transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lift',
+        'rounded-2xl border border-border bg-surface-card shadow-card',
+        hover && 'transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-card-hover',
         className,
       )}
     >
@@ -25,7 +25,7 @@ export function StatCard({
   sub,
   trend,
   icon,
-  iconBg = 'bg-accent/15 text-primary dark:text-accent',
+  iconBg = 'bg-accent/10 text-accent',
   spark,
   onClick,
 }: {
@@ -63,7 +63,7 @@ export function StatCard({
 }
 
 /* ---------- Sparkline ---------- */
-export function Sparkline({ data, className, color = '#7CFF4F' }: { data: number[]; className?: string; color?: string }) {
+export function Sparkline({ data, className, color = '#E11D48' }: { data: number[]; className?: string; color?: string }) {
   if (data.length < 2) return null
   const W = 100
   const H = 32
@@ -164,7 +164,7 @@ export function EmptyState({ title, sub, action, icon }: { title: string; sub?: 
 }
 
 /* ---------- Progress ring ---------- */
-export function Ring({ value, size = 44, stroke = 5, color = '#7CFF4F', label, className }: { value: number; size?: number; stroke?: number; color?: string; label?: ReactNode; className?: string }) {
+export function Ring({ value, size = 44, stroke = 5, color = '#E11D48', label, className }: { value: number; size?: number; stroke?: number; color?: string; label?: ReactNode; className?: string }) {
   const r = (size - stroke) / 2
   const c = 2 * Math.PI * r
   const v = Math.min(100, Math.max(0, value))

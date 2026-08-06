@@ -73,7 +73,7 @@ export default function AdminPrograms() {
           <Input label="Program name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           <Input label="Tagline" value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} />
           <div className="grid grid-cols-2 gap-3">
-            <Input label="Price (USD/mo)" type="number" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} />
+            <Input label="Price (ETB/mo)" type="number" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} />
             <Select label="Level" value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value })}>
               {['Beginner', 'Intermediate', 'Advanced'].map((l) => <option key={l}>{l}</option>)}
             </Select>
