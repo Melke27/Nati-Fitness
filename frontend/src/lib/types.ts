@@ -305,6 +305,76 @@ export interface Goal {
   status: 'on-track' | 'at-risk' | 'achieved' | 'upcoming'
 }
 
+export interface Partner {
+  id: string
+  slug: string
+  name: string
+  avatar: string
+  cover: string
+  role: string
+  bio: string
+  specialties: string[]
+  clients: number
+  programs: number
+  rating: number
+  location: string
+  verified: boolean
+}
+
+export interface Product {
+  id: string
+  slug: string
+  name: string
+  category: 'equipment' | 'supplement' | 'apparel' | 'digital'
+  image: string
+  price: number
+  compareAt?: number
+  rating: number
+  reviews: number
+  badge?: string
+  description: string
+  partnerSlug?: string
+}
+
+export interface Template {
+  id: string
+  slug: string
+  title: string
+  category: 'workout' | 'nutrition' | 'meal-plan' | 'assessment'
+  image: string
+  price: number
+  description: string
+  items: number
+  partnerSlug: string
+  rating: number
+  downloads: number
+}
+
+export interface Course {
+  id: string
+  slug: string
+  title: string
+  image: string
+  price: number
+  compareAt?: number
+  description: string
+  lessons: number
+  hours: number
+  level: FitnessLevel
+  partnerSlug: string
+  rating: number
+  students: number
+  badge?: string
+}
+
+export interface Service {
+  id: string
+  title: string
+  icon: string
+  description: string
+  features: string[]
+}
+
 export interface DB {
   users: User[]
   clients: Client[]
@@ -331,4 +401,9 @@ export interface DB {
   assessments: Assessment[]
   files: ClientFile[]
   goals: Goal[]
+  partners: Partner[]
+  products: Product[]
+  templates: Template[]
+  courses: Course[]
+  services: Service[]
 }

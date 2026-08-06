@@ -20,7 +20,7 @@ export function Testimonials() {
   const prev = () => setIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)
 
   return (
-    <section id="testimonials" className="relative overflow-hidden bg-surface-subtle/50 py-24 lg:py-32">
+    <section id="testimonials" className="section-padding relative overflow-hidden bg-surface-subtle">
       <div className="pointer-events-none absolute -left-32 top-10 h-80 w-80 rounded-full bg-accent/10 blur-[120px]" />
       <div className="container-shell relative">
         <SectionHeading
@@ -34,7 +34,7 @@ export function Testimonials() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <div className="overflow-hidden rounded-3xl border border-border bg-surface-subtle/70 shadow-card dark:bg-surface-subtle">
+          <div className="overflow-hidden rounded-2xl border border-border bg-surface-card shadow-card">
             <AnimatePresence mode="wait">
               <motion.figure
                 key={index}

@@ -2,14 +2,17 @@ import {
   forwardRef,
   useState,
   useEffect,
+  cloneElement,
   type ButtonHTMLAttributes,
   type InputHTMLAttributes,
   type TextareaHTMLAttributes,
   type ReactNode,
+  type ReactElement,
   type SelectHTMLAttributes,
 } from 'react'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
+import { X } from 'lucide-react'
 
 /* ---------------- Button ---------------- */
 
@@ -20,47 +23,66 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
   size?: ButtonSize
   loading?: boolean
+  asChild?: boolean
 }
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary text-content-inverse hover:bg-primary/85 hover:-translate-y-0.5 shadow-card',
+    'bg-surface-solid text-content-inverse hover:opacity-90 active:scale-[0.98] shadow-soft',
   accent:
-    'bg-cta-gradient text-primary hover:bg-cta-gradient-hover hover:-translate-y-0.5 shadow-glow',
+    'bg-cta-gradient text-primary hover:bg-cta-gradient-hover active:scale-[0.98] shadow-glow btn-ripple',
   outline:
-    'border border-border bg-transparent hover:bg-surface-subtle hover:-translate-y-0.5',
-  ghost: 'hover:bg-surface-subtle',
-  dark: 'bg-surface-solid text-content-inverse hover:opacity-90 hover:-translate-y-0.5 shadow-lift',
-  soft: 'bg-accent/10 text-primary dark:text-accent hover:bg-accent/20',
-  danger: 'bg-error/10 text-error hover:bg-error/20',
+    'border border-border bg-transparent text-content hover:border-accent/50 hover:bg-accent/5 active:scale-[0.98]',
+  ghost: 'text-content-muted hover:bg-surface-subtle hover:text-content active:scale-[0.98]',
+  dark: 'bg-primary text-white border border-border hover:border-accent/30 active:scale-[0.98] shadow-card',
+  soft: 'bg-accent/10 text-accent hover:bg-accent/15 active:scale-[0.98]',
+  danger: 'bg-error/10 text-error hover:bg-error/15 active:scale-[0.98]',
 }
 
 const buttonSizes: Record<ButtonSize, string> = {
-  sm: 'h-9 px-4 text-xs',
-  md: 'h-11 px-6 text-sm',
-  lg: 'h-14 px-8 text-[15px]',
+  sm: 'h-9 px-4 text-xs gap-1.5',
+  md: 'h-11 px-6 text-sm gap-2',
+  lg: 'h-14 px-8 text-[15px] gap-2.5',
   icon: 'h-10 w-10',
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', loading, children, disabled, ...props }, ref) => (
-    <button
-      ref={ref}
-      disabled={disabled || loading}
-      className={cn(
-        'relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full font-bold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0',
-        buttonVariants[variant],
-        buttonSizes[size],
-        className,
-      )}
-      {...props}
-    >
-      {loading && (
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
-      )}
-      {children}
-    </button>
-  ),
+  ({ className, variant = 'primary', size = 'md', loading, children, disabled, asChild, ...props }, ref) => {
+    if (asChild) {
+      const child = children as ReactElement<{ className?: string }>
+      return cloneElement(child, {
+        className: cn(
+          'relative inline-flex items-center justify-center gap-2 rounded-full font-bold transition-all duration-300',
+          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+          'disabled:cursor-not-allowed disabled:opacity-40 disabled:pointer-events-none',
+          buttonVariants[variant],
+          buttonSizes[size],
+          child.props.className,
+          className,
+        ),
+      })
+    }
+    return (
+      <button
+        ref={ref}
+        disabled={disabled || loading}
+        className={cn(
+          'relative inline-flex items-center justify-center gap-2 rounded-full font-bold transition-all duration-300',
+          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+          'disabled:cursor-not-allowed disabled:opacity-40 disabled:pointer-events-none',
+          buttonVariants[variant],
+          buttonSizes[size],
+          className,
+        )}
+        {...props}
+      >
+        {loading && (
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+        )}
+        {children}
+      </button>
+    )
+  },
 )
 Button.displayName = 'Button'
 
@@ -77,15 +99,15 @@ export function Badge({
 }) {
   const styles = {
     default: 'bg-surface-subtle text-content-muted border border-border',
-    accent: 'bg-accent/15 text-primary dark:text-accent border border-accent/30',
-    success: 'bg-success/10 text-success border border-success/25',
-    warning: 'bg-warning/10 text-warning border border-warning/25',
+    accent: 'bg-accent/10 text-accent border border-accent/25',
+    success: 'bg-success/10 text-success border border-success/20',
+    warning: 'bg-warning/10 text-warning border border-warning/20',
     outline: 'border border-border text-content-muted',
   }
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide',
+        'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-caption font-semibold uppercase tracking-wide',
         styles[variant],
         className,
       )}
@@ -101,8 +123,8 @@ export function Card({ className, children, hover = false }: { className?: strin
   return (
     <div
       className={cn(
-        'rounded-2xl border border-border bg-surface-subtle/60 p-6 dark:bg-surface-subtle',
-        hover && 'transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-lift',
+        'rounded-2xl border border-border bg-surface-card p-6 shadow-card',
+        hover && 'card-surface-hover',
         className,
       )}
     >
@@ -113,62 +135,70 @@ export function Card({ className, children, hover = false }: { className?: strin
 
 /* ---------------- Inputs ---------------- */
 
-export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement> & { label?: string }>(
-  ({ className, label, id, ...props }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement> & { label?: string; error?: string }>(
+  ({ className, label, id, error, ...props }, ref) => {
     const input = (
       <input
         ref={ref}
         id={id}
+        aria-invalid={error ? true : undefined}
         className={cn(
-          'h-12 w-full rounded-xl border border-border bg-surface px-4 text-sm text-content placeholder:text-content-faint transition-colors focus:border-accent-dark focus:outline-none focus:ring-4 focus:ring-accent/20 dark:bg-surface-subtle',
+          'input-base',
+          error && 'border-error focus:border-error focus:ring-error/20',
           className,
         )}
         {...props}
       />
     )
-    if (!label) return input
+    if (!label && !error) return input
     return (
-      <div className="space-y-1.5">
-        <Label htmlFor={id}>{label}</Label>
+      <div className="space-y-2">
+        {label && <Label htmlFor={id}>{label}</Label>}
         {input}
+        {error && <p className="text-caption text-error" role="alert">{error}</p>}
       </div>
     )
   },
 )
 Input.displayName = 'Input'
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string }>(
-  ({ className, label, id, ...props }, ref) => {
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement> & { label?: string; error?: string }>(
+  ({ className, label, id, error, ...props }, ref) => {
     const area = (
       <textarea
         ref={ref}
         id={id}
+        aria-invalid={error ? true : undefined}
         className={cn(
-          'w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-content placeholder:text-content-faint transition-colors focus:border-accent-dark focus:outline-none focus:ring-4 focus:ring-accent/20 dark:bg-surface-subtle',
+          'input-base min-h-[120px] resize-y py-3',
+          error && 'border-error focus:border-error focus:ring-error/20',
           className,
         )}
         {...props}
       />
     )
-    if (!label) return area
+    if (!label && !error) return area
     return (
-      <div className="space-y-1.5">
-        <Label htmlFor={id}>{label}</Label>
+      <div className="space-y-2">
+        {label && <Label htmlFor={id}>{label}</Label>}
         {area}
+        {error && <p className="text-caption text-error" role="alert">{error}</p>}
       </div>
     )
   },
 )
 Textarea.displayName = 'Textarea'
 
-export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement> & { label?: string }>(
-  ({ className, label, id, children, ...props }, ref) => {
+export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement> & { label?: string; error?: string }>(
+  ({ className, label, id, children, error, ...props }, ref) => {
     const select = (
       <select
         ref={ref}
         id={id}
+        aria-invalid={error ? true : undefined}
         className={cn(
-          'h-12 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-sm text-content transition-colors focus:border-accent-dark focus:outline-none focus:ring-4 focus:ring-accent/20 dark:bg-surface-subtle',
+          'input-base cursor-pointer appearance-none',
+          error && 'border-error focus:border-error focus:ring-error/20',
           className,
         )}
         {...props}
@@ -176,11 +206,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
         {children}
       </select>
     )
-    if (!label) return select
+    if (!label && !error) return select
     return (
-      <div className="space-y-1.5">
-        <Label htmlFor={id}>{label}</Label>
+      <div className="space-y-2">
+        {label && <Label htmlFor={id}>{label}</Label>}
         {select}
+        {error && <p className="text-caption text-error" role="alert">{error}</p>}
       </div>
     )
   },
@@ -189,7 +220,7 @@ Select.displayName = 'Select'
 
 export function Label({ children, htmlFor, className }: { children: ReactNode; htmlFor?: string; className?: string }) {
   return (
-    <label htmlFor={htmlFor} className={cn('text-[13px] font-bold text-content', className)}>
+    <label htmlFor={htmlFor} className={cn('text-sm font-semibold text-content', className)}>
       {children}
     </label>
   )
@@ -199,7 +230,7 @@ export function Label({ children, htmlFor, className }: { children: ReactNode; h
 
 export function Progress({ value, className, barClassName }: { value: number; className?: string; barClassName?: string }) {
   return (
-    <div className={cn('h-2 w-full overflow-hidden rounded-full bg-surface-solid/10', className)} role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
+    <div className={cn('h-2 w-full overflow-hidden rounded-full bg-surface-subtle', className)} role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
       <motion.div
         className={cn('h-full rounded-full bg-cta-gradient', barClassName)}
         initial={{ width: 0 }}
@@ -221,8 +252,8 @@ export function Switch({ checked, onChange, label }: { checked: boolean; onChang
       aria-label={label}
       onClick={() => onChange(!checked)}
       className={cn(
-        'relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2',
-        checked ? 'bg-cta-gradient' : 'bg-surface-solid/20',
+        'relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+        checked ? 'bg-accent' : 'bg-surface-subtle border border-border',
       )}
     >
       <motion.span
@@ -247,9 +278,9 @@ export function Avatar({ name, src, className, size = 'md' }: { name: string; sr
   const sizes = { sm: 'h-8 w-8 text-[10px]', md: 'h-10 w-10 text-xs', lg: 'h-14 w-14 text-sm' }
   return (
     <div
-      className={cn('relative flex items-center justify-center overflow-hidden rounded-full bg-cta-gradient font-black text-primary', sizes[size], className)}
+      className={cn('relative flex items-center justify-center overflow-hidden rounded-full bg-accent font-bold text-primary', sizes[size], className)}
     >
-      {src ? <img src={src} alt={name} className="h-full w-full object-cover" /> : <span>{initials}</span>}
+      {src ? <img src={src} alt={name} className="h-full w-full object-cover" loading="lazy" /> : <span>{initials}</span>}
     </div>
   )
 }
@@ -257,7 +288,7 @@ export function Avatar({ name, src, className, size = 'md' }: { name: string; sr
 /* ---------------- Skeleton ---------------- */
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn('animate-pulse rounded-xl bg-surface-solid/10', className)} />
+  return <div className={cn('shimmer rounded-xl bg-surface-subtle', className)} />
 }
 
 /* ---------------- Modal / Dialog ---------------- */
@@ -282,7 +313,7 @@ export function Modal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[80] flex items-end justify-center bg-black/60 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-[80] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-6"
           onClick={onClose}
         >
           <motion.div
@@ -293,19 +324,20 @@ export function Modal({
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
+            aria-labelledby={title ? 'modal-title' : undefined}
             className={cn(
-              'max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-border bg-surface-solid p-6 shadow-lift dark:bg-surface dark:border-border',
+              'max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-border bg-surface-card p-6 shadow-lift sm:rounded-3xl',
               className,
             )}
           >
-            <div className="mb-4 flex items-center justify-between">
-              {title && <h3 className="text-lg font-black text-content-inverse">{title}</h3>}
+            <div className="mb-6 flex items-center justify-between">
+              {title && <h3 id="modal-title" className="text-lg font-bold text-content">{title}</h3>}
               <button
                 onClick={onClose}
                 aria-label="Close dialog"
-                className="ml-auto rounded-full p-2 text-content-faint transition hover:bg-surface-subtle hover:text-content"
+                className="ml-auto grid h-9 w-9 place-items-center rounded-xl border border-border text-content-muted transition hover:bg-surface-subtle hover:text-content"
               >
-                ✕
+                <X className="h-4 w-4" />
               </button>
             </div>
             {children}
@@ -331,11 +363,11 @@ export function Accordion({ items }: { items: { id: string; question: string; an
 function AccordionItem({ item, index }: { item: { id: string; question: string; answer: string }; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ delay: index * 0.05 }}
-      className="group overflow-hidden rounded-2xl border border-border bg-surface-subtle/50 dark:bg-surface-subtle"
+      className="overflow-hidden rounded-2xl border border-border bg-surface-card"
     >
       <AccordionTrigger item={item} />
     </motion.div>
@@ -346,14 +378,12 @@ function AccordionTrigger({ item }: { item: { id: string; question: string; answ
   return (
     <details className="group/acc" aria-label={item.question}>
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 [&::-webkit-details-marker]:hidden">
-        <span className="text-sm font-bold text-content sm:text-base">{item.question}</span>
-        <motion.span
-          className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-border text-content-muted transition-all duration-300 group-open/acc:rotate-45 group-open/acc:bg-accent group-open/acc:text-primary"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <span className="text-sm font-semibold text-content sm:text-base">{item.question}</span>
+        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-border text-content-muted transition-all duration-300 group-open/acc:rotate-45 group-open/acc:border-accent/30 group-open/acc:bg-accent/10 group-open/acc:text-accent">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
             <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-        </motion.span>
+        </span>
       </summary>
       <div className="px-6 pb-5">
         <p className="text-sm leading-relaxed text-content-muted">{item.answer}</p>
@@ -381,13 +411,13 @@ export function SectionHeading({
     <div className={cn('mb-12 flex flex-col gap-4 sm:mb-16', align === 'center' ? 'items-center text-center' : 'items-start text-left')}>
       {eyebrow && (
         <motion.span
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-primary dark:text-accent"
+          className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-4 py-1.5 text-caption font-semibold uppercase tracking-[0.15em] text-accent"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-accent-dark" />
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
           {eyebrow}
         </motion.span>
       )}
@@ -397,7 +427,7 @@ export function SectionHeading({
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.08 }}
         className={cn(
-          'max-w-3xl text-balance text-3xl font-black leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl',
+          'max-w-3xl text-balance text-heading-sm font-bold tracking-tight sm:text-heading lg:text-display-sm',
           dark ? 'text-white' : 'text-content',
         )}
       >
@@ -405,11 +435,11 @@ export function SectionHeading({
       </motion.h2>
       {description && (
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.16 }}
-          className={cn('max-w-2xl text-base leading-relaxed sm:text-lg', dark ? 'text-white/60' : 'text-content-muted')}
+          className={cn('max-w-2xl text-body text-content-muted', dark && 'text-white/60')}
         >
           {description}
         </motion.p>
@@ -446,5 +476,28 @@ export function Counter({ value, suffix = '', duration = 1.8 }: { value: number;
       {display.toLocaleString()}
       {suffix}
     </motion.span>
+  )
+}
+
+/* ---------------- Empty State ---------------- */
+
+export function EmptyState({
+  icon,
+  title,
+  description,
+  action,
+}: {
+  icon?: ReactNode
+  title: string
+  description?: string
+  action?: ReactNode
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface-subtle/50 px-8 py-16 text-center">
+      {icon && <div className="mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-surface-card text-content-muted">{icon}</div>}
+      <h3 className="text-subheading font-semibold text-content">{title}</h3>
+      {description && <p className="mt-2 max-w-sm text-sm text-content-muted">{description}</p>}
+      {action && <div className="mt-6">{action}</div>}
+    </div>
   )
 }

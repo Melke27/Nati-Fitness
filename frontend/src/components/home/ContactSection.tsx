@@ -22,7 +22,7 @@ export function ContactSection() {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-surface-subtle/50 py-24 lg:py-32">
+    <section id="contact" className="section-padding relative overflow-hidden bg-surface-subtle">
       <div className="pointer-events-none absolute -right-40 top-20 h-96 w-96 rounded-full bg-accent/10 blur-[130px]" />
       <div className="container-shell relative">
         <SectionHeading
@@ -34,7 +34,7 @@ export function ContactSection() {
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
           {/* Form */}
           <Reveal dir="right">
-            <div className="rounded-3xl border border-border bg-surface-subtle/70 p-8 shadow-card dark:bg-surface-subtle">
+            <div className="rounded-2xl border border-border bg-surface-card p-8 shadow-card">
               {sent ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                   <motion.div
@@ -95,9 +95,9 @@ export function ContactSection() {
                   href={c.href}
                   target={c.href?.startsWith('http') ? '_blank' : undefined}
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-4 rounded-2xl border border-border bg-surface-subtle/70 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-card dark:bg-surface-subtle"
+                  className="group flex items-center gap-4 rounded-2xl border border-border bg-surface-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-card-hover"
                 >
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent/15 text-primary transition group-hover:bg-accent dark:text-accent dark:group-hover:text-primary">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent transition group-hover:bg-accent group-hover:text-primary">
                     <c.icon className="h-5 w-5" />
                   </span>
                   <div className="min-w-0">
@@ -110,7 +110,7 @@ export function ContactSection() {
             ))}
 
             <Reveal dir="left" delay={0.3}>
-              <div className="relative overflow-hidden rounded-2xl border border-border bg-surface-subtle/70 p-6 dark:bg-surface-subtle">
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-surface-card p-6">
                 <div className="absolute inset-0 grid-pattern opacity-40" />
                 <div className="relative flex items-center gap-3">
                   <span className="relative grid h-3 w-3">

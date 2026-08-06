@@ -69,7 +69,7 @@ export default function Login() {
             <label className="flex items-center gap-2 text-content-muted">
               <input type="checkbox" className="h-4 w-4 rounded accent-[#7CFF4F]" defaultChecked /> Remember me
             </label>
-            <a href="/contact" className="text-accent-dark underline-offset-4 hover:underline dark:text-accent">Forgot password?</a>
+            <Link to="/contact" className="text-accent-dark underline-offset-4 hover:underline dark:text-accent">Forgot password?</Link>
           </div>
 
           <Button type="submit" variant="accent" size="lg" className="group w-full" loading={loading}>

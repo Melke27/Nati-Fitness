@@ -5,14 +5,14 @@ import { Rings } from '@/components/visuals'
 
 export function CTABand() {
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="section-padding">
       <div className="container-shell">
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-hidden rounded-[36px] bg-primary px-8 py-16 text-center text-white sm:px-16 lg:py-24"
+          className="relative overflow-hidden rounded-3xl border border-border bg-surface-card px-8 py-16 text-center text-white sm:px-16 lg:py-24"
         >
           <div className="absolute inset-0 grid-pattern opacity-30" />
           <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-accent/20 blur-[110px]" />

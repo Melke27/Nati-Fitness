@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { ToastProvider } from '@/context/ToastContext'
-import { WhatsAppButton, BackToTop, StickyCTA, MouseFollower, ScrollProgress, Loader } from '@/components/layout/floating'
+import { WhatsAppButton, BackToTop, StickyCTA, ScrollProgress, Loader } from '@/components/layout/floating'
 import { PublicLayout } from '@/pages/PublicLayout'
 import Home from '@/pages/Home'
 import Programs from '@/pages/Programs'
@@ -15,6 +15,12 @@ import BlogPost from '@/pages/BlogPost'
 import Contact from '@/pages/Contact'
 import FAQ from '@/pages/FAQ'
 import About from '@/pages/About'
+import Partners from '@/pages/Partners'
+import PartnerDetail from '@/pages/PartnerDetail'
+import Shop from '@/pages/Shop'
+import Templates from '@/pages/Templates'
+import Courses from '@/pages/Courses'
+import Services from '@/pages/Services'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
 import Onboarding from '@/pages/onboarding/Onboarding'
@@ -58,7 +64,7 @@ function Shell() {
   const location = useLocation()
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1400)
+    const t = setTimeout(() => setLoading(false), 800)
     return () => clearTimeout(t)
   }, [])
 
@@ -66,7 +72,6 @@ function Shell() {
     <ThemeProvider>
       <ToastProvider>
         <ScrollProgress />
-        <MouseFollower />
         <AnimatePresence mode="wait">
           {loading && <Loader key="loader" />}
         </AnimatePresence>
@@ -76,9 +81,15 @@ function Shell() {
             <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/partners" element={<Partners />} />
+                <Route path="/partners/:slug" element={<PartnerDetail />} />
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/programs/:slug" element={<ProgramDetail />} />
                 <Route path="/pricing" element={<Pricing />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/templates" element={<Templates />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/services" element={<Services />} />
                 <Route path="/transformations" element={<Transformations />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />

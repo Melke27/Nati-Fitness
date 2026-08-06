@@ -32,7 +32,7 @@ const PROGRAM_IMG: Record<string, string> = {
 export function ProgramsSection({ limit }: { limit?: number }) {
   const list = limit ? PROGRAMS.slice(0, limit) : PROGRAMS
   return (
-    <section id="programs" className="relative py-24 lg:py-32">
+    <section id="programs" className="section-padding relative">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Programs"
@@ -45,7 +45,7 @@ export function ProgramsSection({ limit }: { limit?: number }) {
             <StaggerItem key={p.id} className="h-full">
               <Link
                 to={`/programs/${p.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-subtle/60 transition-all duration-300 hover:-translate-y-2 hover:border-accent/50 hover:shadow-lift dark:bg-surface-subtle"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-hover"
               >
                 <div className="relative h-44 overflow-hidden">
                   <img

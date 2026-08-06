@@ -8,8 +8,8 @@ export function Glass({ className, children, hover = false }: { className?: stri
   return (
     <div
       className={cn(
-        'rounded-2xl border border-border bg-surface-subtle/60 shadow-[0_1px_2px_rgba(17,17,17,0.04)] dark:bg-surface-subtle',
-        hover && 'transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lift',
+        'rounded-2xl border border-border bg-surface-card shadow-card',
+        hover && 'transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/30 hover:shadow-card-hover',
         className,
       )}
     >
@@ -25,7 +25,7 @@ export function StatCard({
   sub,
   trend,
   icon,
-  iconBg = 'bg-accent/15 text-primary dark:text-accent',
+  iconBg = 'bg-accent/10 text-accent',
   spark,
   onClick,
 }: {
