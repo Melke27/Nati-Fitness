@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Lock, ShieldCheck, CreditCard, Landmark, Smartphone, Ticket, Sparkles, Upload, ChevronLeft, ArrowRight } from 'lucide-react'
-import { useDB, getSession, addPayment, applyCoupon, type PaymentMethod } from '@/lib/store'
+import { useDB, getSession, addPayment, applyCoupon, finalizePendingRegistration, getPendingRegistration, type PaymentMethod } from '@/lib/store'
 import { formatCurrency } from '@/lib/utils'
 import { useToast } from '@/context/ToastContext'
 import { Button, Input } from '@/components/ui'
@@ -30,9 +30,11 @@ export default function Checkout() {
   const planId = params.get('plan') ?? 'pro'
   const programId = params.get('program')
   const cycle = (params.get('cycle') ?? 'quarterly') as Cycle
+  const goal = params.get('goal')
 
   const plan = db.plans.find((p) => p.id === planId) ?? db.plans[1]
-  const program = db.programs.find((p) => p.id === programId)
+  const resolvedProgramId = programId ?? (goal ? ({ 'Weight Loss': 'p_weightloss', 'Muscle Gain': 'p_muscle', 'Overall Fitness': 'p_beginner', 'Strength Training': 'p_strength' } as Record<string, string>)[goal] : undefined)
+  const program = db.programs.find((p) => p.id === resolvedProgramId)
 
   const [step, setStep] = useState(0)
   const [method, setMethod] = useState<PaymentMethod>('Card')
@@ -86,12 +88,20 @@ export default function Checkout() {
   }
 
   const pay = () => {
-    if (!session) return navigate('/login')
+    const pending = getPendingRegistration()
+    if (!session && !pending) return navigate('/login')
+
     setProcessing(true)
     setTimeout(() => {
+      let activeSession = session
+      if (!activeSession && pending) {
+        const created = finalizePendingRegistration()
+        activeSession = { userId: created.userId, name: pending.name, email: pending.email, role: 'client' }
+      }
+
       const payment = addPayment({
-        clientId: `client_${session.userId}`,
-        clientName: session.name,
+        clientId: `client_${activeSession?.userId ?? 'guest'}`,
+        clientName: activeSession?.name ?? pending?.name ?? 'Client',
         amount: total,
         plan: plan.name,
         program: program?.name ?? 'Coaching',

@@ -132,6 +132,16 @@ export interface Session {
   role: 'client' | 'admin'
 }
 
+export interface PendingRegistration {
+  name: string
+  email: string
+  password: string
+  phone?: string
+  goal?: string | null
+}
+
+const PENDING_REGISTRATION_KEY = 'coachnati:pending-registration'
+
 export function getSession(): Session | null {
   try {
     const raw = localStorage.getItem(SESSION_KEY)
@@ -144,6 +154,39 @@ export function getSession(): Session | null {
 export function setSession(s: Session | null) {
   if (s) localStorage.setItem(SESSION_KEY, JSON.stringify(s))
   else localStorage.removeItem(SESSION_KEY)
+}
+
+export function savePendingRegistration(data: PendingRegistration) {
+  sessionStorage.setItem(PENDING_REGISTRATION_KEY, JSON.stringify(data))
+}
+
+export function getPendingRegistration(): PendingRegistration | null {
+  try {
+    const raw = sessionStorage.getItem(PENDING_REGISTRATION_KEY)
+    return raw ? (JSON.parse(raw) as PendingRegistration) : null
+  } catch {
+    return null
+  }
+}
+
+export function clearPendingRegistration() {
+  sessionStorage.removeItem(PENDING_REGISTRATION_KEY)
+}
+
+export function finalizePendingRegistration() {
+  const pending = getPendingRegistration()
+  if (!pending) throw new Error('No registration details found')
+
+  const userId = registerUser({
+    name: pending.name,
+    email: pending.email,
+    password: pending.password,
+    phone: pending.phone,
+  })
+
+  setSession({ userId, name: pending.name, email: pending.email, role: 'client' })
+  clearPendingRegistration()
+  return { userId }
 }
 
 /* ---------------- helper actions ---------------- */

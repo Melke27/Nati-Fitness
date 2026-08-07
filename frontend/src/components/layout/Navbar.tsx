@@ -175,7 +175,7 @@ export function Navbar() {
                   </Button>
                 </Link>
               )}
-              <Button variant="accent" size="sm" onClick={() => navigate('/register')} className="group">
+              <Button variant="accent" size="sm" onClick={() => navigate('/get-started')} className="group">
                 Get Started
               </Button>
             </div>
@@ -231,7 +231,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             ))}
 
             <div className="mt-8 space-y-3 pb-10">
-              <Link to="/register" onClick={onClose} className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white">
+              <Link to="/get-started" onClick={onClose} className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white">
                 Get Started
               </Link>
               {session ? (

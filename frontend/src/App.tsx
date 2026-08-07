@@ -7,6 +7,7 @@ import { StickyCTA, BackToTop, ScrollProgress, Loader } from '@/components/layou
 import { Chatbot } from '@/components/layout/Chatbot'
 import { PublicLayout } from '@/pages/PublicLayout'
 import Home from '@/pages/Home'
+import { PlanFinder } from '@/components/home/PlanFinder'
 import Programs from '@/pages/Programs'
 import ProgramDetail from '@/pages/ProgramDetail'
 import Pricing from '@/pages/Pricing'
@@ -79,6 +80,7 @@ function Shell() {
             <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/get-started" element={<PlanFinder />} />
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/programs/:slug" element={<ProgramDetail />} />
                 <Route path="/pricing" element={<Pricing />} />
