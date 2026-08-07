@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
+import { openPlanFinder } from '@/lib/planFinderBus'
 
 const SLIDES = [
   { word1: 'BUILD', word2: 'YOUR', word3: 'MUSCLE', image: MEDIA.hero, alt: 'Coach Nati building muscle' },
@@ -39,8 +40,8 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-accent/15 blur-[150px]" />
       <div className="pointer-events-none absolute -bottom-40 right-10 h-[520px] w-[520px] rounded-full bg-accent/10 blur-[160px]" />
 
-      <div className="container-shell relative z-10 w-full py-24 lg:py-32">
-        <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
+      <div className="container-shell relative z-10 w-full py-14 lg:py-24">
+        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — headline */}
           <div className="flex flex-col justify-center lg:col-span-7 lg:max-w-3xl">
             <motion.div variants={stagger} initial="hidden" animate="show">
@@ -83,12 +84,15 @@ export function Hero() {
                     <ArrowRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Link to="/contact">
-                  <Button variant="outline" size="xl" className="items-center gap-3 border-white/20 bg-white/5 px-10 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white">
-                    Book Free Call
-                    <ArrowUpRight className="h-6 w-6" />
-                  </Button>
-                </Link>
+<Button
+                  variant="outline"
+                  size="xl"
+                  onClick={openPlanFinder}
+                  className="items-center gap-3 border-white/20 bg-white/5 px-10 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white"
+                >
+                  Find Your Perfect Plan
+                  <ArrowUpRight className="h-6 w-6" />
+                </Button>
               </motion.div>
 
               {/* Stats */}

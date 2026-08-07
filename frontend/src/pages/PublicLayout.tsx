@@ -3,7 +3,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { cn } from '@/lib/utils'
 
-const NO_FOOTER = ['/login', '/register', '/onboarding', '/checkout']
+const NO_FOOTER = ['/login', '/register', '/onboarding', '/checkout', '/enroll']
 
 export function PublicLayout() {
   const { pathname } = useLocation()

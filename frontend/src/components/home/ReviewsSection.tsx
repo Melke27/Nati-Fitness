@@ -22,7 +22,7 @@ export function ReviewsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="flex h-full flex-col rounded-2xl border border-border bg-surface-card p-8"
+              className="flex h-full flex-col rounded-2xl border border-border bg-surface-card p-7"
             >
               <Quote className="h-8 w-8 text-accent" />
               <blockquote className="mt-4 flex-1 text-base leading-relaxed text-content-muted">

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/context/ThemeContext'
 import { ToastProvider } from '@/context/ToastContext'
 import { StickyCTA, BackToTop, ScrollProgress, Loader } from '@/components/layout/floating'
 import { Chatbot } from '@/components/layout/Chatbot'
+import { PlanFinderModal } from '@/components/planfinder/PlanFinderModal'
 import { PublicLayout } from '@/pages/PublicLayout'
 import Home from '@/pages/Home'
 import Programs from '@/pages/Programs'
@@ -24,6 +25,7 @@ import Register from '@/pages/auth/Register'
 import Onboarding from '@/pages/onboarding/Onboarding'
 import Checkout from '@/pages/checkout/Checkout'
 import CheckoutSuccess from '@/pages/checkout/CheckoutSuccess'
+import PlanEnrollment from '@/pages/enroll/PlanEnrollment'
 import DashboardLayout from '@/pages/dashboard/DashboardLayout'
 import ClientOverview from '@/pages/dashboard/ClientOverview'
 import ClientWorkouts from '@/pages/dashboard/ClientWorkouts'
@@ -96,6 +98,7 @@ function Shell() {
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                <Route path="/enroll" element={<PlanEnrollment />} />
               </Route>
 
               <Route path="/dashboard" element={<DashboardLayout />}>
@@ -142,6 +145,7 @@ function Shell() {
         <StickyCTA />
         <BackToTop />
         <Chatbot />
+        <PlanFinderModal />
       </ToastProvider>
     </ThemeProvider>
   )

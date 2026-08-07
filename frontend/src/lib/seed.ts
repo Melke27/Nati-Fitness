@@ -206,7 +206,7 @@ export function buildSeed(): DB {
     { id: 'g5', clientId: 'client_david', title: 'Bench 110kg', target: 'Strength PR', deadline: addDays(today, 45).toISOString(), progress: 91, status: 'achieved' },
   ]
 
-  const partners: Partner[] = [
+const partners: Partner[] = [
     { id: 'partner_nati', slug: 'coach-nati', name: 'Coach Nati', avatar: AVATARS.coach, cover: MEDIA.gym, role: 'Head Coach · Transformation Specialist', bio: 'Elite coach with 10+ years transforming bodies and minds. Certified CSCS, Precision Nutrition L2, and former competitive athlete. I build sustainable systems — not quick fixes.', specialties: ['Weight Loss', 'Muscle Gain', 'Strength', 'Nutrition'], experience: 10, clients: 500, programs: 12, rating: 4.9, location: 'Addis Ababa', verified: true },
   ]
 

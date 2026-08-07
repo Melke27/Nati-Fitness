@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, CalendarClock, Sparkles } from 'lucide-react'
 import { Rings } from '@/components/visuals'
+import { openPlanFinder } from '@/lib/planFinderBus'
 
 export function CTABand() {
   return (
@@ -40,20 +41,20 @@ export function CTABand() {
             </p>
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                to="/register"
-                className="group flex items-center gap-2 rounded-full bg-cta-gradient px-8 py-4 text-base font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-1"
-              >
-                <CalendarClock className="h-5 w-5" />
-                Start Your Journey
-                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-              <Link
-                to="/contact"
-                className="rounded-full border border-white/25 px-8 py-4 text-base font-black text-white transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:text-accent"
-              >
-                Book Consultation
-              </Link>
+<button
+              onClick={openPlanFinder}
+              className="group flex items-center gap-2 rounded-full bg-cta-gradient px-8 py-4 text-base font-black text-primary shadow-glow transition-all duration-300 hover:-translate-y-1"
+            >
+              <CalendarClock className="h-5 w-5" />
+              Get My Perfect Plan
+              <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+            <Link
+              to="/contact"
+              className="rounded-full border border-white/25 px-8 py-4 text-base font-black text-white transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:text-accent"
+            >
+              Book Consultation
+            </Link>
             </div>
 
             <p className="mt-6 text-xs font-semibold text-white/40">

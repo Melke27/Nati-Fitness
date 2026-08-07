@@ -72,7 +72,7 @@
   }
 
   .section-padding {
-    @apply py-20 lg:py-32;
+    @apply py-14 lg:py-20;
   }
 
   .glass {

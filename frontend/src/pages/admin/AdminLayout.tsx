@@ -141,7 +141,7 @@ export default function AdminLayout() {
   const currentItem = NAV_GROUPS.flatMap((g) => g.items).find((i) => (i.to === '/admin' ? location.pathname === '/admin' : location.pathname.startsWith(i.to)))
 
   return (
-    <div className="flex min-h-screen bg-surface-subtle/40 dark:bg-[#0a0c10]">
+    <div className="flex min-h-screen overflow-x-hidden bg-surface-subtle/40 dark:bg-[#0a0c10]">
       {/* ---------- Sidebar ---------- */}
       <aside
         className={cn(
@@ -269,7 +269,7 @@ export default function AdminLayout() {
               <AnimatePresence>
                 {notifOpen && (
                   <motion.div initial={{ opacity: 0, y: 8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.98 }} transition={{ duration: 0.18 }}
-                    className="absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-2xl border border-border bg-surface-solid shadow-lift dark:bg-surface">
+                    className="absolute right-0 top-12 z-50 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-surface-solid shadow-lift dark:bg-surface">
                     <div className="flex items-center justify-between border-b border-border px-4 py-3">
                       <p className="text-sm font-black text-content">Notifications</p>
                       <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-black text-accent-dark dark:text-accent">{notificationItems.length} new</span>

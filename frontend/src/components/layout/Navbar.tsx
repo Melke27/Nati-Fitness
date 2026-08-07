@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, LayoutGrid, Sparkles, HeartPulse, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getSession } from '@/lib/store'
 import { Button } from '@/components/ui'
+import { openPlanFinder } from '@/lib/planFinderBus'
 
 /* ----------------------- Mega menu data ----------------------- */
 const PROGRAMS_MENU = [
@@ -82,7 +83,7 @@ function MenuGroup({
 const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/programs', label: 'Programs' },
-  { to: '/services', label: 'Services' },
+{ to: '/pricing', label: 'Pricing' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -92,7 +93,6 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
   const [menu, setMenu] = useState<'programs' | 'about' | null>(null)
   const location = useLocation()
-  const navigate = useNavigate()
   const session = getSession()
 
   useEffect(() => {
@@ -141,6 +141,15 @@ export function Navbar() {
                   <MenuGroup key={l.to} label={l.label} open={menu === 'programs'} onToggle={(v) => setMenu(v ? 'programs' : null)} panel={<DropdownPanel items={PROGRAMS_MENU} />} />
                 ) : l.to === '/about' ? (
                   <MenuGroup key={l.to} label={l.label} open={menu === 'about'} onToggle={(v) => setMenu(v ? 'about' : null)} panel={<DropdownPanel items={ABOUT_MENU} />} />
+                ) : l.to === '/pricing' ? (
+                  <button
+                    key={l.to}
+                    type="button"
+                    onClick={openPlanFinder}
+                    className="rounded-xl px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors text-content-muted hover:text-white"
+                  >
+                    {l.label}
+                  </button>
                 ) : (
                   <NavLink
                     key={l.to}
@@ -175,7 +184,7 @@ export function Navbar() {
                   </Button>
                 </Link>
               )}
-              <Button variant="accent" size="sm" onClick={() => navigate('/register')} className="group">
+              <Button variant="accent" size="sm" onClick={openPlanFinder} className="group">
                 Get Started
               </Button>
             </div>
@@ -224,16 +233,34 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           <nav className="container-shell flex flex-1 flex-col gap-1 overflow-y-auto py-4" aria-label="Mobile navigation">
             {LINKS.map((l, i) => (
               <motion.div key={l.to} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
-                <Link to={l.to} onClick={onClose} className="block border-b border-border py-4 text-xl font-semibold text-white/90 hover:text-accent">
-                  {l.label}
-                </Link>
+                {l.to === '/pricing' ? (
+                  <button
+                    onClick={() => {
+                      openPlanFinder()
+                      onClose()
+                    }}
+                    className="block w-full border-b border-border py-4 text-left text-xl font-semibold text-white/90 hover:text-accent"
+                  >
+                    {l.label}
+                  </button>
+                ) : (
+                  <Link to={l.to} onClick={onClose} className="block border-b border-border py-4 text-xl font-semibold text-white/90 hover:text-accent">
+                    {l.label}
+                  </Link>
+                )}
               </motion.div>
             ))}
 
             <div className="mt-8 space-y-3 pb-10">
-              <Link to="/register" onClick={onClose} className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white">
+              <button
+                onClick={() => {
+                  openPlanFinder()
+                  onClose()
+                }}
+                className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white"
+              >
                 Get Started
-              </Link>
+              </button>
               {session ? (
                 <Link to={session.role === 'admin' ? '/admin' : '/dashboard'} onClick={onClose} className="block rounded-xl border border-border py-4 text-center font-semibold text-white">
                   Dashboard

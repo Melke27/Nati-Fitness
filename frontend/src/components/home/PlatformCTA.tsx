@@ -33,7 +33,7 @@ export function PlatformCTA() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/contact">Book Free Call</Link>
+                <Link to="/pricing">Try For 14 Days</Link>
               </Button>
             </div>
           </div>
