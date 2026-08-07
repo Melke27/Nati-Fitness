@@ -37,7 +37,7 @@ const QUESTIONS = [
       { id: 'No equipment', label: 'At home', desc: 'No equipment — bodyweight only', icon: HomeIcon },
       { id: 'Dumbbells', label: 'Dumbbells', desc: 'Home or gym with free weights', icon: Weight },
       { id: 'Full gym', label: 'Full gym', desc: 'Access to machines & barbells', icon: MapPin },
-      { id: 'Classes', label: 'Group classes', desc: 'Prefer coached group sessions', icon: Sparkles },
+      { id: 'Classes', label: 'Group support', desc: 'Prefer guided sessions with Coach Nati', icon: Sparkles },
     ],
   },
 ]

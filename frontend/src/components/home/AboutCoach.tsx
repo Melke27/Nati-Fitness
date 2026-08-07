@@ -5,7 +5,7 @@ import { Reveal } from '@/components/motion'
 
 const CREDENTIALS = [
   { value: '10+', label: 'Years Experience' },
-  { value: '500+', label: 'Clients Coached' },
+  { value: '500+', label: 'Clients helped' },
   { value: '12', label: 'Countries' },
   { value: '100%', label: 'Personalized' },
 ]

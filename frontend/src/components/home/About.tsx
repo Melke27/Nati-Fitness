@@ -73,7 +73,7 @@ export function About() {
           <Reveal dir="left" delay={0.16}>
             <div className="mt-6 space-y-4 text-base leading-relaxed text-content-muted">
               <p>
-                For over a decade I've coached everyone from total beginners to competitive athletes — online and in
+                For over a decade I've helped clients from total beginners to competitive athletes — online and in
                 person across 12 countries. My philosophy is simple: sustainable habits, progressive programming and
                 accountability that actually holds.
               </p>
@@ -114,7 +114,7 @@ export function About() {
               {[
                 'Evidence-based programming, reviewed and periodised every 4 weeks',
                 'Hybrid online + in-person coaching across 12 countries',
-                'A dedicated coach in your corner, 7 days a week',
+                'Direct support from Coach Nati, 7 days a week',
               ].map((point) => (
                 <li key={point} className="flex items-start gap-3">
                   <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent/15">

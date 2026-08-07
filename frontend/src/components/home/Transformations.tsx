@@ -177,7 +177,7 @@ function BeforeAfterSlider() {
               <div className="mt-6 flex flex-wrap gap-3 text-xs font-bold text-white/60">
                 <span className="rounded-full border border-white/15 px-4 py-2">{t.program}</span>
                 <span className="rounded-full border border-white/15 px-4 py-2">{t.months} months</span>
-                <span className="rounded-full border border-white/15 px-4 py-2">100% coach-led</span>
+                <span className="rounded-full border border-white/15 px-4 py-2">100% Coach Nati led</span>
               </div>
             </StaggerItem>
           </Stagger>

@@ -21,7 +21,6 @@ import Courses from '@/pages/Courses'
 import Services from '@/pages/Services'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
-import GetStarted from '@/pages/GetStarted'
 import Onboarding from '@/pages/onboarding/Onboarding'
 import Checkout from '@/pages/checkout/Checkout'
 import CheckoutSuccess from '@/pages/checkout/CheckoutSuccess'
@@ -94,7 +93,6 @@ function Shell() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/get-started" element={<GetStarted />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/checkout/success" element={<CheckoutSuccess />} />
