@@ -5,8 +5,6 @@ import { Check, ArrowRight, Zap } from 'lucide-react'
 import { registerUser, setSession } from '@/lib/store'
 import { useToast } from '@/context/ToastContext'
 import { Button, Input } from '@/components/ui'
-import { PROGRAMS } from '@/lib/constants'
-import { formatCurrency } from '@/lib/utils'
 import { AuthShell } from './AuthShell'
 
 export default function Register() {
@@ -41,30 +39,6 @@ export default function Register() {
         <div className="mb-8">
           <h1 className="text-3xl font-black tracking-tight text-content">Create your account</h1>
           <p className="mt-2 text-sm text-content-muted">2-minute signup. Free assessment. No card required.</p>
-        </div>
-
-        <div className="mb-6 rounded-2xl border border-border bg-surface-subtle/70 p-4 dark:bg-surface-subtle">
-          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-accent">Explore programs</p>
-          <h2 className="mt-2 text-lg font-black text-content">Choose a path before you create your account</h2>
-          <div className="mt-4 max-h-[320px] space-y-3 overflow-y-auto pr-1">
-            {PROGRAMS.map((program) => (
-              <div key={program.id} className="rounded-xl border border-border/70 bg-surface-card/80 p-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-black text-content">{program.name}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-content-muted">{program.description}</p>
-                  </div>
-                  <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-accent">
-                    {program.goal}
-                  </span>
-                </div>
-                <div className="mt-3 flex items-center justify-between text-[11px] font-semibold text-content-muted">
-                  <span>{program.duration}</span>
-                  <span>{formatCurrency(program.price)}/mo</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         <form onSubmit={submit} className="space-y-4">
