@@ -69,8 +69,8 @@ export function PlanFinder() {
       <div className="container-shell relative">
         <SectionHeading
           eyebrow="Free Assessment"
-          title={<>Find your <span className="text-gradient-accent">perfect plan</span></>}
-          description="Answer 3 quick questions to get started — it takes under 30 seconds and your plan is matched instantly."
+          title={<>Find Your <span className="text-gradient-accent">Perfect Plan</span></>}
+          description="Answer 3 quick questions to get started."
         />
 
         <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-border bg-surface-card shadow-lift">
@@ -95,10 +95,11 @@ export function PlanFinder() {
             {step > 0 && (
               <button
                 onClick={() => setStep((s) => s - 1)}
-                className="grid h-10 w-10 place-items-center rounded-xl border border-border text-content-muted transition hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 rounded-xl border border-border px-3 py-2 text-sm font-semibold text-content-muted transition hover:border-accent hover:text-accent"
                 aria-label="Previous question"
               >
                 <ArrowLeft className="h-4 w-4" />
+                Back
               </button>
             )}
           </div>
