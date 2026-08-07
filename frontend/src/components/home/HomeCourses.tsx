@@ -13,8 +13,8 @@ export function HomeCourses() {
       <div className="container-shell">
         <SectionHeading
           eyebrow="Courses"
-          title={<>Learn from the <span className="text-gradient-accent">pros</span></>}
-          description="In-depth video courses led by our certified coaches. Go at your own pace."
+          title={<>Learn from <span className="text-gradient-accent">Coach Nati</span></>}
+          description="In-depth video courses built by Coach Nati. Go at your own pace and learn the system behind real results."
         />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Flame, Dumbbell, HeartPulse, Zap, Sparkles, Home as HomeIcon, Weight, Clock, MapPin, Check } from 'lucide-react'
+import { getSession } from '@/lib/store'
 import { SectionHeading } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
@@ -57,7 +58,8 @@ export function PlanFinder() {
       setTimeout(() => setStep((s) => s + 1), 220)
     } else {
       const params = new URLSearchParams({ goal: next.goal ?? 'Overall Fitness' })
-      navigate(`/register?${params.toString()}`)
+      const target = getSession() ? '/onboarding' : '/register'
+      navigate(`${target}?${params.toString()}`)
     }
   }
 

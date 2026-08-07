@@ -10,7 +10,7 @@ export function WhyPlatform() {
         <SectionHeading
           eyebrow="Why Coach Nati"
           title={<>Why train with <span className="text-gradient-accent">Coach Nati?</span></>}
-          description="The future of fitness is digital. Your bridge to proven programs, expert coaches, and a scalable path to real results."
+          description="The future of fitness is digital. Your bridge to proven programs, personal coaching, and a clear path to real results."
         />
 
         <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

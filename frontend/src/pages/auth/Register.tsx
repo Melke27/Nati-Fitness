@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Check, ArrowRight, Zap, ArrowLeft } from 'lucide-react'
-import { savePendingRegistration } from '@/lib/store'
+import { Check, ArrowRight, Zap } from 'lucide-react'
+import { registerUser, setSession } from '@/lib/store'
 import { useToast } from '@/context/ToastContext'
 import { Button, Input } from '@/components/ui'
 import { AuthShell } from './AuthShell'
@@ -22,16 +22,11 @@ export default function Register() {
     if (form.password !== form.confirm) return error('Passwords do not match')
     setLoading(true)
     try {
+      const userId = registerUser({ name: form.name, email: form.email, password: form.password, phone: form.phone })
+      setSession({ userId, name: form.name, email: form.email, role: 'client' })
+      success('Account created!', 'Let’s build your coaching profile — 2 minutes.')
       const goal = searchParams.get('goal')
-      savePendingRegistration({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        phone: form.phone,
-        goal,
-      })
-      success('Great choice!', 'Complete checkout to create your account and activate your plan.')
-      navigate(goal ? `/checkout?goal=${encodeURIComponent(goal)}` : '/checkout')
+      navigate(goal ? `/onboarding?goal=${encodeURIComponent(goal)}` : '/onboarding')
     } catch (err) {
       error('Registration failed', (err as Error).message)
       setLoading(false)
@@ -42,8 +37,8 @@ export default function Register() {
     <AuthShell>
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
         <div className="mb-8">
-          <h1 className="text-3xl font-black tracking-tight text-content">Almost there</h1>
-          <p className="mt-2 text-sm text-content-muted">We’ll create your account after checkout so you can choose your plan first.</p>
+          <h1 className="text-3xl font-black tracking-tight text-content">Create your account</h1>
+          <p className="mt-2 text-sm text-content-muted">2-minute signup. Free assessment. No card required.</p>
         </div>
 
         <form onSubmit={submit} className="space-y-4">
@@ -61,7 +56,7 @@ export default function Register() {
           </label>
 
           <Button type="submit" variant="accent" size="lg" className="group w-full" loading={loading}>
-            Continue to checkout <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            Create account <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
         </form>
 
@@ -78,14 +73,6 @@ export default function Register() {
           Already have an account?{' '}
           <Link to="/login" className="font-black text-accent-dark underline-offset-4 hover:underline dark:text-accent">Sign in</Link>
         </p>
-
-        <button
-          type="button"
-          onClick={() => navigate('/get-started')}
-          className="mt-4 flex items-center justify-center gap-1.5 text-xs font-bold text-content-faint transition hover:text-content"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to plan finder
-        </button>
 
         <Link to="/" className="mt-4 flex items-center justify-center gap-1.5 text-xs font-bold text-content-faint transition hover:text-content">
           <Zap className="h-3.5 w-3.5" /> Back to Coach Nati

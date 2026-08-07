@@ -55,7 +55,7 @@ export default function Services() {
                 { value: '500+', label: 'Clients transformed' },
                 { value: '98%', label: 'Satisfaction rate' },
                 { value: '10+', label: 'Years experience' },
-                { value: '6', label: 'Expert coaches' },
+                { value: '1', label: 'Coach guiding everything' },
               ].map((s, i) => (
                 <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="rounded-2xl border border-border bg-surface-subtle/60 p-6 text-center dark:bg-surface-subtle">
                   <p className="text-3xl font-black text-content">{s.value}</p>
