@@ -3,13 +3,8 @@ import { ArrowRight, Check, Clock, BarChart3 } from 'lucide-react'
 import { PROGRAMS } from '@/lib/constants'
 import { formatCurrency } from '@/lib/utils'
 import { DynamicIcon } from '@/lib/icons'
-<<<<<<< HEAD
-import { Reveal, Stagger, StaggerItem } from '@/components/motion'
-import { SectionHeading } from '@/components/ui'
-=======
 import { StaggerItem } from '@/components/motion'
-import { SectionHeading, Badge } from '@/components/ui'
->>>>>>> a9aa17bb0f62657f3d4409ea04226f446ef8d3eb
+import { SectionHeading } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
 
 const PROGRAM_IMG: Record<string, string> = {
@@ -27,8 +22,10 @@ const PROGRAM_IMG: Record<string, string> = {
   'beginner-program': MEDIA.outdoor,
 }
 
+const HIDDEN_PROGRAM_SLUGS = ['weight-loss', 'muscle-gain', 'strength-training']
+
 export function ProgramsSection({ limit }: { limit?: number }) {
-  const programs = limit ? PROGRAMS.slice(0, limit) : PROGRAMS
+  const programs = (limit ? PROGRAMS.slice(0, limit) : PROGRAMS).filter((p) => !HIDDEN_PROGRAM_SLUGS.includes(p.slug))
 
   return (
     <section id="programs" className="section-padding section-anchor relative">
