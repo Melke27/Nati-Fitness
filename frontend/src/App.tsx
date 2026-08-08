@@ -17,7 +17,6 @@ import BlogPost from '@/pages/BlogPost'
 import Contact from '@/pages/Contact'
 import FAQ from '@/pages/FAQ'
 import About from '@/pages/About'
-import Templates from '@/pages/Templates'
 import Courses from '@/pages/Courses'
 import Services from '@/pages/Services'
 import Login from '@/pages/auth/Login'
@@ -67,7 +66,6 @@ function Shell() {
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/programs/:slug" element={<ProgramDetail />} />
                 <Route path="/pricing" element={<Pricing />} />
-                <Route path="/templates" element={<Templates />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/transformations" element={<Transformations />} />

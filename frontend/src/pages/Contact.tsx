@@ -1,7 +1,5 @@
 import { PageHero } from '@/components/PageHero'
 import { ContactSection } from '@/components/home/ContactSection'
-import { FAQSection } from '@/components/home/FAQSection'
-import { CTABand } from '@/components/home/CTABand'
 
 export default function Contact() {
   return (
@@ -12,9 +10,7 @@ export default function Contact() {
         title={<>Let's build your <span className="text-gradient-accent">game plan</span></>}
         description="Book a free 15-minute consultation and walk away with clear next steps — whether we train together or not."
       />
-      <ContactSection />
-      <FAQSection />
-      <CTABand />
+      <ContactSection showHeading={false} />
     </>
   )
 }

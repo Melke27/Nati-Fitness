@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, LayoutGrid, Sparkles, HeartPulse, Users } from 'lucide-react'
+import { Menu, X, Zap, ChevronDown, ArrowRight, Dumbbell, Sparkles, HeartPulse, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getSession } from '@/lib/store'
 import { Button } from '@/components/ui'
@@ -10,7 +10,6 @@ import { openPlanFinder } from '@/lib/planFinderBus'
 /* ----------------------- Mega menu data ----------------------- */
 const PROGRAMS_MENU = [
   { to: '/programs', icon: Dumbbell, title: 'Programs', desc: 'Explore science-based training programs.' },
-  { to: '/templates', icon: LayoutGrid, title: 'Templates', desc: 'Ready-made training templates & plans.' },
   { to: '/courses', icon: HeartPulse, title: 'Courses', desc: 'Structured courses with video lessons.' },
 ]
 

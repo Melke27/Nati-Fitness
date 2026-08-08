@@ -11,7 +11,6 @@ const COMPANY_LINKS = [
 const PROGRAM_LINKS = [
   { label: 'All Programs', to: '/programs' },
   { label: 'Courses', to: '/courses' },
-  { label: 'Templates', to: '/templates' },
   { label: 'Pricing', to: '/pricing' },
 ]
 

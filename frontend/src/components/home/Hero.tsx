@@ -9,13 +9,13 @@ import { openPlanFinder } from '@/lib/planFinderBus'
 const SLIDES = [
   { word1: 'BUILD', word2: 'YOUR', word3: 'MUSCLE', image: MEDIA.hero, alt: 'Coach Nati building muscle' },
   { word1: 'GROW', word2: 'YOUR', word3: 'POWER', image: MEDIA.gymDark, alt: 'Coach Nati lifting in a dark gym' },
-  { word1: 'FORGE', word2: 'YOUR', word3: 'POWER', image: MEDIA.barbell, alt: 'Coach Nati loading a barbell' },
+  { word1: 'FORGE', word2: 'YOUR', word3: 'STRENGTH', image: MEDIA.barbell, alt: 'Coach Nati loading a barbell' },
 ]
 
 const STATS = [
   { value: '10+', label: 'Years Experience' },
   { value: '500+', label: 'Active Members' },
-  { value: '50+', label: 'Programs' },
+  { value: '3', label: 'Signature Programs' },
 ]
 
 const stagger = {

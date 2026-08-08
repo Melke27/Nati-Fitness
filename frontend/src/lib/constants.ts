@@ -19,7 +19,7 @@ export const SITE = {
 export const PLATFORM_STATS = [
   { value: 10, suffix: '+', label: 'Years Experience' },
   { value: 500, suffix: '+', label: 'Active Members' },
-  { value: 50, suffix: '+', label: 'Programs' },
+  { value: 3, suffix: '', label: 'Signature Programs' },
 ]
 
 export const PLATFORM_WHY = [

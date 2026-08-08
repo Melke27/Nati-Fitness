@@ -3,7 +3,7 @@ import type { DB } from './types'
 import { buildSeed } from './seed'
 import { uid, todayKey } from './utils'
 
-const DB_KEY = 'coachnati:db:v4'
+const DB_KEY = 'coachnati:db:v5'
 const SESSION_KEY = 'coachnati:session'
 
 let db: DB = load()
@@ -37,7 +37,6 @@ const REQUIRED_COLLECTIONS = [
   'files',
   'goals',
   'partners',
-  'templates',
   'courses',
   'services',
 ] as const
