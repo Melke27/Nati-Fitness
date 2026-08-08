@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Play, Check, Clock, Flame, Video, RotateCcw } from 'lucide-react'
+import { Play, Check, Clock, Flame, RotateCcw } from 'lucide-react'
 import { useDB, getSession, logWorkout } from '@/lib/store'
 import { todayKey, DAY_SHORT } from '@/lib/utils'
 import { useToast } from '@/context/ToastContext'
@@ -50,9 +49,6 @@ export default function ClientWorkouts() {
           <h1 className="text-2xl font-black text-content">Workouts</h1>
           <p className="text-sm text-content-muted">Your weekly plan · {weeklyDoneCount(db, client.id)}/7 sessions done</p>
         </div>
-        <Link to="/dashboard/resources">
-          <Button variant="outline" size="md"><Video className="h-4 w-4" /> Exercise tutorials</Button>
-        </Link>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">

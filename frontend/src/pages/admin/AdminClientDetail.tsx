@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, MessageSquare, Flame, Send, Phone, BadgeCheck, Check, Target } from 'lucide-react'
+import { ArrowLeft, MessageSquare, Flame, Send, Phone, BadgeCheck, TrendingUp, Target } from 'lucide-react'
 import { useDB, sendMessage } from '@/lib/store'
 import { cn, formatDate } from '@/lib/utils'
 import { useToast } from '@/context/ToastContext'
@@ -133,15 +133,12 @@ export default function AdminClientDetail() {
           <Card>
             <h2 className="mb-3 text-sm font-black text-content">Quick actions</h2>
             <div className="space-y-2">
-              <Link to="/admin/assign" className="flex items-center justify-between rounded-xl border border-border px-4 py-3 text-sm font-black text-content transition hover:border-accent/50">
-                Assign new workout <Check className="h-4 w-4 text-accent-dark dark:text-accent" />
+              <Link to="/admin/progress" className="flex items-center justify-between rounded-xl border border-border px-4 py-3 text-sm font-black text-content transition hover:border-accent/50">
+                Review progress <TrendingUp className="h-4 w-4 text-accent-dark dark:text-accent" />
               </Link>
-              <Link to="/admin/assign" className="flex items-center justify-between rounded-xl border border-border px-4 py-3 text-sm font-black text-content transition hover:border-accent/50">
-                Update meal plan <Check className="h-4 w-4 text-accent-dark dark:text-accent" />
+              <Link to="/admin/schedule" className="flex items-center justify-between rounded-xl border border-border px-4 py-3 text-sm font-black text-content transition hover:border-accent/50">
+                Schedule a check-in <Flame className="h-4 w-4 text-warning" />
               </Link>
-              <button className="flex items-center justify-between rounded-xl border border-border px-4 py-3 text-sm font-black text-content transition hover:border-accent/50">
-                Schedule check-in <Flame className="h-4 w-4 text-warning" />
-              </button>
             </div>
           </Card>
 

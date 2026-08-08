@@ -119,7 +119,7 @@ export function Navbar() {
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-[60] transition-all duration-300',
-          scrolled ? 'glass border-b border-border py-3' : 'bg-nav/80 py-4 backdrop-blur-md',
+          scrolled ? 'glass border-b border-border py-3 shadow-header' : 'bg-nav/80 py-4 backdrop-blur-md',
         )}
       >
         <div className="container-shell relative flex items-center justify-between">
@@ -216,9 +216,10 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: '100%' }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[90] flex flex-col bg-nav"
+          className="fixed inset-0 z-[90] flex flex-col overflow-y-auto bg-nav"
         >
-          <div className="container-shell flex items-center justify-between py-4">
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/15 blur-[120px]" />
+          <div className="container-shell relative flex items-center justify-between py-4">
             <span className="flex items-center gap-2.5 text-lg font-bold text-white">
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent text-white">
                 <Zap className="h-5 w-5" fill="currentColor" />
@@ -230,7 +231,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             </button>
           </div>
 
-          <nav className="container-shell flex flex-1 flex-col gap-1 overflow-y-auto py-4" aria-label="Mobile navigation">
+          <nav className="container-shell relative flex flex-1 flex-col gap-1 py-4" aria-label="Mobile navigation">
             {LINKS.map((l, i) => (
               <motion.div key={l.to} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
                 {l.to === '/pricing' ? (
@@ -239,34 +240,34 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                       openPlanFinder()
                       onClose()
                     }}
-                    className="block w-full border-b border-border py-4 text-left text-xl font-semibold text-white/90 hover:text-accent"
+                    className="block w-full border-b border-border py-4 text-left text-xl font-semibold text-white/90 transition-colors hover:text-accent"
                   >
                     {l.label}
                   </button>
                 ) : (
-                  <Link to={l.to} onClick={onClose} className="block border-b border-border py-4 text-xl font-semibold text-white/90 hover:text-accent">
+                  <Link to={l.to} onClick={onClose} className="block border-b border-border py-4 text-xl font-semibold text-white/90 transition-colors hover:text-accent">
                     {l.label}
                   </Link>
                 )}
               </motion.div>
             ))}
 
-            <div className="mt-8 space-y-3 pb-10">
+            <div className="mt-8 space-y-3 pb-safe-lg">
               <button
                 onClick={() => {
                   openPlanFinder()
                   onClose()
                 }}
-                className="flex items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-4 text-base font-semibold text-white shadow-glow active:scale-[0.98]"
               >
                 Get Started
               </button>
               {session ? (
-                <Link to={session.role === 'admin' ? '/admin' : '/dashboard'} onClick={onClose} className="block rounded-xl border border-border py-4 text-center font-semibold text-white">
+                <Link to={session.role === 'admin' ? '/admin' : '/dashboard'} onClick={onClose} className="block w-full rounded-xl border border-border py-4 text-center font-semibold text-white transition-colors hover:border-accent/40 hover:text-accent">
                   Dashboard
                 </Link>
               ) : (
-                <Link to="/login" onClick={onClose} className="block rounded-xl border border-border py-4 text-center font-semibold text-white">
+                <Link to="/login" onClick={onClose} className="block w-full rounded-xl border border-border py-4 text-center font-semibold text-white transition-colors hover:border-accent/40 hover:text-accent">
                   Sign in
                 </Link>
               )}

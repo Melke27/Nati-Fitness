@@ -32,7 +32,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-footer text-white">
       <div className="container-shell">
-        <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="grid gap-10 py-16 sm:gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {/* Company */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-2.5">

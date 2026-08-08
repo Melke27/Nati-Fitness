@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useMemo } from 'react'
 import {
   Flame, CheckCircle2, ChevronRight, Dumbbell, Trophy, CalendarClock, MessageSquare, ArrowRight, Sparkles,
-  Target, Award, Lock, Salad, Droplets, HeartPulse, Zap, TrendingUp,
+  Target, Award, Lock, Salad, Droplets, Zap, TrendingUp,
 } from 'lucide-react'
 import { useDB, getSession, logWorkout } from '@/lib/store'
 import { greeting, todayKey, weekDates, DAY_SHORT, cn } from '@/lib/utils'
@@ -259,7 +259,7 @@ export default function ClientOverview() {
           { to: '/dashboard/workouts', icon: CalendarClock, title: 'Log workout', desc: 'Track your session' },
           { to: '/dashboard/nutrition', icon: Salad, title: 'Log food & water', desc: 'Hit your macros' },
           { to: '/dashboard/progress', icon: TrendingUp, title: 'Log progress', desc: 'Record weight & photos' },
-          { to: '/dashboard/calendar', icon: HeartPulse, title: 'Check schedule', desc: 'See upcoming sessions' },
+          { to: '/dashboard/messages', icon: MessageSquare, title: 'Message coach', desc: 'Chat with your coach' },
         ].map((a) => (
           <Link key={a.to} to={a.to} className="group flex items-center gap-4 rounded-2xl border border-border bg-surface p-5 transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-card">
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-primary transition group-hover:bg-accent dark:text-accent dark:group-hover:text-primary">

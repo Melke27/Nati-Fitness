@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  LayoutDashboard, Dumbbell, Salad, TrendingUp, MessageSquare, Calendar, Library, LogOut, Zap, Menu, X, Sun, Moon, Flame,
+  LayoutDashboard, Dumbbell, Salad, TrendingUp, MessageSquare, LogOut, Zap, Menu, X, Sun, Moon, Flame,
 } from 'lucide-react'
 import { useState } from 'react'
 import { getSession, setSession, useDB } from '@/lib/store'
@@ -16,8 +16,6 @@ const NAV = [
   { to: '/dashboard/nutrition', label: 'Nutrition', icon: Salad },
   { to: '/dashboard/progress', label: 'Progress', icon: TrendingUp },
   { to: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
-  { to: '/dashboard/calendar', label: 'Calendar', icon: Calendar },
-  { to: '/dashboard/resources', label: 'Resources', icon: Library },
 ]
 
 export default function DashboardLayout() {

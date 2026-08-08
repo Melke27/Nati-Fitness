@@ -124,7 +124,7 @@ export function Card({ className, children, hover = false }: { className?: strin
   return (
     <div
       className={cn(
-        'rounded-2xl border border-border bg-surface-card p-6 shadow-card',
+        'rounded-2xl border border-border bg-card-gradient p-6 shadow-card',
         hover && 'card-surface-hover',
         className,
       )}

@@ -46,7 +46,7 @@ export default function AdminOverview() {
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link to="/admin/members" className="rounded-full bg-cta-gradient px-6 py-2.5 text-sm font-black text-primary shadow-glow transition hover:-translate-y-0.5">Manage members</Link>
-              <Link to="/admin/workouts" className="rounded-full border border-white/25 px-6 py-2.5 text-sm font-black text-white/80 transition hover:bg-white/10">New workout plan</Link>
+              <Link to="/admin/messaging" className="rounded-full border border-white/25 px-6 py-2.5 text-sm font-black text-white/80 transition hover:bg-white/10">Message clients</Link>
             </div>
           </div>
           <div className="hidden items-center gap-3 rounded-2xl border border-white/15 bg-white/5 p-3 backdrop-blur-md sm:flex">
@@ -179,10 +179,10 @@ export default function AdminOverview() {
             <h2 className="mb-3 flex items-center gap-2 text-sm font-black text-content"><Dumbbell className="h-4 w-4 text-pink-500" /> Quick actions</h2>
             <div className="space-y-2">
               {[
-                { to: '/admin/workouts', label: 'Create workout plan' },
-                { to: '/admin/nutrition', label: 'Build meal plan' },
-                { to: '/admin/assign', label: 'Assign work' },
-                { to: '/admin/ai', label: 'AI coaching assistant' },
+                { to: '/admin/members', label: 'Add a client' },
+                { to: '/admin/schedule', label: 'Schedule a check-in' },
+                { to: '/admin/payments', label: 'Record a payment' },
+                { to: '/admin/progress', label: 'Review progress' },
               ].map((a) => (
                 <Link key={a.to} to={a.to} className="flex items-center justify-between rounded-xl border border-border px-3 py-2.5 text-xs font-black text-content transition hover:border-accent/50 hover:bg-accent/5">
                   {a.label} <ChevronRight className="h-3.5 w-3.5 text-content-faint" />

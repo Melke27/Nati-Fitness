@@ -34,18 +34,10 @@ export const MEDIA = {
 
 /* Gallery set (public masonry) */
 export const GALLERY_MEDIA = [
-  { key: 'gym', url: MEDIA.gym, tag: 'Strength' },
-  { key: 'barbell', url: MEDIA.barbell, tag: 'Training' },
-  { key: 'trainer', url: MEDIA.trainer, tag: 'Coaching' },
-  { key: 'womanFit', url: MEDIA.womanFit, tag: 'Lifestyle' },
-  { key: 'runWoman', url: MEDIA.runWoman, tag: 'Outdoor' },
-  { key: 'yoga', url: MEDIA.yoga, tag: 'Mobility' },
+  { key: 'coaching', url: MEDIA.trainer, tag: 'Coaching' },
+  { key: 'training', url: MEDIA.barbell, tag: 'Training' },
+  { key: 'strength', url: MEDIA.deadlift, tag: 'Strength' },
   { key: 'nutrition', url: MEDIA.nutrition, tag: 'Nutrition' },
-  { key: 'boxing', url: MEDIA.boxing, tag: 'Conditioning' },
-  { key: 'deadlift', url: MEDIA.deadlift, tag: 'Strength' },
-  { key: 'community', url: MEDIA.community, tag: 'Community' },
-  { key: 'athlete', url: MEDIA.athlete, tag: 'Athlete' },
-  { key: 'plyo', url: MEDIA.plyo, tag: 'Plyometrics' },
 ]
 
 export const AVATAR = (seed: string) =>
