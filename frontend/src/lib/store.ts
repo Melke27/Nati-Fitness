@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import type { DB } from './types'
+import type { DB, MemberRequest } from './types'
 import { buildSeed } from './seed'
 import { uid, todayKey } from './utils'
 
@@ -39,6 +39,7 @@ const REQUIRED_COLLECTIONS = [
   'partners',
   'courses',
   'services',
+  'memberRequests',
 ] as const
 
 function load(): DB {
@@ -231,6 +232,130 @@ export function addPayment(data: { clientId: string; clientName: string; amount:
 }
 
 export type PaymentMethod = 'Card' | 'Bank Transfer' | 'CBE' | 'Telebirr' | 'Mobile Money'
+
+/* ---------------- member requests ---------------- */
+
+/**
+ * Creates a membership request once a member checks out. For instant (card)
+ * payments the request is created as already-approved and the member is
+ * activated. For manual-transfer payments it stays "pending" until the admin
+ * confirms the money and approves the request.
+ */
+export function addMemberRequest(data: {
+  clientId: string
+  userId: string
+  name: string
+  email: string
+  phone?: string
+  plan: string
+  program: string
+  amount: number
+  method: string
+  reference?: string
+  status: 'pending' | 'approved'
+}) {
+  const request: MemberRequest = {
+    id: `req_${uid()}`,
+    clientId: data.clientId,
+    userId: data.userId,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    plan: data.plan,
+    program: data.program,
+    amount: data.amount,
+    method: data.method,
+    reference: data.reference,
+    status: data.status,
+    createdAt: new Date().toISOString(),
+    decidedAt: data.status === 'approved' ? new Date().toISOString() : undefined,
+  }
+  mutate((d) => {
+    d.memberRequests.push(request)
+    // Make sure the member record exists so approval can activate them.
+    let client = d.clients.find((c) => c.id === data.clientId)
+    if (!client) {
+      client = {
+        id: data.clientId,
+        userId: data.userId,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        status: 'onboarding',
+        joinedAt: new Date().toISOString(),
+        progress: [],
+        achievements: [],
+        streak: 0,
+      }
+      d.clients.push(client)
+    }
+    if (data.status === 'approved') activateClient(client)
+  })
+  return request
+}
+
+function activateClient(client: DB['clients'][number]) {
+  client.status = 'active'
+  client.subscriptionEnds = new Date(Date.now() + 30 * 86400000).toISOString()
+  client.lastActive = todayKey()
+  if (!client.joinedAt) client.joinedAt = new Date().toISOString()
+}
+
+export function approveMemberRequest(requestId: string) {
+  mutate((d) => {
+    const req = d.memberRequests.find((r) => r.id === requestId)
+    if (!req || req.status !== 'pending') return
+    req.status = 'approved'
+    req.decidedAt = new Date().toISOString()
+    const payment = d.payments.find((p) => p.clientId === req.clientId && p.status === 'pending')
+    if (payment) payment.status = 'paid'
+    const client = d.clients.find((c) => c.id === req.clientId)
+    if (client) activateClient(client)
+  })
+}
+
+export function rejectMemberRequest(requestId: string) {
+  mutate((d) => {
+    const req = d.memberRequests.find((r) => r.id === requestId)
+    if (!req || req.status !== 'pending') return
+    req.status = 'rejected'
+    req.decidedAt = new Date().toISOString()
+    const payment = d.payments.find((p) => p.clientId === req.clientId && p.status === 'pending')
+    if (payment) payment.status = 'refunded'
+  })
+}
+
+/**
+ * Approves a pending payment from the Payments dashboard — confirming the money
+ * also approves the linked membership request and activates the member.
+ */
+export function approvePayment(paymentId: string) {
+  mutate((d) => {
+    const payment = d.payments.find((p) => p.id === paymentId)
+    if (!payment || payment.status !== 'pending') return
+    payment.status = 'paid'
+    const req = d.memberRequests.find((r) => r.clientId === payment.clientId && r.status === 'pending')
+    if (req) {
+      req.status = 'approved'
+      req.decidedAt = new Date().toISOString()
+    }
+    const client = d.clients.find((c) => c.id === payment.clientId)
+    if (client) activateClient(client)
+  })
+}
+
+export function rejectPayment(paymentId: string) {
+  mutate((d) => {
+    const payment = d.payments.find((p) => p.id === paymentId)
+    if (!payment || payment.status !== 'pending') return
+    payment.status = 'refunded'
+    const req = d.memberRequests.find((r) => r.clientId === payment.clientId && r.status === 'pending')
+    if (req) {
+      req.status = 'rejected'
+      req.decidedAt = new Date().toISOString()
+    }
+  })
+}
 
 export function logWorkout(data: { clientId: string; name: string; durationMin: number; calories: number; date?: string }) {
   const w = {

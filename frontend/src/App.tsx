@@ -40,6 +40,7 @@ import AdminProgress from '@/pages/admin/AdminProgress'
 import AdminSchedule from '@/pages/admin/AdminSchedule'
 import AdminMessaging from '@/pages/admin/AdminMessaging'
 import AdminNotifications from '@/pages/admin/AdminNotifications'
+import AdminRequests from '@/pages/admin/AdminRequests'
 
 function Shell() {
   const [loading, setLoading] = useState(true)
@@ -99,6 +100,7 @@ function Shell() {
                 <Route path="messaging" element={<AdminMessaging />} />
                 <Route path="notifications" element={<AdminNotifications />} />
                 <Route path="payments" element={<AdminPayments />} />
+                <Route path="requests" element={<AdminRequests />} />
               </Route>
 
               <Route path="*" element={<Home />} />

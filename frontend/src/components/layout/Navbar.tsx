@@ -82,7 +82,8 @@ function MenuGroup({
 const LINKS = [
   { to: '/', label: 'Home' },
   { to: '/programs', label: 'Programs' },
-{ to: '/pricing', label: 'Pricing' },
+  { to: '/pricing', label: 'Pricing' },
+  { to: '/services', label: 'Services' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Lock, ShieldCheck, CreditCard, Landmark, Smartphone, Ticket, Sparkles, Upload, ChevronLeft, ArrowRight } from 'lucide-react'
-import { useDB, getSession, addPayment, applyCoupon, type PaymentMethod } from '@/lib/store'
+import { useDB, getSession, addPayment, addMemberRequest, applyCoupon, type PaymentMethod } from '@/lib/store'
 import { formatCurrency } from '@/lib/utils'
 import { RECOMMENDED_PLANS } from '@/lib/planFinderData'
 import { useToast } from '@/context/ToastContext'
@@ -103,8 +103,9 @@ export default function Checkout() {
     const pending = isTransferLike
     const status = pending ? ('pending' as const) : ('paid' as const)
     setTimeout(() => {
+      const clientId = `client_${session.userId}`
       const payment = addPayment({
-        clientId: `client_${session.userId}`,
+        clientId,
         clientName: session.name,
         amount: total,
         plan: orderPlanLabel,
@@ -112,6 +113,18 @@ export default function Checkout() {
         method,
         paymentRef: isTransferLike ? ref.value : undefined,
         status,
+      })
+      addMemberRequest({
+        clientId,
+        userId: session.userId,
+        name: session.name,
+        email: session.email,
+        plan: orderPlanLabel,
+        program: orderProgram,
+        amount: total,
+        method,
+        reference: isTransferLike ? ref.value : undefined,
+        status: pending ? 'pending' : 'approved',
       })
       if (pending) {
         success('Payment received for review', 'Your plan will activate once your transfer is confirmed.')

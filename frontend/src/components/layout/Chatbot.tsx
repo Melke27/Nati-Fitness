@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MessageCircle, X, Send, Zap, Sparkles } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, bmi, bmiCategory } from '@/lib/utils'
 
 type Msg = { role: 'user' | 'bot'; text: string; to?: string; cta?: string }
 
-const QUICK = ['Programs & pricing', 'Start my transformation', 'Coach help', 'Payment options', 'Free trial']
+const QUICK = ['Programs & pricing', 'Start my transformation', 'Coach help', 'Payment options', 'Free trial', 'BMI calculator']
 
 const GREETING: Msg = {
   role: 'bot',
@@ -73,10 +73,17 @@ function ruleReply(input: string): Msg {
   }
 }
 
+function parseNum(t: string) {
+  const m = t.replace(',', '.').match(/\d+(?:\.\d+)?/)
+  return m ? parseFloat(m[0]) : NaN
+}
+
 export function Chatbot() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Msg[]>([GREETING])
   const [input, setInput] = useState('')
+  const [bmiStep, setBmiStep] = useState<null | 1 | 2>(null)
+  const [bmiWeight, setBmiWeight] = useState(0)
   const bodyRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
@@ -89,7 +96,52 @@ export function Chatbot() {
     if (!text) return
     setMessages((m) => [...m, { role: 'user', text }])
     setInput('')
-    setTimeout(() => setMessages((m) => [...m, ruleReply(text)]), 450)
+
+    setTimeout(() => {
+      // BMI flow — waiting for the user's weight
+      if (bmiStep === 1) {
+        const w = parseNum(text)
+        if (!isFinite(w) || w <= 0 || w > 400) {
+          setMessages((m) => [...m, { role: 'bot', text: "That doesn't look like a valid weight. Please enter your weight in kilograms, e.g. 75." }])
+          return
+        }
+        setBmiWeight(w)
+        setBmiStep(2)
+        setMessages((m) => [...m, { role: 'bot', text: `Got it — ${w} kg 👍\n\nNow, what's your height in centimeters? (e.g. 175)` }])
+        return
+      }
+
+      // BMI flow — waiting for the user's height
+      if (bmiStep === 2) {
+        const h = parseNum(text)
+        if (!isFinite(h) || h <= 0 || h > 300) {
+          setMessages((m) => [...m, { role: 'bot', text: "That doesn't look like a valid height. Please enter your height in centimeters, e.g. 175." }])
+          return
+        }
+        const value = bmi(bmiWeight, h)
+        const cat = bmiCategory(value)
+        setBmiStep(null)
+        setMessages((m) => [
+          ...m,
+          {
+            role: 'bot',
+            text: `📊 Here's your BMI result!\n\n• BMI: ${value.toFixed(1)}\n• Category: ${cat.label}\n• Weight: ${bmiWeight} kg · Height: ${h} cm\n\nYour BMI is a great starting point, but it doesn't tell the whole story — muscle, age and body composition matter too. Want a plan built around your numbers?`,
+            to: '/onboarding',
+            cta: 'Get a Personalized Plan',
+          },
+        ])
+        return
+      }
+
+      // Ask to calculate BMI
+      if (/(bmi|body mass index|body mass|mass index)/.test(text.toLowerCase())) {
+        setBmiStep(1)
+        setMessages((m) => [...m, { role: 'bot', text: "Let's calculate your BMI! 🧮\n\nFirst — what's your weight in kilograms? (e.g. 75)" }])
+        return
+      }
+
+      setMessages((m) => [...m, ruleReply(text)])
+    }, 450)
   }
 
   return (
@@ -140,7 +192,7 @@ export function Chatbot() {
                   <div className={cn('max-w-[85%]', m.role === 'user' && 'max-w-[80%]')}>
                     <p
                       className={cn(
-                        'px-4 py-2.5 text-sm leading-relaxed',
+                        'px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line',
                         m.role === 'user'
                           ? 'rounded-2xl rounded-br-sm bg-accent text-white shadow-glow'
                           : 'rounded-2xl rounded-bl-sm border border-border bg-surface-card text-content-soft',

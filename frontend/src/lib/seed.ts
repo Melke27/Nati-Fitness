@@ -261,5 +261,6 @@ const partners: Partner[] = [
     partners,
     courses,
     services,
+    memberRequests: [],
   }
 }

@@ -348,6 +348,23 @@ export interface Service {
   features: string[]
 }
 
+export interface MemberRequest {
+  id: string
+  clientId: string
+  userId: string
+  name: string
+  email: string
+  phone?: string
+  plan: string
+  program: string
+  amount: number
+  method: string
+  reference?: string
+  status: 'pending' | 'approved' | 'rejected'
+  createdAt: string
+  decidedAt?: string
+}
+
 export interface DB {
   users: User[]
   clients: Client[]
@@ -377,4 +394,5 @@ export interface DB {
   partners: Partner[]
   courses: Course[]
   services: Service[]
+  memberRequests: MemberRequest[]
 }

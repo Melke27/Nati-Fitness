@@ -14,6 +14,7 @@ export default function AdminOverview() {
 
   const active = db.clients.filter((c) => c.status === 'active')
   const onboarding = db.clients.filter((c) => c.status === 'onboarding')
+  const pendingRequests = db.memberRequests.filter((r) => r.status === 'pending').length
   const revenue = db.payments.filter((p) => p.status === 'paid').reduce((a, p) => a + p.amount, 0)
   const thisMonth = db.payments.filter((p) => p.status === 'paid' && new Date(p.createdAt).getMonth() === new Date().getMonth()).reduce((a, p) => a + p.amount, 0)
 
@@ -44,6 +45,11 @@ export default function AdminOverview() {
             <p className="mt-2 max-w-md text-sm text-white/60">
               {active.length} active members · {onboarding.length} onboarding · {workoutThisWeek} workouts logged this week.
             </p>
+            {pendingRequests > 0 && (
+              <Link to="/admin/requests" className="mt-4 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/15 px-4 py-2 text-xs font-black text-accent transition hover:bg-accent/25">
+                <Sparkles className="h-3.5 w-3.5" /> {pendingRequests} membership request{pendingRequests > 1 ? 's' : ''} awaiting approval
+              </Link>
+            )}
             <div className="mt-5 flex flex-wrap gap-3">
               <Link to="/admin/members" className="rounded-full bg-cta-gradient px-6 py-2.5 text-sm font-black text-primary shadow-glow transition hover:-translate-y-0.5">Manage members</Link>
               <Link to="/admin/messaging" className="rounded-full border border-white/25 px-6 py-2.5 text-sm font-black text-white/80 transition hover:bg-white/10">Message clients</Link>
@@ -179,6 +185,7 @@ export default function AdminOverview() {
             <h2 className="mb-3 flex items-center gap-2 text-sm font-black text-content"><Dumbbell className="h-4 w-4 text-pink-500" /> Quick actions</h2>
             <div className="space-y-2">
               {[
+                { to: '/admin/requests', label: 'Review member requests' },
                 { to: '/admin/members', label: 'Add a client' },
                 { to: '/admin/schedule', label: 'Schedule a check-in' },
                 { to: '/admin/payments', label: 'Record a payment' },

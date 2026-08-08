@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  LayoutDashboard, Users, MessageSquareText, HeartPulse, CalendarCheck2, CalendarDays, Wallet, BellRing,
+  LayoutDashboard, Users, UserCheck, MessageSquareText, HeartPulse, CalendarCheck2, CalendarDays, Wallet, BellRing,
   ChevronLeft, ChevronRight, LogOut, Sun, Moon, Search,
   Zap, Menu, X, ExternalLink, TrendingUp,
 } from 'lucide-react'
@@ -12,7 +12,7 @@ import { useToast } from '@/context/ToastContext'
 import { cn } from '@/lib/utils'
 import { AVATARS } from '@/lib/media'
 
-const NAV_GROUPS: { title: string; items: { to: string; label: string; icon: typeof Users; badge?: 'clients' | 'appointments' | 'leads' | 'messages' }[] }[] = [
+const NAV_GROUPS: { title: string; items: { to: string; label: string; icon: typeof Users; badge?: 'clients' | 'appointments' | 'leads' | 'messages' | 'requests' }[] }[] = [
   {
     title: 'Coaching',
     items: [
@@ -31,6 +31,7 @@ const NAV_GROUPS: { title: string; items: { to: string; label: string; icon: typ
   {
     title: 'Business',
     items: [
+      { to: '/admin/requests', label: 'Requests', icon: UserCheck, badge: 'requests' },
       { to: '/admin/payments', label: 'Payments', icon: Wallet, badge: 'appointments' },
     ],
   },
@@ -91,8 +92,9 @@ export default function AdminLayout() {
   const pendingAppointments = db.appointments.filter((a) => a.status === 'new').length
   const unreadCoach = db.messages.filter((m) => m.sender === 'client' && !m.read).length
   const leads = db.leads.length
+  const pendingRequests = db.memberRequests.filter((r) => r.status === 'pending').length
 
-  const badges = { clients: activeClients, appointments: pendingAppointments, leads, messages: unreadCoach }
+  const badges = { clients: activeClients, appointments: pendingAppointments, leads, messages: unreadCoach, requests: pendingRequests }
 
   const notificationItems = useMemo(() => {
     const items: { id: string; icon: ReactNode; title: string; body: string; time: string; tone: string }[] = []
@@ -101,6 +103,9 @@ export default function AdminLayout() {
     )
     db.leads.slice(-3).forEach((l) =>
       items.push({ id: `n-lead-${l.id}`, icon: <TrendingUp className="h-4 w-4" />, title: `New lead — ${l.name}`, body: `Goal: ${l.goal}`, time: new Date(l.createdAt).toLocaleDateString(), tone: 'bg-pink-500/15 text-pink-500' }),
+    )
+    db.memberRequests.filter((r) => r.status === 'pending').slice(0, 3).forEach((r) =>
+      items.push({ id: `n-req-${r.id}`, icon: <UserCheck className="h-4 w-4" />, title: `Membership request — ${r.name}`, body: `${r.program} · ${r.plan} · ${r.method}`, time: new Date(r.createdAt).toLocaleDateString(), tone: 'bg-accent/15 text-primary dark:text-accent' }),
     )
     db.messages.filter((m) => m.sender === 'client').slice(-3).forEach((m) =>
       items.push({ id: `n-msg-${m.id}`, icon: <MessageSquareText className="h-4 w-4" />, title: `Message from ${m.senderName}`, body: m.text.slice(0, 60), time: new Date(m.createdAt).toLocaleDateString(), tone: 'bg-sky-500/15 text-sky-500' }),

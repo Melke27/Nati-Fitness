@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Download } from 'lucide-react'
-import { useDB } from '@/lib/store'
+import { Download, Check, X, UserPlus } from 'lucide-react'
+import { useDB, approvePayment, rejectPayment } from '@/lib/store'
 import { formatCurrency } from '@/lib/utils'
 import { Avatar, Badge, Card, Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
+import { useToast } from '@/context/ToastContext'
 
 const METHOD_STYLE: Record<string, string> = {
   Card: 'bg-accent/15 text-primary border-accent/30 dark:text-accent',
@@ -15,16 +16,28 @@ const METHOD_STYLE: Record<string, string> = {
 export default function AdminPayments() {
   const db = useDB()
   const [status, setStatus] = useState('all')
+  const toast = useToast()
 
   const list = db.payments.filter((p) => (status === 'all' ? true : p.status === status))
   const total = list.filter((p) => p.status === 'paid').reduce((a, p) => a + p.amount, 0)
+  const pendingCount = db.payments.filter((p) => p.status === 'pending').length
+
+  const confirmPayment = (id: string) => {
+    approvePayment(id)
+    toast?.success('Payment approved', 'The member request has been approved and the member activated.')
+  }
+
+  const declinePayment = (id: string) => {
+    rejectPayment(id)
+    toast?.error('Payment declined', 'The payment was refunded and the request rejected.')
+  }
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-content">Payments</h1>
-          <p className="text-sm text-content-muted">{list.length} transactions · {formatCurrency(total)} collected</p>
+          <p className="text-sm text-content-muted">{list.length} transactions · {formatCurrency(total)} collected · {pendingCount} pending approval</p>
         </div>
         <Button variant="outline" size="md"><Download className="h-4 w-4" /> Export CSV</Button>
       </div>
@@ -55,6 +68,7 @@ export default function AdminPayments() {
                 <th className="px-6 py-4">Method</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-right">Amount</th>
+                <th className="px-6 py-4 text-right">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -76,10 +90,26 @@ export default function AdminPayments() {
                     <span className="font-black text-content">{formatCurrency(p.amount)}</span>
                     <span className="ml-2 text-[10px] text-content-faint">{new Date(p.createdAt).toLocaleDateString()}</span>
                   </td>
+                  <td className="px-6 py-4">
+                    {p.status === 'pending' ? (
+                      <div className="flex items-center justify-end gap-2">
+                        <Button variant="accent" size="sm" onClick={() => confirmPayment(p.id)}>
+                          <Check className="h-3.5 w-3.5" /> Approve
+                        </Button>
+                        <Button variant="danger" size="sm" onClick={() => declinePayment(p.id)}>
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    ) : p.status === 'paid' ? (
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-success"><UserPlus className="h-3.5 w-3.5" /> Member approved</span>
+                    ) : (
+                      <span className="text-[11px] font-black text-content-faint">—</span>
+                    )}
+                  </td>
                 </motion.tr>
               ))}
               {list.length === 0 && (
-                <tr><td colSpan={6} className="px-6 py-12 text-center text-sm text-content-faint">No transactions yet</td></tr>
+                <tr><td colSpan={7} className="px-6 py-12 text-center text-sm text-content-faint">No transactions yet</td></tr>
               )}
             </tbody>
           </table>
