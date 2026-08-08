@@ -4,15 +4,8 @@ import { PROGRAMS } from '@/lib/constants'
 import { formatCurrency } from '@/lib/utils'
 import { DynamicIcon } from '@/lib/icons'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion'
-import { SectionHeading, Badge } from '@/components/ui'
+import { SectionHeading } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
-
-const levelColor: Record<string, string> = {
-  Beginner: 'bg-success/10 text-success border-success/25',
-  Intermediate: 'bg-warning/10 text-warning border-warning/25',
-  Advanced: 'bg-error/10 text-error border-error/25',
-  'All levels': 'bg-accent/10 text-primary border-accent/30 dark:text-accent',
-}
 
 const PROGRAM_IMG: Record<string, string> = {
   'weight-loss': MEDIA.runWoman,
@@ -61,7 +54,6 @@ export function ProgramsSection({ limit }: { limit?: number }) {
                   >
                     <DynamicIcon name={p.icon} className="h-6 w-6" />
                   </div>
-                  <Badge className={`absolute right-5 top-5 ${levelColor[p.level]}`}>{p.level}</Badge>
                   <div className="absolute inset-x-5 bottom-4">
                     <p className="text-sm font-semibold text-white/70">{p.tagline}</p>
                   </div>
