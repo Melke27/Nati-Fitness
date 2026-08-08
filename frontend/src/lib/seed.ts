@@ -1,4 +1,4 @@
-import type { DB, Client, Message, Announcement, Notification, WorkoutSession, MealEntry, WaterEntry, Payment, Coupon, Referral, Exercise, Recipe, AttendanceRecord, Assessment, ClientFile, Goal, Partner, Template, Course, Service } from './types'
+import type { DB, Client, Message, Announcement, Notification, WorkoutSession, MealEntry, WaterEntry, Payment, Coupon, Referral, Exercise, Recipe, AttendanceRecord, Assessment, ClientFile, Goal, Partner, Course, Service } from './types'
 import { PROGRAMS, PLANS, TESTIMONIALS, BLOG_POSTS, FAQS } from './constants'
 import { addDays, todayKey } from './utils'
 import { AVATARS, MEDIA } from './media'
@@ -206,17 +206,8 @@ export function buildSeed(): DB {
     { id: 'g5', clientId: 'client_david', title: 'Bench 110kg', target: 'Strength PR', deadline: addDays(today, 45).toISOString(), progress: 91, status: 'achieved' },
   ]
 
-  const partners: Partner[] = [
-    { id: 'partner_nati', slug: 'coach-nati', name: 'Coach Nati', avatar: AVATARS.coach, cover: MEDIA.gym, role: 'Head Coach · Transformation Specialist', bio: 'Elite coach with 10+ years transforming bodies and minds. Certified CSCS, Precision Nutrition L2, and former competitive athlete. I build sustainable systems — not quick fixes.', specialties: ['Weight Loss', 'Muscle Gain', 'Strength', 'Nutrition'], experience: 10, clients: 500, programs: 12, rating: 4.9, location: 'Addis Ababa', verified: true },
-  ]
-
-  const templates: Template[] = [
-    { id: 'tmp1', slug: 'fat-loss-workout', title: '12-Week Fat Loss Workout Plan', category: 'workout', image: MEDIA.runWoman, price: 2000, description: 'Progressive cardio + strength program designed to melt fat while keeping muscle.', items: 36, partnerSlug: 'coach-nati', rating: 4.9, downloads: 1240 },
-    { id: 'tmp2', slug: 'muscle-building-split', title: 'Push/Pull/Legs Split Template', category: 'workout', image: MEDIA.deadlift, price: 2400, description: '6-day PPL optimized for hypertrophy with progressive overload built in.', items: 42, partnerSlug: 'coach-nati', rating: 4.8, downloads: 980 },
-    { id: 'tmp3', slug: 'high-protein-meal-plan', title: 'High-Protein Meal Plan', category: 'meal-plan', image: MEDIA.mealPrep, price: 1600, description: '7-day meal plan hitting 180g protein daily with grocery list included.', items: 21, partnerSlug: 'coach-nati', rating: 4.9, downloads: 2100 },
-    { id: 'tmp4', slug: 'beginner-fullbody', title: 'Beginner Full-Body Routine', category: 'workout', image: MEDIA.womanFit, price: 0, description: 'The perfect starting point. 3 days/week, zero equipment needed.', items: 18, partnerSlug: 'coach-nati', rating: 4.7, downloads: 3400 },
-    { id: 'tmp5', slug: 'macro-template', title: 'Macro & Calorie Tracker', category: 'nutrition', image: MEDIA.nutrition, price: 800, description: 'Spreadsheet template to track calories, macros, and weekly averages.', items: 1, partnerSlug: 'coach-nati', rating: 4.8, downloads: 1560 },
-    { id: 'tmp6', slug: 'flexibility-flow', title: '30-Day Flexibility Flow', category: 'workout', image: MEDIA.yoga, price: 1200, description: 'Daily 15-minute mobility routine to eliminate stiffness and improve range.', items: 30, partnerSlug: 'coach-nati', rating: 4.6, downloads: 870 },
+const partners: Partner[] = [
+    { id: 'partner_nati', slug: 'coach-nati', name: 'Coach Nati', avatar: AVATARS.coach, cover: MEDIA.gym, role: 'Head Coach · Transformation Specialist', bio: 'Elite coach with 10+ years transforming bodies and minds. Certified CSCS, Precision Nutrition L2, and former competitive athlete. I build sustainable systems — not quick fixes.', specialties: ['Weight Loss', 'Muscle Gain', 'Strength', 'Nutrition'], experience: 10, clients: 500, programs: PROGRAMS.length, rating: 4.9, location: 'Addis Ababa', verified: true },
   ]
 
   const courses: Course[] = [
@@ -268,7 +259,6 @@ export function buildSeed(): DB {
     files,
     goals,
     partners,
-    templates,
     courses,
     services,
   }

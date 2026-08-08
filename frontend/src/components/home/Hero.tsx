@@ -4,17 +4,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui'
 import { MEDIA } from '@/lib/media'
+import { openPlanFinder } from '@/lib/planFinderBus'
 
 const SLIDES = [
   { word1: 'BUILD', word2: 'YOUR', word3: 'MUSCLE', image: MEDIA.hero, alt: 'Coach Nati building muscle' },
   { word1: 'GROW', word2: 'YOUR', word3: 'POWER', image: MEDIA.gymDark, alt: 'Coach Nati lifting in a dark gym' },
-  { word1: 'FORGE', word2: 'YOUR', word3: 'POWER', image: MEDIA.barbell, alt: 'Coach Nati loading a barbell' },
+  { word1: 'FORGE', word2: 'YOUR', word3: 'STRENGTH', image: MEDIA.barbell, alt: 'Coach Nati loading a barbell' },
 ]
 
 const STATS = [
   { value: '10+', label: 'Years Experience' },
   { value: '500+', label: 'Active Members' },
-  { value: '50+', label: 'Programs' },
+  { value: '3', label: 'Signature Programs' },
 ]
 
 const stagger = {
@@ -39,8 +40,8 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-accent/15 blur-[150px]" />
       <div className="pointer-events-none absolute -bottom-40 right-10 h-[520px] w-[520px] rounded-full bg-accent/10 blur-[160px]" />
 
-      <div className="container-shell relative z-10 w-full py-24 lg:py-32">
-        <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
+      <div className="container-shell relative z-10 w-full py-14 lg:py-24">
+        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — headline */}
           <div className="flex flex-col justify-center lg:col-span-7 lg:max-w-3xl">
             <motion.div variants={stagger} initial="hidden" animate="show">
@@ -58,7 +59,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -60 }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-display text-6xl font-bold uppercase leading-[0.95] tracking-tight text-white [text-shadow:0_4px_30px_rgba(0,0,0,0.6)] sm:text-7xl xl:text-8xl"
+                    className="font-display text-[clamp(2.6rem,10.5vw,7.5rem)] font-bold uppercase leading-[0.95] tracking-tight text-white [text-shadow:0_4px_30px_rgba(0,0,0,0.6)]"
                   >
                     <span className="block">{slide.word1}</span>
                     <span className="block">
@@ -76,19 +77,22 @@ export function Hero() {
                 Transform your body. Build your muscle, build your strength. Start your journey now.
               </motion.p>
 
-              <motion.div variants={rise} className="mt-10 flex flex-wrap items-center gap-4">
-                <Link to="/programs">
-                  <Button variant="accent" size="xl" className="group items-center gap-3 uppercase tracking-wide shadow-glow">
+              <motion.div variants={rise} className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+                <Link to="/programs" className="w-full sm:w-auto">
+                  <Button variant="accent" size="xl" className="group w-full items-center justify-center gap-3 uppercase tracking-wide shadow-glow sm:w-auto">
                     Explore Programs
                     <ArrowRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Link to="/contact">
-                  <Button variant="outline" size="xl" className="items-center gap-3 border-white/20 bg-white/5 px-10 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white">
-                    Book Free Call
-                    <ArrowUpRight className="h-6 w-6" />
-                  </Button>
-                </Link>
+                <Button
+                  variant="outline"
+                  size="xl"
+                  onClick={openPlanFinder}
+                  className="w-full items-center justify-center gap-3 border-white/20 bg-white/5 px-10 text-white shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md hover:border-accent hover:bg-accent/10 hover:text-white sm:w-auto"
+                >
+                  Find Your Perfect Plan
+                  <ArrowUpRight className="h-6 w-6" />
+                </Button>
               </motion.div>
 
               {/* Stats */}
@@ -99,9 +103,9 @@ export function Hero() {
                 className="mt-12 grid max-w-xl grid-cols-3 gap-3 sm:gap-4"
               >
                 {STATS.map((s) => (
-                  <div key={s.label} className="glass rounded-2xl border border-white/10 px-4 py-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+                  <div key={s.label} className="glass min-w-0 rounded-2xl border border-white/10 px-3 py-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:px-4">
                     <p className="text-2xl font-bold tracking-tight text-white [text-shadow:0_2px_14px_rgba(225,29,72,0.5)] sm:text-3xl">{s.value}</p>
-                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-content-muted">{s.label}</p>
+                    <p className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-content-muted sm:text-[11px]">{s.label}</p>
                   </div>
                 ))}
               </motion.div>

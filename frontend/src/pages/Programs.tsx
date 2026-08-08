@@ -10,7 +10,7 @@ export default function Programs() {
         eyebrow="Programs"
         crumb="Programs"
         title={<>Every body is different. <br /> <span className="text-gradient-accent">So is every program.</span></>}
-        description="Nine specialized programs, fully personalized to your body, equipment, schedule and goals after your free assessment."
+        description="Three specialized programs, fully personalized to your body, equipment, schedule and goals after your free assessment."
       />
       <ProgramsSection />
       <Process />

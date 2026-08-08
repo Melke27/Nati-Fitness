@@ -15,7 +15,7 @@ export function AboutCoach() {
     <section className="section-padding relative overflow-hidden">
       <div className="pointer-events-none absolute -right-40 top-1/3 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[140px]" aria-hidden />
       <div className="container-shell relative">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Portrait */}
           <Reveal dir="right">
             <div className="relative mx-auto max-w-md">
@@ -64,31 +64,25 @@ export function AboutCoach() {
             </Reveal>
 
             <Reveal dir="left" delay={0.16}>
-              <div className="mt-7 space-y-5 text-base leading-[1.75] text-content-muted">
+              <div className="mt-6 space-y-4 text-[15px] leading-[1.75] text-content-muted">
                 <p>
-                  I'm a dedicated fitness coach with over 10 years of experience helping people transform their bodies,
-                  build muscle, lose fat, and take control of their health. As the head coach and transformation
-                  specialist behind Coach Nati, I've worked with clients from every fitness level — from total beginners
-                  to elite athletes — both online and in person across 12 countries.
+                  I'm a dedicated fitness coach with over 10 years of experience helping people transform their
+                  bodies, build muscle, lose fat, and take control of their health — both online and in person
+                  across 12 countries.
                 </p>
                 <p>
-                  My coaching combines science-based training, personalized programming, and proven nutrition strategies
-                  so you can build strength, lose weight, and perform at your best — sustainably. No fad diets, no
-                  gimmicks. Just the intersection of strength science and real life, so the body you build is the one
-                  you keep.
-                </p>
-                <p>
-                  My goal is simple: make fitness sustainable, enjoyable, and results-driven so you can achieve lasting
-                  progress with confidence. Let's take your fitness to the next level.
+                  My coaching combines science-based training, personalized programming, and proven nutrition
+                  strategies so you can build strength, lose weight, and perform at your best. No fad diets, no
+                  gimmicks — just results that last.
                 </p>
               </div>
             </Reveal>
 
             <Reveal dir="up" delay={0.28}>
-              <div className="mt-9 grid grid-cols-2 gap-4 sm:grid-cols-4">
+              <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {CREDENTIALS.map((c) => (
-                  <div key={c.label} className="rounded-2xl border border-border bg-surface-card px-4 py-5 text-center">
-                    <p className="text-2xl font-black text-content">{c.value}</p>
+                  <div key={c.label} className="rounded-2xl border border-border bg-surface-card px-4 py-4 text-center">
+                    <p className="text-xl font-black text-content">{c.value}</p>
                     <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-content-muted">{c.label}</p>
                   </div>
                 ))}
@@ -96,7 +90,7 @@ export function AboutCoach() {
             </Reveal>
 
             <Reveal dir="up" delay={0.36}>
-              <p className="mt-8 flex items-center gap-2 text-sm font-bold text-content">
+              <p className="mt-6 flex items-center gap-2 text-sm font-bold text-content">
                 <BadgeCheck className="h-5 w-5 text-accent" />
                 CSCS · Precision Nutrition L2 · Certified Transformation Specialist
               </p>

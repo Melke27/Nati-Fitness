@@ -69,12 +69,17 @@ export default {
         lift: '0 20px 48px -12px rgba(0, 0, 0, 0.6)',
         glow: '0 0 0 1px rgba(225, 29, 72, 0.25), 0 8px 32px -8px rgba(225, 29, 72, 0.35)',
         card: '0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 32px -8px rgba(0, 0, 0, 0.45)',
+        'card-hover':
+          '0 0 0 1px rgba(225, 29, 72, 0.18), 0 24px 48px -16px rgba(0, 0, 0, 0.65), 0 8px 24px -8px rgba(225, 29, 72, 0.18)',
+        header: '0 12px 40px -16px rgba(0, 0, 0, 0.7)',
       },
       backgroundImage: {
         'cta-gradient': 'linear-gradient(135deg, #E11D48 0%, #C81A2F 100%)',
         'cta-gradient-hover': 'linear-gradient(135deg, #F43F5E 0%, #E11D48 100%)',
+        'card-gradient': 'linear-gradient(180deg, #141417 0%, #0e0e10 100%)',
         'hero-glow':
           'radial-gradient(60% 60% at 72% 18%, rgba(225,29,72,0.12) 0%, transparent 60%), radial-gradient(42% 42% at 8% 82%, rgba(225,29,72,0.06) 0%, transparent 60%)',
+        'accent-fade': 'linear-gradient(90deg, transparent, rgba(225,29,72,0.5), transparent)',
       },
       animation: {
         float: 'float 6s ease-in-out infinite',

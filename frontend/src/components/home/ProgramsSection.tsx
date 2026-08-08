@@ -3,8 +3,13 @@ import { ArrowRight, Check, Clock, BarChart3 } from 'lucide-react'
 import { PROGRAMS } from '@/lib/constants'
 import { formatCurrency } from '@/lib/utils'
 import { DynamicIcon } from '@/lib/icons'
+<<<<<<< HEAD
 import { Reveal, Stagger, StaggerItem } from '@/components/motion'
 import { SectionHeading } from '@/components/ui'
+=======
+import { StaggerItem } from '@/components/motion'
+import { SectionHeading, Badge } from '@/components/ui'
+>>>>>>> a9aa17bb0f62657f3d4409ea04226f446ef8d3eb
 import { MEDIA } from '@/lib/media'
 
 const PROGRAM_IMG: Record<string, string> = {
@@ -23,9 +28,10 @@ const PROGRAM_IMG: Record<string, string> = {
 }
 
 export function ProgramsSection({ limit }: { limit?: number }) {
-  const list = limit ? PROGRAMS.slice(0, limit) : PROGRAMS
+  const programs = limit ? PROGRAMS.slice(0, limit) : PROGRAMS
+
   return (
-    <section id="programs" className="section-padding relative">
+    <section id="programs" className="section-padding section-anchor relative">
       <div className="container-shell">
         <SectionHeading
           eyebrow="Programs"
@@ -33,14 +39,14 @@ export function ProgramsSection({ limit }: { limit?: number }) {
           description="Every program is fully personalized after your onboarding assessment — workouts, nutrition and weekly coaching included."
         />
 
-        <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" amount={0.05}>
-          {list.map((p) => (
+        <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {programs.map((p) => (
             <StaggerItem key={p.id} className="h-full">
               <Link
                 to={`/programs/${p.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-card-hover"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card-gradient transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-card-hover"
               >
-                <div className="relative h-52 overflow-hidden sm:h-60">
+                <div className="relative h-52 overflow-hidden sm:h-56 lg:h-60">
                   <img
                     src={PROGRAM_IMG[p.slug] ?? MEDIA.gym}
                     alt={p.name}
@@ -48,6 +54,7 @@ export function ProgramsSection({ limit }: { limit?: number }) {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                   <div
                     className="absolute left-5 top-5 grid h-12 w-12 place-items-center rounded-2xl backdrop-blur-md transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
                     style={{ background: `${p.color}33`, color: '#fff' }}
@@ -99,16 +106,7 @@ export function ProgramsSection({ limit }: { limit?: number }) {
               </Link>
             </StaggerItem>
           ))}
-        </Stagger>
-
-        <Reveal dir="up" className="mt-12 text-center">
-          <Link
-            to="/programs"
-            className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-4 text-sm font-black text-content transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:bg-accent/10"
-          >
-            Explore all 12 programs <ArrowRight className="h-4 w-4" />
-          </Link>
-        </Reveal>
+        </div>
       </div>
     </section>
   )

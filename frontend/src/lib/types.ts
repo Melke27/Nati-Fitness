@@ -323,20 +323,6 @@ export interface Partner {
   verified: boolean
 }
 
-export interface Template {
-  id: string
-  slug: string
-  title: string
-  category: 'workout' | 'nutrition' | 'meal-plan' | 'assessment'
-  image: string
-  price: number
-  description: string
-  items: number
-  partnerSlug: string
-  rating: number
-  downloads: number
-}
-
 export interface Course {
   id: string
   slug: string
@@ -389,7 +375,6 @@ export interface DB {
   files: ClientFile[]
   goals: Goal[]
   partners: Partner[]
-  templates: Template[]
   courses: Course[]
   services: Service[]
 }

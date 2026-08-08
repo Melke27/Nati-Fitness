@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Lock, ShieldCheck, CreditCard, Landmark, Smartphone, Ticket, Sparkles, Upload, ChevronLeft, ArrowRight } from 'lucide-react'
 import { useDB, getSession, addPayment, applyCoupon, type PaymentMethod } from '@/lib/store'
 import { formatCurrency } from '@/lib/utils'
+import { RECOMMENDED_PLANS } from '@/lib/planFinderData'
 import { useToast } from '@/context/ToastContext'
 import { Button, Input } from '@/components/ui'
 import { cn } from '@/lib/utils'
@@ -31,6 +32,10 @@ export default function Checkout() {
   const programId = params.get('program')
   const cycle = (params.get('cycle') ?? 'quarterly') as Cycle
 
+  const offerId = params.get('offer')
+  const offerPlan = offerId ? RECOMMENDED_PLANS[offerId] : undefined
+  const isOffer = !!offerPlan
+
   const plan = db.plans.find((p) => p.id === planId) ?? db.plans[1]
   const program = db.programs.find((p) => p.id === programId)
 
@@ -43,11 +48,16 @@ export default function Checkout() {
   const [processing, setProcessing] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const months = cycle === 'monthly' ? 1 : cycle === 'quarterly' ? 3 : 12
-  const priceFor = plan[cycle]
+  // In "offer" mode we sell the Coach Nati recommended plan at a fixed one-time
+  // price for its listed duration. Otherwise we use the classic billing tiers.
+  const priceFor = isOffer ? offerPlan.priceEtb : plan[cycle]
+  const months = isOffer ? 1 : cycle === 'monthly' ? 1 : cycle === 'quarterly' ? 3 : 12
   const subtotal = priceFor * months
   const discount = applied ? Math.round((subtotal * applied.pct) / 100) : 0
   const total = subtotal - discount
+
+  const orderProgram = isOffer ? offerPlan.name : (program?.name ?? 'Premium Coaching')
+  const orderPlanLabel = isOffer ? `Coach Nati · ${offerPlan?.name} · ${offerPlan?.duration ?? ''}` : `${plan.name} · ${cycle}`
 
   const isTransferLike = method === 'CBE' || method === 'Telebirr' || method === 'Bank Transfer' || method === 'Mobile Money'
 
@@ -88,18 +98,28 @@ export default function Checkout() {
   const pay = () => {
     if (!session) return navigate('/login')
     setProcessing(true)
+    // Card uses a demo gateway (no real charge). All manual-transfer methods are
+    // recorded as PENDING and only become active once Coach Nati confirms the money.
+    const pending = isTransferLike
+    const status = pending ? ('pending' as const) : ('paid' as const)
     setTimeout(() => {
       const payment = addPayment({
         clientId: `client_${session.userId}`,
         clientName: session.name,
         amount: total,
-        plan: plan.name,
-        program: program?.name ?? 'Coaching',
+        plan: orderPlanLabel,
+        program: orderProgram,
         method,
         paymentRef: isTransferLike ? ref.value : undefined,
+        status,
       })
-      success('Payment successful! 🎉', 'Welcome to your coaching journey.')
-      navigate(`/checkout/success?ref=${payment.reference}`)
+      if (pending) {
+        success('Payment received for review', 'Your plan will activate once your transfer is confirmed.')
+        navigate(`/checkout/success?ref=${payment.reference}&pending=1`)
+      } else {
+        success('Payment successful! 🎉', 'Welcome to your coaching journey.')
+        navigate(`/checkout/success?ref=${payment.reference}`)
+      }
     }, 1200)
   }
 
@@ -268,11 +288,11 @@ export default function Checkout() {
                       <dl className="space-y-3 text-sm">
                         <div className="flex justify-between text-content-muted">
                           <dt>Program</dt>
-                          <dd className="font-black text-content">{program?.name ?? 'Premium Coaching'}</dd>
+                          <dd className="font-black text-content">{orderProgram}</dd>
                         </div>
                         <div className="flex justify-between text-content-muted">
                           <dt>Plan</dt>
-                          <dd className="font-black text-content">{plan.name} · {cycle}</dd>
+                          <dd className="font-black text-content">{orderPlanLabel}</dd>
                         </div>
                         <div className="flex justify-between text-content-muted">
                           <dt>Payment method</dt>
@@ -319,7 +339,13 @@ export default function Checkout() {
                 <ChevronLeft className="h-4 w-4" /> Back
               </Button>
               <Button variant="accent" size="lg" onClick={next} disabled={!canNext()} className="group">
-                {step === STEPS.length - 1 ? (processing ? 'Processing…' : 'Pay securely') : 'Continue'}
+                {step === STEPS.length - 1
+                  ? processing
+                    ? 'Processing…'
+                    : isTransferLike
+                      ? 'Submit for confirmation'
+                      : 'Pay securely'
+                  : 'Continue'}
                 {step === STEPS.length - 1 && !processing && <Lock className="h-4 w-4" />}
                 {step < STEPS.length - 1 && <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />}
               </Button>
@@ -334,14 +360,14 @@ export default function Checkout() {
               <div className="mt-5 flex items-center gap-4 border-b border-white/10 pb-5">
                 <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent/20 text-xl text-accent">◆</div>
                 <div>
-                  <p className="font-black text-white">{program?.name ?? 'Premium Coaching'}</p>
-                  <p className="text-xs text-white/50">{plan.name} plan · {cycle} billing</p>
+                  <p className="font-black text-white">{orderProgram}</p>
+                  <p className="text-xs text-white/50">{orderPlanLabel}</p>
                 </div>
               </div>
 
               <dl className="mt-5 space-y-3 text-sm">
                 <div className="flex justify-between text-white/70">
-                  <dt>{plan.name} · {months} month{months > 1 ? 's' : ''}</dt>
+                  <dt>{orderPlanLabel}</dt>
                   <dd className="font-bold text-white">{formatCurrency(subtotal)}</dd>
                 </div>
                 {applied && (
@@ -357,7 +383,7 @@ export default function Checkout() {
               </dl>
 
               <p className="mt-2 text-[11px] font-semibold text-white/40">
-                Billed {cycle}. Cancel anytime. Auto-renew for yearly is off by default.
+                {isOffer ? `One-time payment for your ${orderProgram} plan.` : `Billed ${cycle}. Cancel anytime. Auto-renew for yearly is off by default.`}
               </p>
 
               <div className="mt-5 flex items-center justify-center gap-5 text-[11px] font-bold text-white/40">

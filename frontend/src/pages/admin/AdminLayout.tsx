@@ -2,10 +2,9 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  LayoutDashboard, Users, MessageSquareText,   Dumbbell, Library, Apple, HeartPulse, ClipboardList,
-  Target, CalendarCheck2, CalendarDays, BarChart3, Wallet, FileText, FolderOpen, BellRing,
-  UserRound, Settings, Sparkles, Send, ChevronLeft, ChevronRight, LogOut, Sun, Moon, Search,
-  Zap, Menu, X, ExternalLink, TrendingUp, Video,
+  LayoutDashboard, Users, MessageSquareText, HeartPulse, CalendarCheck2, CalendarDays, Wallet, BellRing,
+  ChevronLeft, ChevronRight, LogOut, Sun, Moon, Search,
+  Zap, Menu, X, ExternalLink, TrendingUp,
 } from 'lucide-react'
 import { getSession, setSession, useDB } from '@/lib/store'
 import { useTheme } from '@/context/ThemeContext'
@@ -21,44 +20,24 @@ const NAV_GROUPS: { title: string; items: { to: string; label: string; icon: typ
       { to: '/admin/members', label: 'Members', icon: Users, badge: 'clients' },
       { to: '/admin/messaging', label: 'Messaging', icon: MessageSquareText, badge: 'messages' },
       { to: '/admin/schedule', label: 'Schedule', icon: CalendarDays },
-      { to: '/admin/attendance', label: 'Attendance', icon: CalendarCheck2 },
-    ],
-  },
-  {
-    title: 'Programs',
-    items: [
-      { to: '/admin/workouts', label: 'Workout Plans', icon: Dumbbell },
-      { to: '/admin/exercises', label: 'Exercise Library', icon: Library },
-      { to: '/admin/nutrition', label: 'Nutrition Plans', icon: Apple },
-      { to: '/admin/live', label: 'Live Coaching', icon: Video },
-      { to: '/admin/programs', label: 'Public Programs', icon: Zap },
-      { to: '/admin/assign', label: 'Assign Work', icon: Send },
     ],
   },
   {
     title: 'Client Success',
     items: [
       { to: '/admin/progress', label: 'Progress', icon: HeartPulse },
-      { to: '/admin/assessments', label: 'Assessments', icon: ClipboardList },
-      { to: '/admin/goals', label: 'Goals', icon: Target },
-      { to: '/admin/files', label: 'Files', icon: FolderOpen },
     ],
   },
   {
     title: 'Business',
     items: [
-      { to: '/admin/reports', label: 'Reports', icon: BarChart3 },
       { to: '/admin/payments', label: 'Payments', icon: Wallet, badge: 'appointments' },
-      { to: '/admin/content', label: 'Content', icon: FileText },
     ],
   },
   {
     title: 'System',
     items: [
-      { to: '/admin/ai', label: 'AI Assistant', icon: Sparkles },
       { to: '/admin/notifications', label: 'Notifications', icon: BellRing },
-      { to: '/admin/profile', label: 'Coach Profile', icon: UserRound },
-      { to: '/admin/settings', label: 'Settings', icon: Settings },
     ],
   },
 ]
@@ -141,7 +120,7 @@ export default function AdminLayout() {
   const currentItem = NAV_GROUPS.flatMap((g) => g.items).find((i) => (i.to === '/admin' ? location.pathname === '/admin' : location.pathname.startsWith(i.to)))
 
   return (
-    <div className="flex min-h-screen bg-surface-subtle/40 dark:bg-[#0a0c10]">
+    <div className="flex min-h-screen overflow-x-hidden bg-surface-subtle/40 dark:bg-[#0a0c10]">
       {/* ---------- Sidebar ---------- */}
       <aside
         className={cn(
@@ -269,7 +248,7 @@ export default function AdminLayout() {
               <AnimatePresence>
                 {notifOpen && (
                   <motion.div initial={{ opacity: 0, y: 8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.98 }} transition={{ duration: 0.18 }}
-                    className="absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-2xl border border-border bg-surface-solid shadow-lift dark:bg-surface">
+                    className="absolute right-0 top-12 z-50 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-surface-solid shadow-lift dark:bg-surface">
                     <div className="flex items-center justify-between border-b border-border px-4 py-3">
                       <p className="text-sm font-black text-content">Notifications</p>
                       <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-black text-accent-dark dark:text-accent">{notificationItems.length} new</span>
@@ -298,7 +277,7 @@ export default function AdminLayout() {
             </div>
 
             {/* Profile */}
-            <Link to="/admin/profile" className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-border transition hover:ring-accent">
+            <Link to="/admin" className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-border transition hover:ring-accent">
               <img src={AVATARS.coach} alt={session.name} className="h-full w-full object-cover" />
             </Link>
           </div>
@@ -333,9 +312,8 @@ function CommandPalette({ onClose }: { onClose: () => void }) {
 
   const pages = NAV_GROUPS.flatMap((g) => g.items).map((i) => ({ ...i, kind: 'Page' as const }))
   const members = db.clients.map((c) => ({ to: `/admin/members/${c.id}`, label: c.name, icon: Users, kind: 'Member' as const }))
-  const workouts = db.workouts.slice(-5).map((w) => ({ to: '/admin/workouts', label: w.name, icon: Dumbbell, kind: 'Workout' as const }))
 
-  const results = [...pages, ...members, ...workouts].filter(
+  const results = [...pages, ...members].filter(
     (r) => r.label.toLowerCase().includes(q.toLowerCase()) || (r as { to?: string }).to?.toLowerCase().includes(q.toLowerCase()),
   ).slice(0, 12)
 

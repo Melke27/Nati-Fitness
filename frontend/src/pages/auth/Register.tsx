@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Check, ArrowRight, Zap } from 'lucide-react'
+import { Check, ArrowRight } from 'lucide-react'
 import { registerUser, setSession } from '@/lib/store'
 import { useToast } from '@/context/ToastContext'
 import { Button, Input } from '@/components/ui'
@@ -25,8 +25,10 @@ export default function Register() {
       const userId = registerUser({ name: form.name, email: form.email, password: form.password, phone: form.phone })
       setSession({ userId, name: form.name, email: form.email, role: 'client' })
       success('Account created!', 'Let’s build your coaching profile — 2 minutes.')
+      const offer = searchParams.get('offer')
       const goal = searchParams.get('goal')
-      navigate(goal ? `/onboarding?goal=${encodeURIComponent(goal)}` : '/onboarding')
+      if (offer) navigate(`/checkout?offer=${encodeURIComponent(offer)}`)
+      else navigate(goal ? `/onboarding?goal=${encodeURIComponent(goal)}` : '/onboarding')
     } catch (err) {
       error('Registration failed', (err as Error).message)
       setLoading(false)
@@ -73,10 +75,6 @@ export default function Register() {
           Already have an account?{' '}
           <Link to="/login" className="font-black text-accent-dark underline-offset-4 hover:underline dark:text-accent">Sign in</Link>
         </p>
-
-        <Link to="/" className="mt-4 flex items-center justify-center gap-1.5 text-xs font-bold text-content-faint transition hover:text-content">
-          <Zap className="h-3.5 w-3.5" /> Back to Coach Nati
-        </Link>
       </motion.div>
     </AuthShell>
   )

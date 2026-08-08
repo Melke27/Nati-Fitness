@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  LayoutDashboard, Dumbbell, Salad, TrendingUp, MessageSquare, Calendar, Library, LogOut, Zap, Menu, X, Sun, Moon,
+  LayoutDashboard, Dumbbell, Salad, TrendingUp, MessageSquare, LogOut, Zap, Menu, X, Sun, Moon, Flame,
 } from 'lucide-react'
 import { useState } from 'react'
 import { getSession, setSession, useDB } from '@/lib/store'
@@ -16,16 +16,16 @@ const NAV = [
   { to: '/dashboard/nutrition', label: 'Nutrition', icon: Salad },
   { to: '/dashboard/progress', label: 'Progress', icon: TrendingUp },
   { to: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
-  { to: '/dashboard/calendar', label: 'Calendar', icon: Calendar },
-  { to: '/dashboard/resources', label: 'Resources', icon: Library },
 ]
 
 export default function DashboardLayout() {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const session = getSession()
   const db = useDB()
   const { theme, toggle } = useTheme()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const currentLabel = NAV.find((n) => (n.end ? pathname === n.to : pathname.startsWith(n.to)))?.label ?? 'Dashboard'
 
   useEffect(() => {
     if (!session) {
@@ -34,12 +34,18 @@ export default function DashboardLayout() {
     }
     if (session.role !== 'client') {
       navigate('/admin')
+      return
     }
-  }, [session, navigate])
+    if (!db.clients.find((c) => c.userId === session.userId)) {
+      navigate('/login')
+    }
+  }, [session, navigate, db])
 
   if (!session || session.role !== 'client') return null
 
   const client = db.clients.find((c) => c.userId === session.userId)
+  if (!client) return null
+
   const unread = db.messages.filter((m) => m.clientId === client?.id && m.sender === 'coach' && !m.read).length
   const unreadNotifs = db.notifications.filter((n) => n.clientId === client?.id && !n.read).length
 
@@ -49,7 +55,7 @@ export default function DashboardLayout() {
   }
 
   return (
-    <div className="flex min-h-screen bg-surface-subtle/40">
+    <div className="flex min-h-screen overflow-x-hidden bg-surface-subtle/40">
       {/* Sidebar */}
       <aside
         className={cn(
@@ -70,7 +76,7 @@ export default function DashboardLayout() {
             </button>
           </div>
 
-          <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-2" aria-label="Dashboard navigation">
+          <nav className="flex-1 space-y-1 overflow-y-auto overscroll-contain px-3 py-2" aria-label="Dashboard navigation">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
@@ -79,18 +85,23 @@ export default function DashboardLayout() {
                 onClick={() => setMobileOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    'group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all',
-                    isActive ? 'bg-primary text-accent shadow-card dark:bg-surface-solid dark:text-accent' : 'text-content-muted hover:bg-surface-subtle hover:text-content dark:hover:bg-surface-subtle',
+                    'group relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all',
+                    isActive ? 'text-accent-dark dark:text-accent' : 'text-content-muted hover:bg-surface-subtle hover:text-content dark:hover:bg-surface-subtle',
                   )
                 }
               >
-                <item.icon className="h-4.5 w-4.5 h-[18px] w-[18px]" />
-                {item.label}
-                {item.label === 'Messages' && unread > 0 && (
-                  <span className="ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-error px-1 text-[10px] font-black text-white">{unread}</span>
-                )}
-                {item.label === 'Overview' && unreadNotifs > 0 && (
-                  <span className="ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-warning px-1 text-[10px] font-black text-white">{unreadNotifs}</span>
+                {({ isActive }) => (
+                  <>
+                    {isActive && <motion.span layoutId="client-nav-pill" className="absolute inset-0 rounded-xl bg-cta-gradient shadow-glow" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
+                    <item.icon className={cn('relative h-[18px] w-[18px] shrink-0', isActive ? 'text-primary' : 'text-content-faint group-hover:text-content-muted')} />
+                    <span className="relative truncate">{item.label}</span>
+                    {item.label === 'Messages' && unread > 0 && (
+                      <span className="relative ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-error px-1 text-[10px] font-black text-white">{unread}</span>
+                    )}
+                    {item.label === 'Overview' && unreadNotifs > 0 && (
+                      <span className="relative ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-warning px-1 text-[10px] font-black text-white">{unreadNotifs}</span>
+                    )}
+                  </>
                 )}
               </NavLink>
             ))}
@@ -103,6 +114,11 @@ export default function DashboardLayout() {
                 <p className="truncate text-xs font-black text-content">{session.name}</p>
                 <Badge variant="success" className="mt-0.5 px-2 py-0 text-[9px]">{client?.status}</Badge>
               </div>
+              {client && client.streak > 0 && (
+                <span className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-accent/10 px-2 py-1 text-[10px] font-black text-accent-dark dark:text-accent">
+                  <Flame className="h-3 w-3" /> {client.streak}
+                </span>
+              )}
             </div>
             <button onClick={logout} className="flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2.5 text-xs font-black text-content-muted transition hover:border-error/40 hover:text-error">
               <LogOut className="h-3.5 w-3.5" /> Sign out
@@ -120,7 +136,10 @@ export default function DashboardLayout() {
             <button onClick={() => setMobileOpen(true)} className="grid h-10 w-10 place-items-center rounded-full border border-border text-content lg:hidden" aria-label="Open menu">
               <Menu className="h-4 w-4" />
             </button>
-            <Link to="/" className="text-xs font-bold text-content-muted hover:text-content">View public site ↗</Link>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-black text-content lg:hidden">{currentLabel}</p>
+              <Link to="/" className="hidden text-xs font-bold text-content-muted hover:text-content lg:block">View public site ↗</Link>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={toggle} className="grid h-10 w-10 place-items-center rounded-full border border-border text-content-muted transition hover:text-content" aria-label="Toggle theme">

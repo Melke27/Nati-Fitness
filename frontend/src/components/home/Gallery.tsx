@@ -12,7 +12,7 @@ export function Gallery() {
         <SectionHeading
           eyebrow="Gallery"
           title={<>Inside the <span className="text-gradient-accent">training experience</span></>}
-          description="Luxury gym environments, focused sessions, and the lifestyle behind every transformation."
+          description="A look inside Coach Nati's coaching — focused sessions, strength work and the nutrition behind every transformation."
         />
 
         <Stagger className="columns-2 gap-4 sm:columns-3 lg:gap-6" amount={0.05}>

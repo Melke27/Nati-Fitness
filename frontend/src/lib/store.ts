@@ -3,7 +3,7 @@ import type { DB } from './types'
 import { buildSeed } from './seed'
 import { uid, todayKey } from './utils'
 
-const DB_KEY = 'coachnati:db:v4'
+const DB_KEY = 'coachnati:db:v5'
 const SESSION_KEY = 'coachnati:session'
 
 let db: DB = load()
@@ -37,7 +37,6 @@ const REQUIRED_COLLECTIONS = [
   'files',
   'goals',
   'partners',
-  'templates',
   'courses',
   'services',
 ] as const
@@ -179,6 +178,20 @@ export function registerUser(data: { name: string; email: string; password: stri
   return userId
 }
 
+/**
+ * Enrollment helper: creates a client account if the email is unknown, and
+ * always returns its userId + clientId. Never silently replaces an existing
+ * account. Used only after the user explicitly completes checkout.
+ */
+export function findOrCreateClient(data: { name: string; email: string; phone?: string; password: string }) {
+  const existing = findUser(data.email)
+  if (existing) {
+    return { userId: existing.id, clientId: `client_${existing.id}`, client: db.clients.find((c) => c.userId === existing.id) ?? null }
+  }
+  const userId = registerUser({ name: data.name, email: data.email, password: data.password, phone: data.phone })
+  return { userId, clientId: `client_${userId}`, client: db.clients.find((c) => c.userId === userId) ?? null }
+}
+
 export function loginUser(email: string, password: string) {
   const user = findUser(email)
   if (!user || user.password !== password) throw new Error('Invalid email or password')
@@ -199,7 +212,7 @@ export function saveOnboarding(userId: string, payload: { profile: unknown; prog
   })
 }
 
-export function addPayment(data: { clientId: string; clientName: string; amount: number; plan: string; program: string; method: PaymentMethod; paymentRef?: string }) {
+export function addPayment(data: { clientId: string; clientName: string; amount: number; plan: string; program: string; method: PaymentMethod; paymentRef?: string; status?: 'paid' | 'pending' }) {
   const payment = {
     id: `pay_${uid()}`,
     clientId: data.clientId,
@@ -208,7 +221,7 @@ export function addPayment(data: { clientId: string; clientName: string; amount:
     plan: data.plan,
     program: data.program,
     method: data.method,
-    status: 'paid' as const,
+    status: (data.status ?? 'paid') as 'paid' | 'pending' | 'refunded',
     createdAt: new Date().toISOString(),
     reference: `CN-${new Date().getFullYear()}-${String(db.payments.length + 1).padStart(4, '0')}`,
     ...(data.paymentRef ? { paymentRef: data.paymentRef } : {}),
